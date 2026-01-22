@@ -1,0 +1,489 @@
+{
+  "project_name": "AlgoTrade_DataScience_App",
+  "description": "A comprehensive data science application for stock analysis, feature engineering, ML modeling, and explainable AI (XAI) visualization.",
+  "total_user_stories": 15,
+  "implementation_order": "sequential",
+  "user_stories": [
+    {
+      "id": "US-01",
+      "priority": "P0 - Critical",
+      "category": "Input & Data Ingestion",
+      "title": "Asset Universe Selection & Ticker Input",
+      "as_a": "User",
+      "i_want_to": "Provide a list of stock or crypto tickers manually or automatically select the top 10 S&P 500 tickers",
+      "so_that": "I can define my analysis universe and initialize the data pipeline.",
+      "features_covered": [
+        "Manual ticker input (list of strings)",
+        "Top 10 S&P 500 selection by market cap",
+        "Stocks and crypto support",
+        "Error handling for invalid tickers"
+      ],
+      "acceptance_criteria": [
+        "System accepts manual list (e.g., ['AAPL', 'TSLA', 'BTC-USD'])",
+        "System has function to fetch current top 10 S&P 500 tickers automatically",
+        "Invalid tickers are caught and reported to user",
+        "User can switch between manual and auto mode"
+      ],
+      "implementation_advice": {
+        "libraries": ["yfinance", "pandas", "requests"],
+        "complexity": "Low",
+        "estimated_hours": "2-4",
+        "notes": "Start here - foundational. Use yfinance for validation. Consider caching S&P 500 list."
+      }
+    },
+    {
+      "id": "US-02",
+      "priority": "P0 - Critical",
+      "category": "Data Ingestion",
+      "title": "Multi-Resolution Market Data Fetching",
+      "as_a": "System",
+      "i_want_to": "Fetch historical OHLCV data for multiple fixed intervals and horizons",
+      "so_that": "I can analyze different market regimes and have complete multi-timeframe data.",
+      "features_covered": [
+        "4H interval – last 2 weeks",
+        "1D interval – last 30 days",
+        "1W interval – last 3 months",
+        "1M interval – last 12 months",
+        "3M interval – last 24 months",
+        "Exact timestamps preserved",
+        "Volume included in all datasets"
+      ],
+      "acceptance_criteria": [
+        "All 5 timeframes fetched successfully for each ticker",
+        "Every row contains exact Date/Time timestamp",
+        "Volume data is present and non-null",
+        "Data is validated for completeness",
+        "Missing data is handled gracefully"
+      ],
+      "implementation_advice": {
+        "libraries": ["yfinance", "pandas", "datetime"],
+        "complexity": "Medium",
+        "estimated_hours": "4-6",
+        "notes": "Use yfinance's download function with interval parameter. Handle timezone conversions. Implement retry logic for API failures."
+      }
+    },
+    {
+      "id": "US-03",
+      "priority": "P0 - Critical",
+      "category": "Persistence",
+      "title": "Raw Data Storage",
+      "as_a": "User",
+      "i_want_to": "Have all fetched datasets saved as CSV files in a structured directory",
+      "so_that": "I can reuse them outside the application and ensure data persistence.",
+      "features_covered": [
+        "One CSV per ticker per interval",
+        "Exact date preservation",
+        "Consistent OHLCV schema",
+        "Organized folder structure (data/raw/{ticker}/{interval}.csv)"
+      ],
+      "acceptance_criteria": [
+        "Data saved to 'data/' folder with clear naming convention",
+        "CSV schema: Date, Open, High, Low, Close, Volume",
+        "Files can be loaded independently",
+        "Metadata file tracks what was fetched and when"
+      ],
+      "implementation_advice": {
+        "libraries": ["pandas", "pathlib", "json"],
+        "complexity": "Low",
+        "estimated_hours": "2-3",
+        "notes": "Create data/raw/, data/processed/ folders. Use ticker_interval_date.csv naming. Add metadata.json for tracking."
+      }
+    },
+    {
+      "id": "US-04",
+      "priority": "P1 - High",
+      "category": "Feature Engineering - Foundation",
+      "title": "Rolling Window Generation",
+      "as_a": "Data Scientist",
+      "i_want_to": "Generate rolling windows across multiple horizons",
+      "so_that": "Temporal market behavior is captured consistently for all features.",
+      "features_covered": [
+        "Last 5, 10, 20, 60, 90 trading days",
+        "Last 1 week, 1 month, 3 months",
+        "Year-to-date rolling window",
+        "Window size validation"
+      ],
+      "acceptance_criteria": [
+        "All window sizes defined as constants",
+        "Windows applied consistently across all features",
+        "Edge cases handled (insufficient data for window)",
+        "Windows aligned to trading days not calendar days"
+      ],
+      "implementation_advice": {
+        "libraries": ["pandas"],
+        "complexity": "Medium",
+        "estimated_hours": "3-4",
+        "notes": "Create a config file for window sizes. Use pandas rolling() with min_periods. This is foundational for all subsequent features."
+      }
+    },
+    {
+      "id": "US-05",
+      "priority": "P1 - High",
+      "category": "Feature Engineering - Core",
+      "title": "Core Price Feature Creation",
+      "as_a": "Data Scientist",
+      "i_want_to": "Calculate base returns and rolling statistics for multiple window sizes",
+      "so_that": "The foundation for ML modeling is complete with baseline trends.",
+      "features_covered": [
+        "Simple Returns (pct_change)",
+        "Log Returns (np.log)",
+        "Cumulative Returns",
+        "Average Daily Return per window",
+        "Return Volatility (Std Dev) for all windows",
+        "Price normalization features"
+      ],
+      "acceptance_criteria": [
+        "All return metrics calculated correctly",
+        "Returns are aligned (no lookahead bias)",
+        "Volatility uses proper degrees of freedom",
+        "Features generated for all rolling windows",
+        "NaN handling at window boundaries"
+      ],
+      "implementation_advice": {
+        "libraries": ["pandas", "numpy"],
+        "complexity": "Medium",
+        "estimated_hours": "4-5",
+        "notes": "Use np.log for log returns. Rolling std with ddof=1. Careful with first N rows being NaN."
+      }
+    },
+    {
+      "id": "US-06",
+      "priority": "P1 - High",
+      "category": "Feature Engineering - Extremes",
+      "title": "High/Low Extreme Detection & Regime Analysis",
+      "as_a": "Data Scientist",
+      "i_want_to": "Identify rolling high and low extremes with dates",
+      "so_that": "Breakout and regime behavior can be modeled with support/resistance levels.",
+      "features_covered": [
+        "Highest high per window with date",
+        "Lowest low per window with date",
+        "Distance to high (%)",
+        "Distance to low (%)",
+        "Range normalization ((High-Low)/Low)",
+        "Days since high/low"
+      ],
+      "acceptance_criteria": [
+        "Accurate high/low identification for each window",
+        "Exact dates recorded for extremes",
+        "Percentage distances calculated correctly",
+        "Range features normalized properly",
+        "All windows have these features"
+      ],
+      "implementation_advice": {
+        "libraries": ["pandas", "numpy"],
+        "complexity": "Medium",
+        "estimated_hours": "4-5",
+        "notes": "Use rolling().apply() with custom functions to track dates. idxmax/idxmin for date extraction."
+      }
+    },
+    {
+      "id": "US-07",
+      "priority": "P1 - High",
+      "category": "Feature Engineering - Momentum",
+      "title": "Trend and Momentum Indicators",
+      "as_a": "Data Scientist",
+      "i_want_to": "Calculate advanced technical indicators to capture market sentiment",
+      "so_that": "Directional strength and trend persistence can be learned by the model.",
+      "features_covered": [
+        "SMA (5, 10, 20, 50, 100, 200)",
+        "EMA (5, 10, 20, 50, 100, 200)",
+        "Price-to-MA distance (%)",
+        "MA slope (derivative)",
+        "MA crossover flags (20>50, 50>200)",
+        "RSI (14, 21)",
+        "MACD (line, signal, histogram)",
+        "Rate of Change (ROC)",
+        "Momentum over N days"
+      ],
+      "acceptance_criteria": [
+        "All moving averages calculated correctly",
+        "Crossover flags are binary (0/1)",
+        "RSI bounded between 0-100",
+        "MACD components all present",
+        "ROC and Momentum properly scaled"
+      ],
+      "implementation_advice": {
+        "libraries": ["pandas", "ta-lib or pandas-ta"],
+        "complexity": "Medium-High",
+        "estimated_hours": "6-8",
+        "notes": "Use pandas ewm() for EMA. Consider ta-lib for optimized implementations. Vectorize calculations for speed."
+      }
+    },
+    {
+      "id": "US-08",
+      "priority": "P1 - High",
+      "category": "Feature Engineering - Volatility",
+      "title": "Volatility and Risk Metrics",
+      "as_a": "Data Scientist",
+      "i_want_to": "Compute volatility and downside risk features",
+      "so_that": "Market risk regimes can be identified and quantified.",
+      "features_covered": [
+        "Rolling volatility (std of returns)",
+        "Average True Range (ATR)",
+        "Bollinger Bands (upper, lower, width, %B)",
+        "Volatility regime indicator (current vs avg)",
+        "Rolling max drawdown",
+        "Time since drawdown low"
+      ],
+      "acceptance_criteria": [
+        "ATR calculated using High-Low-Close formula",
+        "Bollinger Bands use 2 standard deviations",
+        "%B shows position within bands",
+        "Drawdown properly calculated as peak-to-trough",
+        "Regime indicator flags high/normal/low vol"
+      ],
+      "implementation_advice": {
+        "libraries": ["pandas", "numpy", "ta-lib"],
+        "complexity": "Medium-High",
+        "estimated_hours": "5-7",
+        "notes": "ATR needs previous close. Drawdown: (current - running_max) / running_max. Cache running max for efficiency."
+      }
+    },
+    {
+      "id": "US-09",
+      "priority": "P2 - Medium",
+      "category": "Feature Engineering - Volume",
+      "title": "Volume-Based Indicators",
+      "as_a": "Data Scientist",
+      "i_want_to": "Analyze volume trends relative to price",
+      "so_that": "Liquidity and participation effects are captured to confirm price movements.",
+      "features_covered": [
+        "Rolling average volume",
+        "Volume change ratio",
+        "Volume spike indicator (Vol > 2x avg)",
+        "On-Balance Volume (OBV)",
+        "VWAP (Volume Weighted Average Price)",
+        "Price-volume trend confirmation flags"
+      ],
+      "acceptance_criteria": [
+        "Volume metrics calculated for all windows",
+        "OBV accumulates correctly (±volume based on close)",
+        "VWAP uses cumulative volume weighting",
+        "Spike indicator is binary",
+        "Trend confirmation uses price direction + volume"
+      ],
+      "implementation_advice": {
+        "libraries": ["pandas", "numpy"],
+        "complexity": "Medium",
+        "estimated_hours": "4-5",
+        "notes": "OBV: cumsum of volume where close>prev_close, else -volume. VWAP resets daily if using intraday."
+      }
+    },
+    {
+      "id": "US-10",
+      "priority": "P2 - Medium",
+      "category": "Feature Engineering - Structural",
+      "title": "Time and Structural Features",
+      "as_a": "Data Scientist",
+      "i_want_to": "Add seasonality context and time-based patterns",
+      "so_that": "Seasonality and structural patterns are learned by the model.",
+      "features_covered": [
+        "Day of week (0-4 for Mon-Fri)",
+        "Week of month (1-5)",
+        "Month of year (1-12)",
+        "Days since last high/low",
+        "Days since MA crossover",
+        "Gap up/down flag (open vs prev close)"
+      ],
+      "acceptance_criteria": [
+        "All time features extracted from datetime index",
+        "Days-since features count trading days",
+        "Gap flags compare open to previous close",
+        "Features are integer encoded for ML",
+        "Cyclical encoding considered for days/months"
+      ],
+      "implementation_advice": {
+        "libraries": ["pandas"],
+        "complexity": "Low-Medium",
+        "estimated_hours": "3-4",
+        "notes": "Use .dt accessor for time features. Consider sin/cos encoding for cyclical features. Gap = (Open - Prev_Close) / Prev_Close."
+      }
+    },
+    {
+      "id": "US-11",
+      "priority": "P2 - Medium",
+      "category": "Feature Engineering - Relative",
+      "title": "Relative and Cross-Asset Features",
+      "as_a": "Data Scientist",
+      "i_want_to": "Add benchmark comparisons and cross-asset context",
+      "so_that": "Macro and relative performance context is included in the model.",
+      "features_covered": [
+        "Relative strength vs index (SPY)",
+        "Rolling beta (regression coefficient)",
+        "Rolling correlation with benchmark",
+        "Sector ETF momentum (if applicable)",
+        "Risk-free rate adjusted return (Sharpe-like)"
+      ],
+      "acceptance_criteria": [
+        "Benchmark data (SPY) fetched and aligned",
+        "Beta calculated via rolling OLS regression",
+        "Correlation uses Pearson coefficient",
+        "Relative strength = Stock_Return / Index_Return",
+        "Risk-free rate fetched or assumed (e.g., 3-month T-bill)"
+      ],
+      "implementation_advice": {
+        "libraries": ["pandas", "numpy", "scipy", "statsmodels"],
+        "complexity": "Medium-High",
+        "estimated_hours": "5-6",
+        "notes": "Use rolling window OLS for beta. Fetch ^IRX for T-bill rate. Handle missing benchmark data gracefully."
+      }
+    },
+    {
+      "id": "US-12",
+      "priority": "P1 - High",
+      "category": "Labeling",
+      "title": "Leakage-Safe Label Generation",
+      "as_a": "Data Scientist",
+      "i_want_to": "Create forward-looking target variables without data leakage",
+      "so_that": "Supervised learning is reliable and predictions are realistic.",
+      "features_covered": [
+        "Forward return (5d, 20d) - shift(-n)",
+        "Forward volatility (next N days std)",
+        "Binary: Hit high in next N days",
+        "Binary: Hit low in next N days",
+        "Trend continuation vs reversal label"
+      ],
+      "acceptance_criteria": [
+        "Labels are strictly forward-looking (use shift(-n))",
+        "No data from time T used to predict time T",
+        "Binary labels properly encoded (0/1)",
+        "NaN values at the end of series handled",
+        "Labels align with features by index"
+      ],
+      "implementation_advice": {
+        "libraries": ["pandas", "numpy"],
+        "complexity": "Medium",
+        "estimated_hours": "3-4",
+        "notes": "CRITICAL: Use shift(-n) for forward values. Never use future data in features. Drop last N rows without labels during training."
+      }
+    },
+    {
+      "id": "US-13",
+      "priority": "P1 - High",
+      "category": "Modeling",
+      "title": "Model Training and Time-Series Validation",
+      "as_a": "Data Scientist",
+      "i_want_to": "Train ML models on engineered features using time-aware splits",
+      "so_that": "Predictions are realistic and avoid lookahead bias.",
+      "features_covered": [
+        "XGBoost / LightGBM training",
+        "Optional: LSTM for sequence modeling",
+        "Optional: Transformer-based models",
+        "Time-series cross-validation (walk-forward)",
+        "Multiple target prediction support",
+        "Hyperparameter tuning"
+      ],
+      "acceptance_criteria": [
+        "Train/test split preserves time order (no shuffle)",
+        "Cross-validation uses TimeSeriesSplit",
+        "Model serialized and saved",
+        "Evaluation metrics calculated (MAE, RMSE, R²)",
+        "Feature importance extracted"
+      ],
+      "implementation_advice": {
+        "libraries": ["xgboost", "lightgbm", "scikit-learn", "optuna (for tuning)"],
+        "complexity": "High",
+        "estimated_hours": "8-12",
+        "notes": "Start with XGBoost/LightGBM (easier). Use TimeSeriesSplit with 5 folds. Track overfitting. Consider early stopping."
+      }
+    },
+    {
+      "id": "US-14",
+      "priority": "P1 - High",
+      "category": "Explainability (XAI)",
+      "title": "Model Explainability with SHAP",
+      "as_a": "User",
+      "i_want_to": "See SHAP values to understand why the model makes specific predictions",
+      "so_that": "Model decisions are transparent, auditable, and trustworthy.",
+      "features_covered": [
+        "Global SHAP importance (summary plot)",
+        "Local SHAP explanations (force plot)",
+        "SHAP time evolution (how importance changes)",
+        "Single prediction waterfall chart",
+        "Top 20 features visualization"
+      ],
+      "acceptance_criteria": [
+        "SHAP values calculated for test set",
+        "Beeswarm plot shows global feature impact",
+        "Force plot explains the latest prediction",
+        "Waterfall plot available for any single prediction",
+        "Plots integrated into UI"
+      ],
+      "implementation_advice": {
+        "libraries": ["shap", "matplotlib", "plotly"],
+        "complexity": "Medium",
+        "estimated_hours": "4-6",
+        "notes": "Use shap.TreeExplainer for XGBoost. Calculate on sample for speed. Cache SHAP values. Integrate with visualization layer."
+      }
+    },
+    {
+      "id": "US-15",
+      "priority": "P2 - Medium",
+      "category": "UI & Visualization",
+      "title": "Minimal Analytical Dashboard",
+      "as_a": "User",
+      "i_want_to": "View a simple UI that displays data, features, predictions, and explanations",
+      "so_that": "I can visually inspect the entire pipeline and model outputs.",
+      "features_covered": [
+        "Ticker selection dropdown",
+        "Candlestick chart + volume",
+        "Indicator overlays (BB, MA, RSI, MACD)",
+        "Prediction vs actual plots",
+        "SHAP visualizations (summary, force, waterfall)",
+        "Feature correlation heatmap",
+        "Drawdown analysis graph"
+      ],
+      "acceptance_criteria": [
+        "UI built with Streamlit or Dash",
+        "All graphs render correctly",
+        "Interactive elements work (dropdowns, date ranges)",
+        "SHAP plots embedded in UI",
+        "Performance is acceptable (< 3s load time)"
+      ],
+      "implementation_advice": {
+        "libraries": ["streamlit", "plotly", "matplotlib"],
+        "complexity": "Medium-High",
+        "estimated_hours": "10-15",
+        "notes": "Streamlit recommended for simplicity. Use plotly for interactivity. Cache data/model loading. Create modular plotting functions."
+      }
+    }
+  ],
+  "implementation_roadmap": {
+    "phase_1_foundation": {
+      "stories": ["US-01", "US-02", "US-03"],
+      "duration": "1-2 weeks",
+      "goal": "Data pipeline operational"
+    },
+    "phase_2_feature_engineering": {
+      "stories": ["US-04", "US-05", "US-06", "US-07", "US-08", "US-09", "US-10", "US-11"],
+      "duration": "3-4 weeks",
+      "goal": "Complete feature set ready for modeling"
+    },
+    "phase_3_modeling": {
+      "stories": ["US-12", "US-13", "US-14"],
+      "duration": "2-3 weeks",
+      "goal": "Trained model with explainability"
+    },
+    "phase_4_visualization": {
+      "stories": ["US-15"],
+      "duration": "2 weeks",
+      "goal": "Production-ready dashboard"
+    }
+  },
+  "technical_recommendations": {
+    "architecture": "Modular pipeline with clear separation: data ingestion -> feature engineering -> modeling -> visualization",
+    "testing": "Unit tests for each feature calculation. Integration tests for end-to-end pipeline.",
+    "versioning": "Track data versions, feature versions, and model versions separately",
+    "performance": "Vectorize pandas operations. Use multiprocessing for multiple tickers. Cache intermediate results.",
+    "scalability": "Consider Dask for larger datasets. Implement incremental feature updates.",
+    "monitoring": "Log all data fetches, feature calculations, and model predictions. Track drift."
+  },
+  "key_pitfalls_to_avoid": [
+    "Data leakage: Never use future data in features. Always shift labels backward, features forward.",
+    "Lookahead bias: Ensure all rolling calculations only use past data.",
+    "Overfitting: Use proper time-series CV. Regularize models. Track train/val/test metrics separately.",
+    "Missing data: Handle NaN values consistently. Document imputation strategies.",
+    "Feature scaling: Normalize/standardize features before LSTM/Transformer training.",
+    "Target imbalance: Check class distribution for classification tasks. Use stratified sampling if needed."
+  ]
+}

@@ -1,0 +1,22 @@
+# AlgoTrade DataScience App - Requirements
+# Phase 1: Dataset Creation (US-01, US-02, US-03)
+
+# Core data handling
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Financial data fetching
+yfinance>=0.2.30
+
+# Utilities
+python-dateutil>=2.8.2
+
+# Optional: For future phases
+# scikit-learn>=1.3.0  # For Phase 3: ML modeling
+# xgboost>=2.0.0  # For Phase 3: ML modeling
+# lightgbm>=4.0.0  # For Phase 3: ML modeling
+# shap>=0.42.0  # For Phase 4: Explainability
+# streamlit>=1.28.0  # For Phase 5: Visualization
+# plotly>=5.17.0  # For Phase 5: Visualization
+# matplotlib>=3.7.0  # For Phase 5: Visualization
+# seaborn>=0.12.0  # For Phase 5: Visualization

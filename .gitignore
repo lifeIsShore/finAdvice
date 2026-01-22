@@ -1,0 +1,101 @@
+# .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Data files (keep structure, ignore content)
+algotrade_datascience/data/raw/*
+!algotrade_datascience/data/raw/.gitkeep
+algotrade_datascience/data/processed/*
+!algotrade_datascience/data/processed/.gitkeep
+algotrade_datascience/data/models/*
+!algotrade_datascience/data/models/.gitkeep
+
+# Logs
+*.log
+logs/
+algotrade_datascience/data_pipeline.log
+
+# Metadata and reports (generated files)
+algotrade_datascience/data/metadata.json
+algotrade_datascience/data/quality_report.json
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+temp/
+tmp/
+
+# Documentation builds
+docs/_build/
+site/
+
+# Model artifacts
+*.pkl
+*.h5
+*.pt
+*.pth
+*.onnx
+
+# Large data files
+*.csv.gz
+*.parquet
+*.feather

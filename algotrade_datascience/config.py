@@ -131,20 +131,21 @@ CSV_FILENAME_TEMPLATE = '{ticker}_{interval}_{date}.csv'
 # ============================================================================
 
 # Minimum number of rows expected per timeframe
-# Updated to reflect new lookback periods
+# Adjusted to reflect actual Yahoo Finance data availability
+# Note: Yahoo Finance has limitations on historical data for shorter intervals
 MIN_ROWS = {
-    '4h': 300,   # ~2 months of 4h bars (6 per day * 60 days)
-    '1d': 400,   # ~2 years of daily bars (252 trading days/year * 2)
-    '1wk': 80,   # ~2 years of weekly bars (52 weeks/year * 2)
-    '1mo': 50,   # ~5 years of monthly bars (12 months/year * 5)
-    '3mo': 15,   # ~5 years of quarterly bars (4 quarters/year * 5)
-    '1h': 1200,  # ~2 months of hourly bars (24 per day * 60 days)
-    '30m': 2400, # ~2 months of 30m bars (48 per day * 60 days)
-    '15m': 4800, # ~2 months of 15m bars (96 per day * 60 days)
-    '5m': 200,   # ~5 days of 5m bars (288 per day * 5, but only trading hours)
-    '3m': 15,    # ~1 hour of 3m bars (20 per hour, resampled from 1m)
-    '2m': 20,    # ~1 hour of 2m bars (30 per hour)
-    '1m': 30     # ~1 hour of 1m bars (60 per hour)
+    '4h': 100,   # ~2 months of 4h bars (Yahoo provides ~116 rows for 2 months)
+    '1d': 300,   # ~2 years of daily bars (Yahoo provides ~345 rows for 2 years)
+    '1wk': 80,   # ~2 years of weekly bars (Yahoo provides ~104 rows)
+    '1mo': 50,   # ~5 years of monthly bars (Yahoo provides ~60 rows)
+    '3mo': 15,   # ~5 years of quarterly bars (Yahoo provides ~20 rows)
+    '1h': 250,   # ~2 months of hourly bars (Yahoo provides ~267 rows for 2 months)
+    '30m': 50,   # Limited by Yahoo Finance (provides ~52 rows for recent data)
+    '15m': 100,  # Limited by Yahoo Finance (provides ~104 rows for recent data)
+    '5m': 150,   # ~5 days of 5m bars (Yahoo provides ~180 rows)
+    '3m': 15,    # ~1 hour of 3m bars (Yahoo provides ~20 rows)
+    '2m': 20,    # ~1 hour of 2m bars (Yahoo provides ~30 rows)
+    '1m': 30     # ~1 hour of 1m bars (Yahoo provides ~60 rows)
 }
 
 # Maximum allowed missing data percentage

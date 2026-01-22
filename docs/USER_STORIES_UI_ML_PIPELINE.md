@@ -1112,22 +1112,24 @@ class PipelineOrchestrator:
 
 ## Epic 7: Cascading "Meta-Model" Architecture
 
-### US-MODEL-002: Prediction-as-a-Feature (Cascading)
+### US-MODEL-002: Prediction-as-a-Feature (Cascading Meta-Model)
 **Priority**: High  
 **Story Points**: 13
 
 **As a** data scientist  
-**I want** to use the outputs of smaller (short-term) models as inputs for the long-term "Big Model"  
-**So that** the long-term model can learn from local patterns identified by specialized models
+**I want** to use the outputs of smaller (short-term) models as inputs for a long-term "Ensemble Meta-Model"  
+**So that** the long-term model can learn from local patterns and consensus identified by specialized models across different time horizons.
 
 **Acceptance Criteria:**
-- [ ] Implement a `FeatureStacker` that collects predictions from 1min, 5min, and 1h models.
-- [ ] Align timestamps correctly to prevent "future look-ahead" leakage.
+- [ ] Implement a `FeatureStacker` that collects predictions from 1min, 5min, 1h, and 1d models.
+- [ ] Align timestamps correctly to prevent "future look-ahead" leakage (Ensemble only uses T-1 predictions).
 - [ ] Create "Meta-Features":
-    - Short-term consensus (average of short-term model predictions)
-    - Prediction volatility (stdev of model outputs)
-    - Momentum of predictions (change in short-term predictions over time)
-- [ ] Train the 1-Day and 1-Month models using these stacked features.
+    - Multi-horizon consensus (average of all model predictions).
+    - Prediction conflict score (stdev of different model outputs).
+    - Confidence weights based on historical accuracy of sub-models.
+- [ ] **3-Month Horizon Prediction**: Train a specific long-term model to predict the price 3 months in the future.
+- [ ] **Visual Output**: Dedicated line graph showing the 3-month projected trend compared to shorter-term signals.
+- [ ] Support for recursive multi-step forecasting or direct multi-target prediction for the 90-day window.
 
 ---
 

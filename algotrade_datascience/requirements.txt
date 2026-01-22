@@ -22,3 +22,11 @@ xgboost>=2.0.0
 # plotly>=5.17.0  # For Phase 5: Visualization
 # matplotlib>=3.7.0  # For Phase 5: Visualization
 # seaborn>=0.12.0  # For Phase 5: Visualization
+# Orchestration
+schedule>=1.2.0
+# Sentiment Analysis (FinBERT)
+transformers>=4.30.0
+torch>=2.0.0
+# News data
+beautifulsoup4>=4.12.0
+requests>=2.31.0

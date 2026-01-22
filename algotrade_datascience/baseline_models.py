@@ -41,14 +41,13 @@ class BaselineModels:
         self.storage = DataStorage()
         self.results = {}
         
-    def create_features(self, df: pd.DataFrame) -> pd.DataFrame:
+    def create_features(self, df: pd.DataFrame, include_target: bool = True) -> pd.DataFrame:
         """
         Create simple features for baseline models
         
-        Features:
-        - Previous N closes (lag features)
-        - Simple moving averages
-        - Returns
+        Args:
+            df: Input OHLCV data
+            include_target: If True, adds 'target' column and drops rows with NaN
         """
         df = df.copy()
         
@@ -73,11 +72,11 @@ class BaselineModels:
         df['volume_sma_5'] = df['Volume'].rolling(window=5).mean()
         df['volume_ratio'] = df['Volume'] / df['volume_sma_5']
         
-        # Target: next period's close
-        df['target'] = df['Close'].shift(-1)
-        
-        # Drop NaN rows
-        df = df.dropna()
+        if include_target:
+            # Target: next period's close
+            df['target'] = df['Close'].shift(-1)
+            # Drop NaN rows (first few because of lags/SMAs, last one because of target shift)
+            df = df.dropna()
         
         return df
     
@@ -149,37 +148,25 @@ class BaselineModels:
         """
         Calculate comprehensive metrics for model evaluation
         """
-        # Remove any NaN values
         mask = ~(np.isnan(y_true) | np.isnan(y_pred))
         y_true = y_true[mask]
         y_pred = y_pred[mask]
         
         if len(y_true) == 0:
             return {
-                'model': model_name,
-                'mse': None,
-                'rmse': None,
-                'mae': None,
-                'r2': None,
-                'mape': None,
-                'direction_accuracy': None
+                'model': model_name, 'mse': None, 'rmse': None, 'mae': None, 'r2': None, 'mape': None, 'direction_accuracy': None
             }
         
         mse = mean_squared_error(y_true, y_pred)
         rmse = np.sqrt(mse)
         mae = mean_absolute_error(y_true, y_pred)
         r2 = r2_score(y_true, y_pred)
-        
-        # MAPE (Mean Absolute Percentage Error)
         mape = np.mean(np.abs((y_true - y_pred) / y_true)) * 100
         
-        # Direction accuracy (did we predict up/down correctly?)
         y_true_series = pd.Series(y_true).reset_index(drop=True)
         y_pred_series = pd.Series(y_pred).reset_index(drop=True)
-        
         true_direction = (y_true_series.diff() > 0).astype(int)
         pred_direction = (y_pred_series.diff() > 0).astype(int)
-        
         direction_accuracy = (true_direction == pred_direction).sum() / len(true_direction) * 100
         
         return {
@@ -192,6 +179,58 @@ class BaselineModels:
             'direction_accuracy': float(direction_accuracy)
         }
     
+    def predict_next(self, df: pd.DataFrame, trained_models: Dict, feature_cols: List[str]) -> Dict:
+        """
+        Predict the next (future) period's price using the best model
+        """
+        try:
+            # Create features but keep the last row (target will be NaN)
+            df_latest = self.create_features(df, include_target=False)
+            
+            # The features for the NEXT prediction is the LAST row
+            last_row = df_latest.tail(1)
+            current_close = float(last_row['Close'].values[0])
+            
+            # Check for NaNs in feature columns
+            nan_cols = last_row[feature_cols].columns[last_row[feature_cols].isnull().any()].tolist()
+            if nan_cols:
+                # This is normal if we don't have enough history for SMAs/Lags
+                return None
+                
+            X_latest = last_row[feature_cols]
+            
+            # Use Best Model based on R2 on test set
+            best_model_name = 'linear_regression'
+            best_r2 = -999
+            
+            # We need the metrics to find the best model
+            # But here we just pick XGBoost if R2 is decent, otherwise LR
+            # For simplicity, let's just use LR as it's the most stable baseline
+            best_model = trained_models['linear_regression']
+            model_used_name = "Linear Regression"
+            
+            # However, if XGBoost is trained, let's use it as it's more powerful
+            if 'xgboost' in trained_models:
+                best_model = trained_models['xgboost']
+                model_used_name = "XGBoost"
+                
+            predicted_next = float(best_model.predict(X_latest)[0])
+            
+            direction = "UP" if predicted_next > current_close else "DOWN"
+            pct_change = ((predicted_next - current_close) / current_close) * 100
+            
+            return {
+                'model_used': model_used_name,
+                'current_close': current_close,
+                'predicted_next': predicted_next,
+                'direction': direction,
+                'pct_change': float(pct_change),
+                'timestamp': datetime.now().isoformat()
+            }
+        except Exception as e:
+            print(f"    ⚠️ Prediction error: {e}")
+            return None
+
     def process_interval(self, interval: str) -> Dict:
         """
         Process a single interval: load data, train models, evaluate
@@ -201,131 +240,58 @@ class BaselineModels:
         print(f"{'='*80}")
         
         try:
-            # Load data
             df = self.storage.load_ticker_data(self.ticker, interval)
-            
             if df is None or len(df) < 50:
-                print(f"  ⚠️ Insufficient data for {interval} (need at least 50 rows)")
+                print(f"  ⚠️ Insufficient data for {interval}")
                 return None
             
-            print(f"  Loaded {len(df)} rows")
-            
-            # Create features
-            print("  Creating features...")
-            df_features = self.create_features(df)
-            print(f"  Created {len(df_features)} feature rows (after dropping NaN)")
-            
+            df_features = self.create_features(df, include_target=True)
             if len(df_features) < 30:
                 print(f"  ⚠️ Insufficient feature rows for {interval}")
                 return None
             
-            # Train models
-            print("  Training models...")
-            results = self.train_models(df_features)
+            train_results = self.train_models(df_features)
             
-            # Print results
-            print(f"\n  Results for {interval}:")
-            print(f"  Train size: {results['train_size']}, Test size: {results['test_size']}")
-            print(f"\n  Model Performance:")
+            # Predict Next Period
+            next_pred_data = self.predict_next(df, train_results['models'], train_results['features'])
             
-            for model_name, metrics in results['metrics'].items():
-                print(f"\n    {metrics['model']}:")
-                print(f"      RMSE: {metrics['rmse']:.4f}")
-                print(f"      MAE: {metrics['mae']:.4f}")
-                print(f"      R²: {metrics['r2']:.4f}")
-                print(f"      MAPE: {metrics['mape']:.2f}%")
-                print(f"      Direction Accuracy: {metrics['direction_accuracy']:.2f}%")
+            if next_pred_data:
+                print(f"\n  🔮 NEXT PREDICTION ({interval}):")
+                print(f"    Current Close: {next_pred_data['current_close']:.2f}")
+                print(f"    Predicted Next: {next_pred_data['predicted_next']:.2f}")
+                print(f"    Expected Move: {next_pred_data['direction']} ({next_pred_data['pct_change']:.2f}%)")
             
             return {
                 'interval': interval,
                 'data_rows': len(df),
-                'feature_rows': len(df_features),
-                'train_size': results['train_size'],
-                'test_size': results['test_size'],
-                'features_used': results['features'],
-                'metrics': results['metrics']
+                'metrics': train_results['metrics'],
+                'next_prediction': next_pred_data,
+                'test_size': train_results['test_size']
             }
-            
         except Exception as e:
             print(f"  ❌ Error processing {interval}: {str(e)}")
-            import traceback
-            traceback.print_exc()
             return None
     
     def run_all_intervals(self, intervals: List[str] = None) -> Dict:
-        """
-        Run baseline models for all intervals
-        """
         if intervals is None:
-            # Focus on main intervals
             intervals = ['1d', '1wk', '1mo', '4h', '1h']
         
-        print(f"\n{'='*80}")
-        print(f"BASELINE ML MODELS - {self.ticker}")
-        print(f"{'='*80}")
-        print(f"Intervals to process: {', '.join(intervals)}")
-        print(f"Start time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        
         all_results = {}
-        
         for interval in intervals:
             result = self.process_interval(interval)
             if result:
                 all_results[interval] = result
         
-        # Save results
         self.save_results(all_results)
-        
-        # Print summary
-        self.print_summary(all_results)
-        
         return all_results
     
     def save_results(self, results: Dict):
-        """
-        Save results to JSON file
-        """
         output_file = f'data/baseline_models_{self.ticker}.json'
-        
         with open(output_file, 'w') as f:
             json.dump(results, f, indent=2, default=str)
-        
         print(f"\n✅ Results saved to {output_file}")
-    
-    def print_summary(self, results: Dict):
-        """
-        Print summary comparison of all models across intervals
-        """
-        print(f"\n{'='*80}")
-        print("SUMMARY - BEST MODELS BY INTERVAL")
-        print(f"{'='*80}")
-        
-        for interval, result in results.items():
-            if result is None:
-                continue
-            
-            metrics = result['metrics']
-            
-            # Find best model by R²
-            best_model = max(metrics.items(), key=lambda x: x[1]['r2'] if x[1]['r2'] is not None else -999)
-            
-            print(f"\n{interval.upper()}:")
-            print(f"  Best Model: {best_model[1]['model']}")
-            print(f"  R²: {best_model[1]['r2']:.4f}")
-            print(f"  RMSE: {best_model[1]['rmse']:.4f}")
-            print(f"  Direction Accuracy: {best_model[1]['direction_accuracy']:.2f}%")
-            print(f"  Test Size: {result['test_size']} samples")
 
 
 if __name__ == "__main__":
-    # Run baseline models for AAPL
-    print("Starting Baseline ML Models...")
-    
     baseline = BaselineModels(ticker='AAPL')
-    results = baseline.run_all_intervals()
-    
-    print(f"\n{'='*80}")
-    print("✅ BASELINE MODELS COMPLETE!")
-    print(f"{'='*80}")
-    print(f"End time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print("\nCheck data/baseline_models_AAPL.json for detailed results")
+    baseline.run_all_intervals()

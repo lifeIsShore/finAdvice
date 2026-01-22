@@ -10,13 +10,17 @@ from typing import Dict, List
 # US-01: Asset Universe Configuration
 # ============================================================================
 
-# Default tickers if none provided
-DEFAULT_TICKERS = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'META', 'JPM', 'V', 'WMT']
+# Default tickers (Top 10 S&P 500 + Top 10 Crypto)
+DEFAULT_TICKERS = [
+    # Top 10 Stocks
+    'AAPL', 'MSFT', 'AMZN', 'NVDA', 'GOOGL', 'META', 'BRK-B', 'TSLA', 'LLY', 'V',
+    # Top 10 Crypto (excluding stablecoins)
+    'BTC-USD', 'ETH-USD', 'SOL-USD', 'BNB-USD', 'XRP-USD', 'ADA-USD', 'AVAX-USD', 'DOGE-USD', 'DOT-USD', 'LINK-USD'
+]
 
 # Top S&P 500 by market cap (as of Jan 2025) - fallback if API fails
 TOP_SP500_TICKERS = [
-    'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 
-    'META', 'BRK-B', 'TSLA', 'LLY', 'V'
+    'AAPL', 'MSFT', 'AMZN', 'NVDA', 'GOOGL', 'META', 'BRK-B', 'TSLA', 'LLY', 'V'
 ]
 
 # Support for crypto

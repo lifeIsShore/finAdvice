@@ -471,6 +471,11 @@ class FeatureEngineer:
         # RSI
         df['rsi'] = ta.momentum.RSIIndicator(df['Close'], window=config['rsi_period']).rsi()
         
+        # Stochastic Oscillator (New)
+        stoch = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close'], window=14, smooth_window=3)
+        df['stoch_k'] = stoch.stoch()
+        df['stoch_d'] = stoch.stoch_signal()
+        
         # MACD (if enabled)
         if config['include_macd']:
             macd = ta.trend.MACD(df['Close'])
@@ -1102,6 +1107,90 @@ class PipelineOrchestrator:
                 'message': message,
                 'overall_progress': sum(self.progress.values()) / len(self.progress)
             })
+
+---
+
+## Epic 7: Cascading "Meta-Model" Architecture
+
+### US-MODEL-002: Prediction-as-a-Feature (Cascading)
+**Priority**: High  
+**Story Points**: 13
+
+**As a** data scientist  
+**I want** to use the outputs of smaller (short-term) models as inputs for the long-term "Big Model"  
+**So that** the long-term model can learn from local patterns identified by specialized models
+
+**Acceptance Criteria:**
+- [ ] Implement a `FeatureStacker` that collects predictions from 1min, 5min, and 1h models.
+- [ ] Align timestamps correctly to prevent "future look-ahead" leakage.
+- [ ] Create "Meta-Features":
+    - Short-term consensus (average of short-term model predictions)
+    - Prediction volatility (stdev of model outputs)
+    - Momentum of predictions (change in short-term predictions over time)
+- [ ] Train the 1-Day and 1-Month models using these stacked features.
+
+---
+
+## Epic 8: Popular Indicator Expansion
+
+### US-FEAT-002: Advanced Technical Indicator Suite
+**Priority**: Medium  
+**Story Points**: 5
+
+**As a** trader  
+**I want** to include popular indicators like Stochastics and long-term MAs  
+**So that** the models can capture standard chart patterns used by humans
+
+**Acceptance Criteria:**
+- [ ] **Stochastic Oscillator**: %K and %D lines.
+- [ ] **Golden/Death Crosses**: Flag for SMA 50/200 crossovers.
+- [ ] **Volume Weighted Moving Average (VWMA)**.
+- [ ] **Commodity Channel Index (CCI)**.
+- [ ] Indicators optimized for both crypto (volatile) and stocks.
+
+---
+
+## Epic 9: Explainable AI (XAI) & Interpretability
+
+### US-XAI-001: Global Feature Importance Visualization
+**Priority**: High  
+**Story Points**: 5
+
+**As a** trader  
+**I want** to see which features are most important across the entire model  
+**So that** I can understand the underlying logic of the predictions and trust the model more
+
+**Acceptance Criteria:**
+- [ ] Bar chart showing the top 10-20 features by importance (Weight/Gain for GBMs).
+- [ ] Feature names are human-readable (e.g., "RSI (14)" instead of `rsi_14`).
+- [ ] Toggle between different importance types (Gain, Cover, Weight).
+- [ ] Visual distinction between technical indicators, sentiment, and cascading model features.
+
+### US-XAI-002: Local Prediction Explanations (SHAP)
+**Priority**: Medium  
+**Story Points**: 8
+
+**As a** trader  
+**I want** to see *why* a specific prediction was made (e.g., why did the model predict a 2% jump?)  
+**So that** I can see which specific indicator triggered the signal at that exact moment
+
+**Acceptance Criteria:**
+- [ ] Integration of SHAP (SHapley Additive exPlanations) for tree-based models.
+- [ ] **Waterfall Plot** for a selected timestamp, showing how each feature pushed the price up or down.
+- [ ] Hover tooltips on the main chart that show the "Top 3 Contributors" to that specific prediction.
+- [ ] Explanation of the "Baseline" (what the model would predict without these features).
+
+### US-XAI-003: Feature Dependency & Interaction Analysis
+**Priority**: Low  
+**Story Points**: 5
+
+**As a** researcher  
+**I want** to see how two features interact (e.g., how RSI and Volume work together)  
+**So that** I can identify non-linear relationships in market dynamics
+
+**Acceptance Criteria:**
+- [ ] SHAP Dependency plots for top features.
+- [ ] Heatmap of feature correlations specifically relating to the target variable.
 ```
 
 ---

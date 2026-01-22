@@ -22,11 +22,11 @@ print("\nThis will fetch data for 2 tickers (AAPL, MSFT) across 5 timeframes.")
 print("Estimated time: 2-3 minutes\n")
 
 try:
-    # Run pipeline with 2 tickers
+    # Run pipeline with 3 tickers (stocks + crypto)
     print("Starting pipeline...")
     result = run_pipeline(
         mode='manual',
-        tickers=['AAPL', 'MSFT'],
+        tickers=['AAPL', 'MSFT', 'BTC-USD'],  # Added Bitcoin
         count=None
     )
     

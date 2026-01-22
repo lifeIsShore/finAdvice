@@ -99,3 +99,5 @@ site/
 *.csv.gz
 *.parquet
 *.feather
+
+data/

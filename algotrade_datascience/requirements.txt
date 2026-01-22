@@ -11,10 +11,12 @@ yfinance>=0.2.30
 # Utilities
 python-dateutil>=2.8.2
 
+# Machine Learning (for baseline models)
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+
 # Optional: For future phases
-# scikit-learn>=1.3.0  # For Phase 3: ML modeling
-# xgboost>=2.0.0  # For Phase 3: ML modeling
-# lightgbm>=4.0.0  # For Phase 3: ML modeling
+# lightgbm>=4.0.0  # For Phase 3: Advanced ML modeling
 # shap>=0.42.0  # For Phase 4: Explainability
 # streamlit>=1.28.0  # For Phase 5: Visualization
 # plotly>=5.17.0  # For Phase 5: Visualization

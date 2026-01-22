@@ -1,0 +1,307 @@
+{
+  "1d": {
+    "interval": "1d",
+    "data_rows": 345,
+    "feature_rows": 325,
+    "train_size": 260,
+    "test_size": 65,
+    "features_used": [
+      "close_lag_1",
+      "close_lag_2",
+      "close_lag_3",
+      "close_lag_4",
+      "close_lag_5",
+      "sma_5",
+      "sma_10",
+      "sma_20",
+      "return_1",
+      "return_5",
+      "volatility_5",
+      "volatility_10",
+      "volume_sma_5",
+      "volume_ratio"
+    ],
+    "metrics": {
+      "linear_regression": {
+        "model": "Linear Regression",
+        "mse": 8.652805622249572,
+        "rmse": 2.941565165392324,
+        "mae": 2.3137010209629625,
+        "r2": 0.8737453367956978,
+        "mape": 0.865482322231198,
+        "direction_accuracy": 58.46153846153847
+      },
+      "random_forest": {
+        "model": "Random Forest",
+        "mse": 358.5458833798218,
+        "rmse": 18.935307850146557,
+        "mae": 17.312750254292723,
+        "r2": -4.231608304364007,
+        "mape": 6.34752803804436,
+        "direction_accuracy": 47.69230769230769
+      },
+      "xgboost": {
+        "model": "XGBoost",
+        "mse": 504.2792467660449,
+        "rmse": 22.456162779202614,
+        "mae": 20.7641120323768,
+        "r2": -6.358030359269043,
+        "mape": 7.619815140255659,
+        "direction_accuracy": 52.307692307692314
+      },
+      "sma_benchmark": {
+        "model": "SMA Benchmark",
+        "mse": 36.61096325270901,
+        "rmse": 6.050699401945945,
+        "mae": 4.781014169546276,
+        "r2": 0.4658027653862693,
+        "mape": 1.7902172500512157,
+        "direction_accuracy": 46.15384615384615
+      }
+    }
+  },
+  "1wk": {
+    "interval": "1wk",
+    "data_rows": 104,
+    "feature_rows": 84,
+    "train_size": 67,
+    "test_size": 17,
+    "features_used": [
+      "close_lag_1",
+      "close_lag_2",
+      "close_lag_3",
+      "close_lag_4",
+      "close_lag_5",
+      "sma_5",
+      "sma_10",
+      "sma_20",
+      "return_1",
+      "return_5",
+      "volatility_5",
+      "volatility_10",
+      "volume_sma_5",
+      "volume_ratio"
+    ],
+    "metrics": {
+      "linear_regression": {
+        "model": "Linear Regression",
+        "mse": 62.90496877349257,
+        "rmse": 7.931265269393816,
+        "mae": 7.05059129326437,
+        "r2": 0.4173343054173012,
+        "mape": 2.6628112178781755,
+        "direction_accuracy": 52.94117647058824
+      },
+      "random_forest": {
+        "model": "Random Forest",
+        "mse": 1095.9849208104692,
+        "rmse": 33.105662971921724,
+        "mae": 30.763526763916015,
+        "r2": -9.151707052516523,
+        "mape": 11.437579805860892,
+        "direction_accuracy": 47.05882352941176
+      },
+      "xgboost": {
+        "model": "XGBoost",
+        "mse": 1245.9339201315718,
+        "rmse": 35.2977891677591,
+        "mae": 31.788239422966452,
+        "r2": -10.540629732949164,
+        "mape": 11.812424970957412,
+        "direction_accuracy": 64.70588235294117
+      },
+      "sma_benchmark": {
+        "model": "SMA Benchmark",
+        "mse": 186.1892240464385,
+        "rmse": 13.645117223623933,
+        "mae": 11.882633164349725,
+        "r2": -0.7246026135624855,
+        "mape": 4.5040755061107784,
+        "direction_accuracy": 47.05882352941176
+      }
+    }
+  },
+  "1mo": {
+    "interval": "1mo",
+    "data_rows": 60,
+    "feature_rows": 40,
+    "train_size": 32,
+    "test_size": 8,
+    "features_used": [
+      "close_lag_1",
+      "close_lag_2",
+      "close_lag_3",
+      "close_lag_4",
+      "close_lag_5",
+      "sma_5",
+      "sma_10",
+      "sma_20",
+      "return_1",
+      "return_5",
+      "volatility_5",
+      "volatility_10",
+      "volume_sma_5",
+      "volume_ratio"
+    ],
+    "metrics": {
+      "linear_regression": {
+        "model": "Linear Regression",
+        "mse": 1102.9316964526483,
+        "rmse": 33.21041548148183,
+        "mae": 27.961667178164575,
+        "r2": -0.5172781340772592,
+        "mape": 11.149209507097838,
+        "direction_accuracy": 75.0
+      },
+      "random_forest": {
+        "model": "Random Forest",
+        "mse": 860.6194973346093,
+        "rmse": 29.336317037668675,
+        "mae": 25.465976390838627,
+        "r2": -0.1839347343685902,
+        "mape": 9.88467928638154,
+        "direction_accuracy": 87.5
+      },
+      "xgboost": {
+        "model": "XGBoost",
+        "mse": 815.3062724810153,
+        "rmse": 28.553568471926855,
+        "mae": 23.781251907348636,
+        "r2": -0.12159835807619301,
+        "mape": 9.117077857522398,
+        "direction_accuracy": 75.0
+      },
+      "sma_benchmark": {
+        "model": "SMA Benchmark",
+        "mse": 1459.0232939037778,
+        "rmse": 38.19716342745594,
+        "mae": 32.562022399902354,
+        "r2": -1.0071452729753174,
+        "mape": 12.821731890852897,
+        "direction_accuracy": 37.5
+      }
+    }
+  },
+  "4h": {
+    "interval": "4h",
+    "data_rows": 116,
+    "feature_rows": 96,
+    "train_size": 76,
+    "test_size": 20,
+    "features_used": [
+      "close_lag_1",
+      "close_lag_2",
+      "close_lag_3",
+      "close_lag_4",
+      "close_lag_5",
+      "sma_5",
+      "sma_10",
+      "sma_20",
+      "return_1",
+      "return_5",
+      "volatility_5",
+      "volatility_10",
+      "volume_sma_5",
+      "volume_ratio"
+    ],
+    "metrics": {
+      "linear_regression": {
+        "model": "Linear Regression",
+        "mse": 6.9189149524270075,
+        "rmse": 2.6303830429097217,
+        "mae": 2.004844080696634,
+        "r2": 0.7602205372323151,
+        "mape": 0.7958875026259341,
+        "direction_accuracy": 50.0
+      },
+      "random_forest": {
+        "model": "Random Forest",
+        "mse": 46.17043799786452,
+        "rmse": 6.794883221797452,
+        "mae": 4.853939163208011,
+        "r2": -0.6000663247050446,
+        "mape": 1.9438922597062376,
+        "direction_accuracy": 50.0
+      },
+      "xgboost": {
+        "model": "XGBoost",
+        "mse": 47.20797080771304,
+        "rmse": 6.870805688397325,
+        "mae": 4.868604278564456,
+        "r2": -0.6360226937975795,
+        "mape": 1.9501258370436199,
+        "direction_accuracy": 60.0
+      },
+      "sma_benchmark": {
+        "model": "SMA Benchmark",
+        "mse": 16.835143984409456,
+        "rmse": 4.103065193780067,
+        "mae": 2.8824324035644535,
+        "r2": 0.41656722073418084,
+        "mape": 1.149589437462189,
+        "direction_accuracy": 55.00000000000001
+      }
+    }
+  },
+  "1h": {
+    "interval": "1h",
+    "data_rows": 267,
+    "feature_rows": 247,
+    "train_size": 197,
+    "test_size": 50,
+    "features_used": [
+      "close_lag_1",
+      "close_lag_2",
+      "close_lag_3",
+      "close_lag_4",
+      "close_lag_5",
+      "sma_5",
+      "sma_10",
+      "sma_20",
+      "return_1",
+      "return_5",
+      "volatility_5",
+      "volatility_10",
+      "volume_sma_5",
+      "volume_ratio"
+    ],
+    "metrics": {
+      "linear_regression": {
+        "model": "Linear Regression",
+        "mse": 1.427414054229328,
+        "rmse": 1.194744346807855,
+        "mae": 0.8815096738803573,
+        "r2": 0.948613388978511,
+        "mape": 0.34756772339905295,
+        "direction_accuracy": 46.0
+      },
+      "random_forest": {
+        "model": "Random Forest",
+        "mse": 36.187328415086185,
+        "rmse": 6.0155904460897425,
+        "mae": 4.121477813720705,
+        "r2": -0.3027363459559689,
+        "mape": 1.649045757987739,
+        "direction_accuracy": 54.0
+      },
+      "xgboost": {
+        "model": "XGBoost",
+        "mse": 45.59767739432866,
+        "rmse": 6.752605230155889,
+        "mae": 4.667472534179689,
+        "r2": -0.6415069648524465,
+        "mape": 1.8672134671061416,
+        "direction_accuracy": 46.0
+      },
+      "sma_benchmark": {
+        "model": "SMA Benchmark",
+        "mse": 5.1096909536119695,
+        "rmse": 2.2604625530213878,
+        "mae": 1.7256214599609376,
+        "r2": 0.8160521814288546,
+        "mape": 0.6821376249946842,
+        "direction_accuracy": 57.99999999999999
+      }
+    }
+  }
+}

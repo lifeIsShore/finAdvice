@@ -7,6 +7,151 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2026-01-22
+
+### 🧹 Codebase Tidying & Reorganization
+
+#### Added
+
+**Project Structure & Organization**
+- Created modular package structure with clear separation of concerns:
+  - `core/` - Phase 1 modules (ticker_selector, data_fetcher, data_storage)
+  - `features/` - Ready for Phase 2 feature engineering modules
+  - `modeling/` - Ready for Phase 3 ML modeling modules
+  - `visualization/` - Ready for Phase 4 dashboard modules
+  - `utils/` - Common utility functions
+- Created `data/processed/` directory for engineered features
+- Created `data/models/` directory for trained model artifacts
+- Created `tests/` directory structure with fixtures folder
+- Added `__init__.py` files to all packages with proper docstrings
+
+**Comprehensive Documentation (13 Files, ~123KB)**
+- `README.md` - Enhanced root README with badges, quick start, and roadmap (11KB)
+- `LICENSE` - MIT License
+- `.gitignore` - Comprehensive ignore rules for Python projects
+- `QUICK_REFERENCE.md` - Quick navigation guide for all documentation (8KB)
+- `TIDYING_SUMMARY.md` - Overview of tidying work performed (10KB)
+- `CLEANUP_COMPLETE.md` - Final cleanup summary (9KB)
+- `docs/INDEX.md` - Complete documentation index (10KB)
+- `docs/ARCHITECTURE.md` - System architecture and design patterns (23KB)
+- `docs/API.md` - Complete API reference with examples (12KB)
+- `docs/CONTRIBUTING.md` - Contribution guidelines and coding standards (13KB)
+- `docs/CHANGELOG.md` - This file - version history (8KB)
+- `docs/PROJECT_STRUCTURE.md` - Directory structure guide (16KB)
+- `requirements-dev.txt` - Development dependencies (pytest, black, flake8, etc.)
+
+**Git Configuration**
+- `.gitignore` configured to exclude:
+  - Python cache files (`__pycache__/`, `*.pyc`)
+  - Virtual environments (`venv/`, `env/`)
+  - Generated data files (`data/raw/*`, `data/processed/*`)
+  - Logs (`*.log`)
+  - Model artifacts (`*.pkl`, `*.h5`)
+  - IDE files (`.vscode/`, `.idea/`)
+- `.gitkeep` files in empty directories to preserve structure
+
+#### Changed
+
+**Code Organization**
+- Moved core modules into `core/` package:
+  - `ticker_selector.py` → `core/ticker_selector.py`
+  - `data_fetcher.py` → `core/data_fetcher.py`
+  - `data_storage.py` → `core/data_storage.py`
+- Updated all import statements to use new package structure:
+  - `main_data_pipeline.py` - Updated to import from `core` package
+  - `test_pipeline.py` - Updated to import from `core` package
+  - `data_quality_checker.py` - Updated to import from `core` package
+
+**Data Directory Structure**
+- Consolidated all data from root `data/` into `algotrade_datascience/data/`
+- Organized data directory with clear subdirectories:
+  - `data/raw/` - Raw CSV files from data fetching
+  - `data/processed/` - Engineered features (ready for Phase 2)
+  - `data/models/` - Trained models (ready for Phase 3)
+
+#### Removed
+
+**Duplicates & Cleanup**
+- Removed duplicate `data/` directory from project root
+- Removed temporary `directory_structure.txt` file
+- Consolidated all data files into single location
+
+#### Documentation Improvements
+
+**Architecture Documentation**
+- Complete system architecture with diagrams
+- Data flow documentation for all phases
+- Component architecture breakdown
+- Design principles and patterns
+- Performance considerations
+- Future enhancement roadmap
+
+**API Documentation**
+- Complete API reference for all public modules
+- Method signatures with type hints
+- Parameter descriptions and examples
+- Return types and error handling
+- Data schemas (CSV, JSON)
+- CLI documentation
+
+**Contributing Guidelines**
+- Code of conduct
+- Development workflow and branch naming
+- Coding standards (PEP 8 + enhancements)
+- Type hints and docstring guidelines (Google-style)
+- Testing guidelines with pytest
+- Pull request process
+- Issue reporting templates
+
+**Project Structure Guide**
+- Complete directory tree
+- File naming conventions
+- Git tracking strategy
+- Module import paths
+- Development workflow
+- Maintenance guidelines
+
+#### Technical Details
+
+**Package Structure**
+- All packages now have proper `__init__.py` files
+- Version information in package metadata
+- `__all__` exports defined for public APIs
+- Consistent docstring format (Google-style)
+
+**Import Paths**
+- Before: `from ticker_selector import TickerSelector`
+- After: `from core.ticker_selector import TickerSelector`
+
+**Development Tools**
+- Added `requirements-dev.txt` with:
+  - Testing: pytest, pytest-cov, pytest-mock
+  - Code quality: black, flake8, pylint, mypy
+  - Documentation: sphinx, sphinx-rtd-theme
+  - Development: ipython, jupyter
+
+#### Benefits
+
+**For Developers**
+- Clear package organization makes code easier to navigate
+- Comprehensive documentation reduces onboarding time
+- Coding standards ensure consistent code quality
+- Test structure ready for TDD approach
+
+**For Users**
+- Professional README with quick start guide
+- Multiple entry points for documentation
+- Clear roadmap and feature status
+- Easy to understand project structure
+
+**For Maintainers**
+- Git ignore rules prevent accidental commits
+- Directory structure scales for future phases
+- Documentation is comprehensive and up-to-date
+- Clear contribution guidelines
+
+---
+
 ## [1.0.0] - 2026-01-22
 
 ### ✅ Phase 1 Complete - Dataset Creation
@@ -211,6 +356,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## Version History
+
+### [1.1.0] - 2026-01-22
+- **Codebase Tidying**: Complete reorganization and documentation
+- Created modular package structure (core, features, modeling, visualization, utils)
+- Added 13 comprehensive documentation files (~123KB)
+- Moved core modules into organized packages
+- Updated all import statements
+- Removed duplicates and consolidated data directory
+- Added development dependencies and tools
+- Created test directory structure
+- Professional .gitignore and LICENSE
 
 ### [1.0.0] - 2026-01-22
 - **Phase 1 Complete**: Dataset Creation (US-01, US-02, US-03)

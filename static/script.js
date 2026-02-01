@@ -254,8 +254,45 @@ async function updateDashboard(ticker) {
         if (priceChart) {
             priceChart.options.plugins.annotation = {
                 annotations: {
-                    getIn: { type: 'line', yMin: data.recommended_get_in, yMax: data.recommended_get_in, borderColor: '#10b981', borderWidth: 2, borderDash: [5, 5], label: { content: 'BUY', enabled: true } },
-                    getOut: { type: 'line', yMin: data.recommended_get_out, yMax: data.recommended_get_out, borderColor: '#f59e0b', borderWidth: 2, borderDash: [5, 5], label: { content: 'SELL', enabled: true } }
+                    getIn: {
+                        type: 'line',
+                        yMin: data.recommended_get_in,
+                        yMax: data.recommended_get_in,
+                        borderColor: '#10b981',
+                        borderWidth: 2,
+                        label: {
+                            content: 'BUY ' + data.recommended_get_in.toFixed(2),
+                            enabled: true,
+                            backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                            color: 'white'
+                        }
+                    },
+                    getOut: {
+                        type: 'line',
+                        yMin: data.recommended_get_out,
+                        yMax: data.recommended_get_out,
+                        borderColor: '#f59e0b',
+                        borderWidth: 2,
+                        label: {
+                            content: 'SELL ' + data.recommended_get_out.toFixed(2),
+                            enabled: true,
+                            backgroundColor: 'rgba(245, 158, 11, 0.8)',
+                            color: 'white'
+                        }
+                    },
+                    stopLoss: {
+                        type: 'line',
+                        yMin: data.recommended_stop_loss,
+                        yMax: data.recommended_stop_loss,
+                        borderColor: '#ef4444',
+                        borderWidth: 2,
+                        label: {
+                            content: 'STOP ' + data.recommended_stop_loss.toFixed(2),
+                            enabled: true,
+                            backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                            color: 'white'
+                        }
+                    }
                 }
             };
             priceChart.update();

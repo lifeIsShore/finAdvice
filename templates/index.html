@@ -11,6 +11,96 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+    <style>
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            /* Hide everything by default */
+            .sidebar,
+            .main-header,
+            .price-hero,
+            .cards-row,
+            .chart-container,
+            .console,
+            .sentiment,
+            .panel.sentiment,
+            .disclaimer-banner,
+            .background-overlay {
+                display: none !important;
+            }
+
+            .grid-layout {
+                display: block;
+                height: auto;
+                padding: 0;
+            }
+
+            /* Show and styling the Right Panel as the Report */
+            .right-panel {
+                width: 100%;
+                height: auto;
+                background: none;
+                backdrop-filter: none;
+                padding: 20px;
+            }
+
+            .panel {
+                background: white !important;
+                border: 1px solid #ddd;
+                box-shadow: none;
+                color: black;
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+            }
+
+            .panel h3 {
+                color: #111;
+                border-bottom: 2px solid #333;
+                padding-bottom: 10px;
+            }
+
+            .metric-row {
+                border-bottom: 1px solid #eee;
+                color: #333;
+            }
+
+            .metric-row span {
+                color: #333;
+            }
+
+            .model-table th {
+                background: #f0f0f0;
+                color: #333;
+            }
+
+            .model-table td {
+                color: #333;
+                border-bottom: 1px solid #eee;
+            }
+
+            .winner-row {
+                background: #e6fffa !important;
+                font-weight: bold;
+            }
+
+            #btn-download-report {
+                display: none;
+            }
+
+            /* Add a report header */
+            .right-panel::before {
+                content: "FinAdvice AI - Performance Report";
+                display: block;
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -88,12 +178,23 @@
         <main class="main-body">
             <header class="main-header">
                 <div class="ticker-info">
-                    <h1 id="current-ticker">---</h1>
-                    <div id="asset-type" class="badge">---</div>
-                </div>
-                <div class="price-hero">
-                    <span class="label">Current Price</span>
-                    <span id="price-val" class="value">---</span>
+                    <div class="price-hero">
+                        <div class="ticker-badge" id="ticker-badge">STOCK</div>
+                        <h2 id="current-ticker">---</h2>
+                        <div class="current-price">
+                            <span class="label">Current Price</span>
+                            <span class="value" id="price-val">$---.--</span>
+                        </div>
+
+                        <!-- Market Sentiment Indicator -->
+                        <div class="market-sentiment-indicator" id="market-sentiment-box" style="display: none;">
+                            <div class="sentiment-icon" id="sentiment-icon">➡️</div>
+                            <div class="sentiment-details">
+                                <div class="sentiment-label" id="sentiment-label">Market Outlook</div>
+                                <div class="sentiment-value" id="sentiment-value">Analyzing...</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </header>
 
@@ -161,30 +262,51 @@
                 </div>
             </div>
 
-            <div class="panel glass metrics">
-                <h3><i class="fas fa-microchip"></i> Model Diagnostic <i class="fas fa-question-circle help-icon"
-                        title="Technical metrics evaluating the accuracy of the AI model on test data"></i></h3>
+            <div class="panel glass metrics" onclick="openAnalytics()" style="cursor: pointer;"
+                title="Click to view detailed analytics">
+                <h3><i class="fas fa-microchip"></i> AI Model Competition <i class="fas fa-question-circle help-icon"
+                        title="We test multiple AI models and pick the best one for this specific asset. Different models work better for different stocks/cryptos!"></i>
+                    <i class="fas fa-external-link-alt" style="float: right; font-size: 0.9rem; opacity: 0.6;"></i>
+                </h3>
 
-                <div class="metric-row">
-                    <span>R² Score <i class="fas fa-question-circle help-icon"
-                            title="Predictive Power (0.0 - 1.0). Higher is better. >0.5 is meaningful."></i></span>
-                    <span id="metric-r2">---</span>
+                <div class="competition-winner-banner" id="competition-winner">
+                    <i class="fas fa-trophy"></i> Winner: <span id="winner-name">---</span>
                 </div>
-                <div class="metric-row">
-                    <span>Mean Error (MAE) <i class="fas fa-question-circle help-icon"
-                            title="Average price difference between predicted and actual values. Lower is better."></i></span>
-                    <span id="metric-mae">---</span>
+
+                <div class="table-responsive">
+                    <table class="model-table">
+                        <thead>
+                            <tr>
+                                <th>Model <i class="fas fa-question-circle help-icon" style="font-size: 0.75rem;"
+                                        title="The AI algorithm used for prediction"></i></th>
+                                <th>Acc % <i class="fas fa-question-circle help-icon" style="font-size: 0.75rem;"
+                                        title="How often it predicts the right direction (up/down). Higher is better!"></i>
+                                </th>
+                                <th>RMSE <i class="fas fa-question-circle help-icon" style="font-size: 0.75rem;"
+                                        title="Prediction error - how far off the price guess is. Lower is better!"></i>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="model-table-body">
+                            <!-- Populated by JS -->
+                            <tr>
+                                <td colspan="3">No data available</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="metric-row">
-                    <span>Root Mean Sq (RMSE) <i class="fas fa-question-circle help-icon"
-                            title="Error penalty metric. Lower is better. Indicates stability."></i></span>
-                    <span id="metric-rmse">---</span>
-                </div>
-                <div class="metric-row">
+
+                <div class="metric-row"
+                    style="margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
                     <span>Last Trained <i class="fas fa-question-circle help-icon"
-                            title="When this model was last updated with new data."></i></span>
+                            title="When we last ran the AI models with fresh data"></i></span>
                     <span id="last-trained">---</span>
                 </div>
+
+                <button id="btn-download-report" class="btn btn-action secondary" style="width: 100%; margin-top: 12px;"
+                    onclick="downloadReport()">
+                    <i class="fas fa-file-pdf"></i> Download Report
+                </button>
             </div>
 
 

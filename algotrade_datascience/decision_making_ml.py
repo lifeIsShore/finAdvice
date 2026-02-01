@@ -24,6 +24,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from core.data_storage import DataStorage
 from core.news_fetcher import NewsFetcher
 from features.sentiment_analysis import SentimentProcessor
+from baseline_models import BaselineModels
 
 class DecisionMakingML:
     def __init__(self, ticker: str = 'AAPL'):
@@ -37,6 +38,9 @@ class DecisionMakingML:
         except Exception as e:
             print(f"Warning: Could not initialize SentimentProcessor: {e}")
             self.sentiment_processor = None
+        
+        # Initialize Baseline Models for Competition
+        self.baseline_models = BaselineModels(ticker)
         self.results = {}
         
     def add_technical_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -351,7 +355,23 @@ class DecisionMakingML:
         print(f"Model R2: {perf['r2']:.4f} (Baseline: {baseline_r2:.4f})")
         print(f"Status: {'WINNER: BEATING BASELINE' if perf['comparison'].get('is_better_r2') else 'NEEDS RETRAINING'}")
         
-        print("\n=== PREMIUM STRATEGY REPORT ===")
+        # Run Model Competition
+        print("\n=== RUNNING MODEL COMPETITION ===")
+        winner = "traditional_xgboost"
+        competition_metrics = {}
+        
+        try:
+            # Run baselines for 1d interval mainly for the decision comparison
+            baseline_results = self.baseline_models.process_interval('1d')
+            
+            if baseline_results and 'metrics' in baseline_results:
+                competition_metrics = baseline_results['metrics']
+                winner = self.baseline_models.identify_winner(competition_metrics)
+        except Exception as e:
+            print(f"[WARNING] Model Competition Warning: {e}")
+            winner = "traditional_xgboost (fallback)"
+        
+        print(f"\n=== PREMIUM STRATEGY REPORT ===")
         print(f"Ticker: {self.ticker} | Date: {predictions['current_date']}")
         print(f"Current Price: ${predictions['current_price']:.2f}")
         print("-" * 30)
@@ -362,15 +382,56 @@ class DecisionMakingML:
         print(f"Potential Trade Gain:     {predictions['potential_gain']:.2f}%")
         print(f"Sentiment Impact:         {predictions['sentiment_score']:.2f}")
         print(f"Confidence Level:         {predictions['confidence_score']:.1f}%")
+        print(f"Best Model (Winner):      {winner.upper()}")
         print("=" * 30)
+
+        # Calculate potential gain
+        potential_gain = ((predictions['recommended_get_out'] - predictions['recommended_get_in']) / 
+                         predictions['recommended_get_in']) * 100
+        predictions['potential_gain'] = potential_gain
+        
+        # Classify market sentiment based on predicted movement
+        predicted_change = ((predictions['predicted_max_high'] - predictions['current_price']) / 
+                           predictions['current_price']) * 100
+        
+        if predicted_change > 5:
+            market_sentiment = "DRAMATICALLY_UP"
+            sentiment_label = "Dramatically Up"
+            sentiment_icon = "[DRAMATICALLY_UP]" # Using text indicators instead of emojis to avoid Windows encoding issues
+        elif predicted_change > 1:
+            market_sentiment = "UP"
+            sentiment_label = "Up"
+            sentiment_icon = "[UP]"
+        elif predicted_change > -1:
+            market_sentiment = "SIDEWAYS"
+            sentiment_label = "Sideways/Fluctuate"
+            sentiment_icon = "[SIDEWAYS]"
+        elif predicted_change > -5:
+            market_sentiment = "DOWN"
+            sentiment_label = "Down"
+            sentiment_icon = "[DOWN]"
+        else:
+            market_sentiment = "DRAMATICALLY_DOWN"
+            sentiment_label = "Dramatically Down"
+            sentiment_icon = "[DRAMATICALLY_DOWN]"
+        
+        predictions['market_sentiment'] = market_sentiment
+        predictions['market_sentiment_label'] = sentiment_label
+        predictions['market_sentiment_icon'] = sentiment_icon
+        predictions['predicted_change_pct'] = predicted_change
+        print(f"Market Sentiment:         {sentiment_label} ({predicted_change:+.2f}%)")
 
         # Save results
         predictions['performance'] = perf
+        predictions['model_competition'] = {
+            'winner': winner,
+            'metrics': competition_metrics
+        }
         predictions['last_trained'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         output_dir = Path("data/decisions")
         output_dir.mkdir(parents=True, exist_ok=True)
-        with open(output_dir / f"{self.ticker}_premium_decision.json", 'w') as f:
-            json.dump(predictions, f, indent=4)
+        with open(output_dir / f"{self.ticker}_premium_decision.json", 'w', encoding='utf-8') as f:
+            json.dump(predictions, f, indent=4, ensure_ascii=False)
 
 if __name__ == "__main__":
     import argparse

@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.0] - 2026-02-01
+
+### 🚀 MVP Release - Full Stack AI Dashboard
+
+#### Added
+
+**Web Dashboard**
+- Interactive Flask application (`dashboard_app.py`) serving a modern UI.
+- Real-time Chart.js visualizations with zoom and pan.
+- Dynamic ticker search and selection.
+- "Predict" button workflow (Data -> Sentiment -> ML -> UI).
+
+**Machine Learning Engine**
+- **Multi-Model Competition**: Automatically trains RF, XGBoost, and Linear Regression for every prediction.
+- **Dynamic Model Selection**: Picks the "Winner" based on validation set performance.
+- **Diagnostics API**: Exposes confusion matrices, ROC curves, and feature importance.
+
+**Sentiment Analysis**
+- integrated `ProsusAI/finbert` for financial sentiment classification.
+- Real-time news scraping from Yahoo Finance.
+- Sentiment scoring impact on price targets.
+
+**Multi-Timeframe Consensus**
+- Analysis across 1h, 4h, 1d, 1wk, 1mo intervals.
+- Confidence scoring system.
+
+#### Changed
+- Promoted `algotrade_datascience` pipeline to production backend.
+- Updated `README.md` and `START_HERE.md` to reflect full-stack capabilities.
+
+---
+
 ## [1.1.0] - 2026-01-22
 
 ### 🧹 Codebase Tidying & Reorganization

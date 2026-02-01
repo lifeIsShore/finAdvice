@@ -24,7 +24,7 @@ warnings.filterwarnings('ignore')
 from sklearn.model_selection import train_test_split, TimeSeriesSplit
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, confusion_matrix, roc_curve, auc, precision_score, recall_score, f1_score
 import xgboost as xgb
 
 # Import from core
@@ -141,7 +141,9 @@ class BaselineModels:
             'metrics': metrics,
             'train_size': len(X_train),
             'test_size': len(X_test),
-            'features': feature_cols
+            'features': feature_cols,
+            'X_test': X_test,
+            'y_test': y_test
         }
     
     def calculate_metrics(self, y_true, y_pred, model_name: str) -> Dict:
@@ -230,7 +232,81 @@ class BaselineModels:
         except Exception as e:
             print(f"    ⚠️ Prediction error: {e}")
             return None
-
+    
+    def generate_diagnostics(self, y_true, y_pred, model, model_name: str, feature_cols: List[str]) -> Dict:
+        """
+        Generate comprehensive diagnostics for a model including ROC, confusion matrix, feature importance
+        """
+        diagnostics = {}
+        
+        # Clean data
+        mask = ~(np.isnan(y_true) | np.isnan(y_pred))
+        y_true_clean = y_true[mask]
+        y_pred_clean = y_pred[mask]
+        
+        if len(y_true_clean) < 10:
+            return {}
+        
+        # 1. Residuals for scatter plot
+        residuals = y_true_clean - y_pred_clean
+        diagnostics['residuals'] = {
+            'actual': y_true_clean.tolist(),
+            'predicted': y_pred_clean.tolist(),
+            'residuals': residuals.tolist()
+        }
+        
+        # 2. Classification metrics (direction prediction)
+        y_true_series = pd.Series(y_true_clean).reset_index(drop=True)
+        y_pred_series = pd.Series(y_pred_clean).reset_index(drop=True)
+        
+        true_direction = (y_true_series.diff() > 0).astype(int).iloc[1:]  # Skip first NaN
+        pred_direction = (y_pred_series.diff() > 0).astype(int).iloc[1:]
+        
+        if len(true_direction) > 0:
+            # Confusion Matrix
+            cm = confusion_matrix(true_direction, pred_direction)
+            diagnostics['confusion_matrix'] = cm.tolist()
+            
+            # Precision, Recall, F1
+            try:
+                precision = precision_score(true_direction, pred_direction, zero_division=0)
+                recall = recall_score(true_direction, pred_direction, zero_division=0)
+                f1 = f1_score(true_direction, pred_direction, zero_division=0)
+                
+                diagnostics['classification_metrics'] = {
+                    'precision': float(precision),
+                    'recall': float(recall),
+                    'f1_score': float(f1)
+                }
+            except:
+                diagnostics['classification_metrics'] = {'precision': 0, 'recall': 0, 'f1_score': 0}
+            
+            # ROC Curve (using prediction probabilities if available, else use predictions as scores)
+            try:
+                fpr, tpr, thresholds = roc_curve(true_direction, pred_direction)
+                roc_auc = auc(fpr, tpr)
+                
+                diagnostics['roc_curve'] = {
+                    'fpr': fpr.tolist(),
+                    'tpr': tpr.tolist(),
+                    'auc': float(roc_auc)
+                }
+            except:
+                diagnostics['roc_curve'] = {'fpr': [], 'tpr': [], 'auc': 0.5}
+        
+        # 3. Feature Importance (for tree-based models)
+        if model_name in ['Random Forest', 'XGBoost'] and hasattr(model, 'feature_importances_'):
+            importances = model.feature_importances_
+            feature_importance = [
+                {'feature': feat, 'importance': float(imp)} 
+                for feat, imp in zip(feature_cols, importances)
+            ]
+            # Sort by importance
+            feature_importance.sort(key=lambda x: x['importance'], reverse=True)
+            diagnostics['feature_importance'] = feature_importance[:10]  # Top 10
+        
+        return diagnostics
+    
     def process_interval(self, interval: str) -> Dict:
         """
         Process a single interval: load data, train models, evaluate
@@ -242,21 +318,40 @@ class BaselineModels:
         try:
             df = self.storage.load_ticker_data(self.ticker, interval)
             if df is None or len(df) < 50:
-                print(f"  ⚠️ Insufficient data for {interval}")
+                print(f"  [!] Insufficient data for {interval}")
                 return None
             
             df_features = self.create_features(df, include_target=True)
             if len(df_features) < 30:
-                print(f"  ⚠️ Insufficient feature rows for {interval}")
+                print(f"  [!] Insufficient feature rows for {interval}")
                 return None
             
             train_results = self.train_models(df_features)
+            
+            # Generate diagnostics for each model
+            diagnostics = {}
+            X_test = train_results['X_test']
+            y_test = train_results['y_test']
+            feature_cols = train_results['features']
+            
+            for model_name, model in train_results['models'].items():
+                y_pred = model.predict(X_test)
+                diagnostics[model_name.lower().replace(' ', '_')] = self.generate_diagnostics(
+                    y_test, y_pred, model, model_name, feature_cols
+                )
+            
+            # Save diagnostics to file
+            diagnostics_dir = Path('data/model_diagnostics')
+            diagnostics_dir.mkdir(parents=True, exist_ok=True)
+            diagnostics_file = diagnostics_dir / f"{self.ticker}_{interval}_diagnostics.json"
+            with open(diagnostics_file, 'w') as f:
+                json.dump(diagnostics, f, indent=2, default=str)
             
             # Predict Next Period
             next_pred_data = self.predict_next(df, train_results['models'], train_results['features'])
             
             if next_pred_data:
-                print(f"\n  🔮 NEXT PREDICTION ({interval}):")
+                print(f"\n  [PREDICTION] Next for {interval}:")
                 print(f"    Current Close: {next_pred_data['current_close']:.2f}")
                 print(f"    Predicted Next: {next_pred_data['predicted_next']:.2f}")
                 print(f"    Expected Move: {next_pred_data['direction']} ({next_pred_data['pct_change']:.2f}%)")
@@ -266,10 +361,11 @@ class BaselineModels:
                 'data_rows': len(df),
                 'metrics': train_results['metrics'],
                 'next_prediction': next_pred_data,
-                'test_size': train_results['test_size']
+                'test_size': train_results['test_size'],
+                'diagnostics_file': str(diagnostics_file)
             }
         except Exception as e:
-            print(f"  ❌ Error processing {interval}: {str(e)}")
+            print(f"  [ERROR] Error processing {interval}: {str(e)}")
             return None
     
     def run_all_intervals(self, intervals: List[str] = None) -> Dict:
@@ -289,7 +385,52 @@ class BaselineModels:
         output_file = f'data/baseline_models_{self.ticker}.json'
         with open(output_file, 'w') as f:
             json.dump(results, f, indent=2, default=str)
-        print(f"\n✅ Results saved to {output_file}")
+        print(f"\n[OK] Results saved to {output_file}")
+
+    def identify_winner(self, metrics: Dict) -> str:
+        """
+        Identify the winning model based on a composite score.
+        Score = (Direction_Accuracy * 0.6) + ((1 - normalized_rmse) * 0.4)
+        """
+        best_score = -float('inf')
+        winner = "linear_regression" # Default fallback
+        
+        # We need to normalize RMSE to make it comparable
+        # Find max RMSE to normalize
+        all_rmses = [m['rmse'] for m in metrics.values() if m['rmse'] is not None]
+        if not all_rmses:
+            return winner
+            
+        max_rmse = max(all_rmses) if max(all_rmses) > 0 else 1.0
+        
+        print("\n*** MODEL COMPETITION ***")
+        print(f"{'Model':<20} | {'Acc %':<8} | {'RMSE':<8} | {'Score':<8}")
+        print("-" * 55)
+        
+        for model_name, m in metrics.items():
+            if m['rmse'] is None: 
+                continue
+                
+            # Direction Accuracy (0-100) -> normalize to 0-1
+            acc = m['direction_accuracy'] / 100.0
+            
+            # RMSE Score (0-1): Lower RMSE is better. 
+            # 1 - (rmse / max_rmse) gives 1 for best (0 error) and 0 for worst (max error)
+            rmse_score = 1.0 - (m['rmse'] / max_rmse)
+            
+            # Composite Score
+            # Weight Accuracy MUCH higher (0.8) because Direction is KEY for trading
+            # RMSE is secondary (0.2) - we care more about getting direction right than exact price
+            final_score = (acc * 0.8) + (rmse_score * 0.2)
+            
+            print(f"{model_name:<20} | {m['direction_accuracy']:<8.1f} | {m['rmse']:<8.4f} | {final_score:<8.4f}")
+            
+            if final_score > best_score:
+                best_score = final_score
+                winner = model_name
+                
+        print(f">> WINNER: {winner.upper()}\n")
+        return winner
 
 
 if __name__ == "__main__":

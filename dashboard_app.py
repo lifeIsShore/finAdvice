@@ -46,22 +46,32 @@ def get_tickers():
         
         # Check decisions
         if os.path.exists(DECISIONS_DIR):
-            for f in os.listdir(DECISIONS_DIR):
-                if f.endswith("_premium_decision.json"):
-                    tickers.add(f.replace("_premium_decision.json", ""))
+            try:
+                for f in os.listdir(DECISIONS_DIR):
+                    if f.endswith("_premium_decision.json"):
+                        tickers.add(f.replace("_premium_decision.json", ""))
+            except Exception as e:
+                print(f"Warning: Error reading DECISIONS_DIR: {e}")
         
         # Check raw data folders if they contain at least one CSV
         if os.path.exists(RAW_DATA_DIR):
-            for d in os.listdir(RAW_DATA_DIR):
-                if os.path.isdir(os.path.join(RAW_DATA_DIR, d)):
-                    tickers.add(d)
-        
+            try:
+                for d in os.listdir(RAW_DATA_DIR):
+                    path = os.path.join(RAW_DATA_DIR, d)
+                    if os.path.isdir(path):
+                        # Verify it has data
+                        if any(fname.endswith('.csv') for fname in os.listdir(path)):
+                            tickers.add(d)
+            except Exception as e:
+                print(f"Warning: Error reading RAW_DATA_DIR: {e}")
+
         res = sorted(list(tickers))
         print(f"API: Found {len(res)} tickers: {res}")
         return jsonify(res)
     except Exception as e:
         print(f"API Error in get_tickers: {e}")
-        return jsonify({"error": str(e)}), 500
+        # Return empty list instead of 500 to keep UI alive
+        return jsonify([])
 
 @app.route("/api/run_pipeline", methods=["POST"])
 def run_pipeline():
@@ -83,10 +93,15 @@ def run_ml():
     try:
         # Pass horizon and risk to script
         cmd = ["python", "algotrade_datascience/decision_making_ml.py", "--ticker", ticker, "--horizon", str(horizon), "--risk", risk]
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True, encoding='utf-8')
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True, encoding='utf-8', errors='replace')
         return jsonify({"status": "success", "output": result.stdout})
     except subprocess.CalledProcessError as e:
-        return jsonify({"status": "error", "output": (e.stdout or "") + (e.stderr or "")}), 500
+        error_msg = (e.stdout or "") + (e.stderr or "")
+        print(f"ML Script Error: {error_msg}", flush=True)
+        return jsonify({"status": "error", "output": error_msg}), 500
+    except Exception as e:
+        print(f"Unexpected Error in run_ml: {str(e)}", flush=True)
+        return jsonify({"status": "error", "output": str(e)}), 500
 
 @app.route("/api/history/<ticker>")
 def get_history(ticker):
@@ -181,6 +196,56 @@ def get_results(ticker):
         return jsonify(data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route("/api/model_metrics/<ticker>")
+def get_model_metrics(ticker):
+    try:
+        # We can either read the separate baseline JSON or the decision JSON which now includes it
+        # Let's read the decision JSON as it is the single source of truth for the UI
+        path = os.path.join(DECISIONS_DIR, f"{ticker}_premium_decision.json")
+        if not os.path.exists(path):
+             return jsonify({"error": "No model metrics found"}), 404
+             
+        with open(path, "r") as f:
+            data = json.load(f)
+            
+        competition = data.get("model_competition", {})
+        return jsonify(competition)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/model_diagnostics/<ticker>")
+def get_model_diagnostics(ticker):
+    """Serve detailed model diagnostics for analytics page"""
+    try:
+        # Load diagnostics from the 1d interval (primary interval)
+        diagnostics_path = os.path.join("data", "model_diagnostics", f"{ticker}_1d_diagnostics.json")
+        if not os.path.exists(diagnostics_path):
+            return jsonify({"error": "No diagnostics found. Run prediction first."}), 404
+        
+        with open(diagnostics_path, "r") as f:
+            diagnostics = json.load(f)
+        
+        return jsonify(diagnostics)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/analytics/<ticker>")
+def analytics_page(ticker):
+    """Serve the analytics page"""
+    return render_template("analytics.html", ticker=ticker)
+
+@app.route("/api/kill_server", methods=["POST"])
+def kill_server():
+    """Allows the UI to request a server restart (useful for dev)"""
+    def _shutdown():
+        import time
+        time.sleep(1)
+        os._exit(0)
+    
+    import threading
+    threading.Thread(target=_shutdown).start()
+    return jsonify({"status": "shutting_down"})
 
 if __name__ == "__main__":
     app.run(debug=False, port=5000, use_reloader=False)

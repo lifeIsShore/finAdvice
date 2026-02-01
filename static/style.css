@@ -244,6 +244,62 @@ body {
     color: var(--secondary);
 }
 
+/* Market Sentiment Indicator */
+.market-sentiment-indicator {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 15px 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+}
+
+.sentiment-icon {
+    font-size: 48px;
+    line-height: 1;
+}
+
+.sentiment-details {
+    flex: 1;
+}
+
+.sentiment-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+}
+
+.sentiment-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.sentiment-value.dramatically-up {
+    color: #10b981;
+}
+
+.sentiment-value.up {
+    color: #34d399;
+}
+
+.sentiment-value.sideways {
+    color: #fbbf24;
+}
+
+.sentiment-value.down {
+    color: #fb923c;
+}
+
+.sentiment-value.dramatically-down {
+    color: #ef4444;
+}
+
+
 .cards-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

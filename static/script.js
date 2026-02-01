@@ -193,6 +193,7 @@ async function updateDashboard(ticker) {
 
     document.getElementById('current-ticker').textContent = ticker;
     fetchSentiment(ticker);
+    fetchModelMetrics(ticker);
     await fetchHistoryAndDrawChart(ticker);
 
     try {
@@ -211,15 +212,25 @@ async function updateDashboard(ticker) {
             return;
         }
 
-        // UI Updates
-        document.getElementById('price-val').textContent = `$${data.current_price.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
-        document.getElementById('get-in-val').textContent = `$${data.recommended_get_in.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
-        document.getElementById('get-out-val').textContent = `$${data.recommended_get_out.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
-        document.getElementById('stop-loss-val').textContent = `$${data.recommended_stop_loss.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+        // UI Updates - FIX: Added $ prefix to all price values
+        document.getElementById('price-val').textContent = `${data.current_price.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+        document.getElementById('get-in-val').textContent = `${data.recommended_get_in.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+        document.getElementById('get-out-val').textContent = `${data.recommended_get_out.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+        document.getElementById('stop-loss-val').textContent = `${data.recommended_stop_loss.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
         document.getElementById('gain-val').textContent = `${data.potential_gain.toFixed(2)}%`;
+        
+        // DEBUG: Log the values to console for verification
+        console.log('Dashboard Values:', {
+            current_price: data.current_price,
+            recommended_get_in: data.recommended_get_in,
+            recommended_get_out: data.recommended_get_out,
+            recommended_stop_loss: data.recommended_stop_loss,
+            potential_gain: data.potential_gain
+        });
 
-        const badge = document.getElementById('asset-type');
-        badge.textContent = data.asset_type;
+        // FIX: Changed from 'asset-type' to 'ticker-badge'
+        const badge = document.getElementById('ticker-badge');
+        badge.textContent = data.asset_type || 'STOCK';
         badge.style.color = data.asset_type === 'Crypto' ? 'var(--secondary)' : 'var(--primary)';
 
         // Confidence
@@ -249,6 +260,40 @@ async function updateDashboard(ticker) {
 
         // Last Trained
         document.getElementById('last-trained').textContent = data.last_trained || '---';
+
+        // Update winner explicitly if not already handled by fetchModelMetrics (fallback)
+        if (data.model_competition && data.model_competition.winner) {
+            document.getElementById('winner-name').textContent = data.model_competition.winner.toUpperCase();
+        }
+
+        // Display Market Sentiment
+        if (data.market_sentiment && data.market_sentiment_label) {
+            const sentimentBox = document.getElementById('market-sentiment-box');
+            const sentimentIcon = document.getElementById('sentiment-icon');
+            const sentimentLabel = document.getElementById('sentiment-label');
+            const sentimentValue = document.getElementById('sentiment-value');
+
+            sentimentBox.style.display = 'flex';
+
+            // Map text icons back to emojis for UI
+            const iconMap = {
+                '[DRAMATICALLY_UP]': '📈',
+                '[UP]': '↗️',
+                '[SIDEWAYS]': '➡️',
+                '[DOWN]': '↘️',
+                '[DRAMATICALLY_DOWN]': '📉'
+            };
+            sentimentIcon.textContent = iconMap[data.market_sentiment_icon] || data.market_sentiment_icon || '➡️';
+            sentimentLabel.textContent = 'Market Outlook';
+            sentimentValue.textContent = data.market_sentiment_label;
+
+            // Remove all sentiment classes
+            sentimentValue.classList.remove('dramatically-up', 'up', 'sideways', 'down', 'dramatically-down');
+
+            // Add appropriate class based on sentiment
+            const sentimentClass = data.market_sentiment.toLowerCase().replace('_', '-');
+            sentimentValue.classList.add(sentimentClass);
+        }
 
         // Add predictions to chart if it exists
         if (priceChart) {
@@ -305,6 +350,7 @@ async function updateDashboard(ticker) {
 }
 
 function clearMetrics() {
+    document.getElementById('price-val').textContent = '$---.--';
     document.getElementById('get-in-val').textContent = '---';
     document.getElementById('get-out-val').textContent = '---';
     document.getElementById('stop-loss-val').textContent = '---';
@@ -471,4 +517,62 @@ function startWithSample() {
     } else {
         logConsole('👋 Welcome! Select a ticker from the dropdown to get started.');
     }
+}
+
+async function fetchModelMetrics(ticker) {
+    const tbody = document.getElementById('model-table-body');
+    const winnerEl = document.getElementById('winner-name');
+
+    if (!tbody) return;
+
+    tbody.innerHTML = '<tr><td colspan="3" class="loading-cell">Loading metrics...</td></tr>';
+
+    try {
+        const resp = await fetch(`/api/model_metrics/${ticker}`);
+        const data = await resp.json();
+
+        if (data.error || !data.metrics) {
+            tbody.innerHTML = '<tr><td colspan="3">No competition data found.</td></tr>';
+            winnerEl.textContent = '---';
+            return;
+        }
+
+        tbody.innerHTML = '';
+        winnerEl.textContent = (data.winner || '---').toUpperCase();
+
+        // Sort explicitly: Winner first, then by score
+        const entries = Object.entries(data.metrics).sort((a, b) => {
+            if (a[0] === data.winner) return -1;
+            if (b[0] === data.winner) return 1;
+            return b[1].direction_accuracy - a[1].direction_accuracy;
+        });
+
+        entries.forEach(([modelName, m]) => {
+            const row = document.createElement('tr');
+            if (modelName === data.winner) row.classList.add('winner-row');
+
+            const acc = m.direction_accuracy ? m.direction_accuracy.toFixed(1) + '%' : 'N/A';
+            const rmse = m.rmse ? m.rmse.toFixed(4) : 'N/A';
+
+            row.innerHTML = `
+                <td>${modelName.replace(/_/g, ' ').toUpperCase()}${modelName === data.winner ? ' [WINNER]' : ''}</td>
+                <td>${acc}</td>
+                <td>${rmse}</td>
+            `;
+            tbody.appendChild(row);
+        });
+
+    } catch (e) {
+        if (tbody) tbody.innerHTML = '<tr><td colspan="3">Error loading metrics</td></tr>';
+        console.error(e);
+    }
+}
+
+function downloadReport() {
+    window.print();
+}
+
+function openAnalytics() {
+    const ticker = document.getElementById('ticker-select').value || 'AAPL';
+    window.open(`/analytics/${ticker}`, '_blank');
 }

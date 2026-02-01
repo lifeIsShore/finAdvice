@@ -8,24 +8,21 @@ Welcome to the **FinAdvice** documentation! This index helps you find exactly wh
 
 ### 🚀 Getting Started (Start Here!)
 
-1. **[README.md](README.md)** - Project overview, features, and quick start
-2. **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - Quick navigation guide
-3. **[algotrade_datascience/START_HERE.md](algotrade_datascience/START_HERE.md)** - Hands-on getting started
+1. **[README.md](README.md)** - MVP Overview & Dashboard Quick Start
+2. **[algotrade_datascience/START_HERE.md](algotrade_datascience/START_HERE.md)** - Developer Quick Start Guide
+3. **[docs/CHANGELOG.md](docs/CHANGELOG.md)** - Release Notes (v2.0.0 released!)
 
 ### 📖 Complete Documentation
 
-4. **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** - System architecture and design (23KB)
-5. **[docs/API.md](docs/API.md)** - Complete API reference (12KB)
-6. **[docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)** - Contribution guidelines (13KB)
-7. **[docs/CHANGELOG.md](docs/CHANGELOG.md)** - Version history (8KB)
-8. **[docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)** - Directory structure (16KB)
+4. **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** - System architecture
+5. **[docs/API.md](docs/API.md)** - API reference
+6. **[docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)** - Contribution guidelines
+7. **[docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)** - Directory structure
 
 ### 📋 Project Information
 
-9. **[user-stories.json](user-stories.json)** - All 15 user stories (US-01 to US-15)
-10. **[LICENSE](LICENSE)** - MIT License
-11. **[TIDYING_SUMMARY.md](TIDYING_SUMMARY.md)** - What was tidied (10KB)
-12. **[CLEANUP_COMPLETE.md](CLEANUP_COMPLETE.md)** - Final cleanup summary (9KB)
+8. **[user-stories.json](user-stories.json)** - Feature specifications
+9. **[LICENSE](LICENSE)** - MIT License
 
 ---
 
@@ -33,60 +30,43 @@ Welcome to the **FinAdvice** documentation! This index helps you find exactly wh
 
 ### For New Users
 
-| Document | Purpose | Size |
-|----------|---------|------|
-| **README.md** | Project overview & quick start | 11KB |
-| **START_HERE.md** | Hands-on getting started guide | 8KB |
-| **QUICK_REFERENCE.md** | Quick navigation | 8KB |
+| Document | Purpose |
+|----------|---------|
+| **README.md** | Dashboard Quick Start |
+| **START_HERE.md** | Developer Guide |
+| **CHANGELOG.md** | What's New (v2.0.0) |
 
 ### For Developers
 
-| Document | Purpose | Size |
-|----------|---------|------|
-| **CONTRIBUTING.md** | How to contribute | 13KB |
-| **ARCHITECTURE.md** | System design | 23KB |
-| **API.md** | API reference | 12KB |
-| **PROJECT_STRUCTURE.md** | Directory guide | 16KB |
+| Document | Purpose |
+|----------|---------|
+| **CONTRIBUTING.md** | How to contribute |
+| **ARCHITECTURE.md** | System design |
+| **API.md** | API reference |
+| **PROJECT_STRUCTURE.md** | Directory guide |
 
 ### For Reference
 
-| Document | Purpose | Size |
-|----------|---------|------|
-| **user-stories.json** | Feature specifications | 21KB |
-| **CHANGELOG.md** | Version history | 8KB |
-| **LICENSE** | MIT License | 1KB |
-
-### Project Meta
-
-| Document | Purpose | Size |
-|----------|---------|------|
-| **TIDYING_SUMMARY.md** | Tidying overview | 10KB |
-| **CLEANUP_COMPLETE.md** | Final cleanup summary | 9KB |
+| Document | Purpose |
+|----------|---------|
+| **user-stories.json** | Feature specifications |
+| **LICENSE** | MIT License |
 
 ---
 
 ## 🎓 Learning Path
 
-### Beginner Path
+### User Path (Traders)
 
-1. Read **[README.md](README.md)** - Understand the project
-2. Read **[START_HERE.md](algotrade_datascience/START_HERE.md)** - Get hands-on
-3. Run the quick test: `python test_pipeline.py`
-4. Explore the data in `algotrade_datascience/data/raw/`
+1. Read **[README.md](README.md)** - Learn to run the dashboard
+2. Run `python dashboard_app.py`
+3. Check **[CHANGELOG.md](docs/CHANGELOG.md)** for new features
 
 ### Developer Path
 
-1. Read **[CONTRIBUTING.md](docs/CONTRIBUTING.md)** - Learn standards
-2. Read **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Understand design
-3. Read **[API.md](docs/API.md)** - Learn the API
-4. Read **[PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)** - Navigate code
-
-### Advanced Path
-
-1. Review **[user-stories.json](user-stories.json)** - All features
-2. Study **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Deep dive
-3. Plan Phase 2 implementation
-4. Contribute new features
+1. Read **[START_HERE.md](algotrade_datascience/START_HERE.md)** - Understand the pipeline
+2. Read **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - See how components fit
+3. Read **[CONTRIBUTING.md](docs/CONTRIBUTING.md)** - Guidelines
 
 ---
 
@@ -94,27 +74,19 @@ Welcome to the **FinAdvice** documentation! This index helps you find exactly wh
 
 ```
 finAdvice/
-├── README.md                    # Main project overview
-├── QUICK_REFERENCE.md           # Quick navigation
-├── TIDYING_SUMMARY.md           # Tidying overview
-├── CLEANUP_COMPLETE.md          # Final cleanup summary
+├── README.md                    # Main entry point
 ├── LICENSE                      # MIT License
-├── .gitignore                   # Git configuration
-├── user-stories.json            # Feature specifications
+├── user-stories.json            # Specs
 │
-├── docs/                        # Complete documentation
-│   ├── ARCHITECTURE.md          # System architecture
-│   ├── API.md                   # API reference
-│   ├── CONTRIBUTING.md          # Contribution guidelines
-│   ├── CHANGELOG.md             # Version history
-│   ├── PROJECT_STRUCTURE.md     # Directory guide
+├── docs/                        # Deep dive docs
+│   ├── ARCHITECTURE.md
+│   ├── API.md
+│   ├── CONTRIBUTING.md
+│   ├── CHANGELOG.md
 │   └── INDEX.md                 # This file
 │
 └── algotrade_datascience/
-    ├── README.md                # Application docs
-    ├── START_HERE.md            # Getting started
-    ├── IMPLEMENTATION_SUMMARY.md # Technical details
-    └── QUICKSTART.py            # Quick commands
+    └── START_HERE.md            # Dev quick start
 ```
 
 ---
@@ -123,47 +95,29 @@ finAdvice/
 
 ### I want to...
 
-#### ...understand what this project does
+#### ...run the dashboard
 → **[README.md](README.md)**
 
-#### ...get started quickly
-→ **[START_HERE.md](algotrade_datascience/START_HERE.md)**
-
-#### ...understand the system architecture
-→ **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**
-
-#### ...use the API
-→ **[docs/API.md](docs/API.md)**
+#### ...understand the ML pipeline
+→ **[algotrade_datascience/START_HERE.md](algotrade_datascience/START_HERE.md)**
 
 #### ...contribute code
 → **[docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)**
 
-#### ...see what changed
+#### ...see what's new in v2.0.0
 → **[docs/CHANGELOG.md](docs/CHANGELOG.md)**
-
-#### ...understand the file structure
-→ **[docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)**
-
-#### ...navigate all documentation
-→ **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)**
-
-#### ...see the feature roadmap
-→ **[user-stories.json](user-stories.json)**
-
-#### ...know what was tidied
-→ **[TIDYING_SUMMARY.md](TIDYING_SUMMARY.md)** or **[CLEANUP_COMPLETE.md](CLEANUP_COMPLETE.md)**
 
 ---
 
 ## 📊 Documentation Statistics
 
-| Category | Files | Total Size |
-|----------|-------|------------|
-| **Root Docs** | 4 | ~38KB |
-| **docs/ Directory** | 5 | ~72KB |
-| **App Docs** | 3 | ~20KB |
-| **Specifications** | 1 | 21KB |
-| **Total** | **13 files** | **~151KB** |
+| Category | Status |
+|----------|--------|
+| **Readme** | ✅ MVP Updated |
+| **Changelog** | ✅ v2.0.0 Added |
+| **Architecture** | ⚠️ Phase 1 (Valid) |
+| **API** | ⚠️ Phase 1 (Valid) |
+
 
 ---
 

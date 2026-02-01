@@ -129,8 +129,9 @@ def get_sentiment(ticker):
             if df.empty:
                 return jsonify([])
             
-            # Limit to 10 articles
+            # Take up to 10 articles (or all if fewer available)
             df = df.head(10)
+            print(f"DEBUG: Using {len(df)} articles after limiting to 10", flush=True)
             
             # Cache the fetched news for future use
             storage.save_news_data(ticker, df)

@@ -15,6 +15,14 @@
 
 <body>
     <div class="background-overlay"></div>
+
+    <!-- Legal Disclaimer -->
+    <div class="disclaimer-banner">
+        <i class="fas fa-exclamation-triangle"></i>
+        <strong>Disclaimer:</strong> This tool provides AI-generated predictions for educational purposes only.
+        Not financial advice. Trading involves risk. Always do your own research.
+    </div>
+
     <div class="grid-layout">
         <!-- Left Sidebar: Assets & Controls -->
         <aside class="sidebar glass">
@@ -116,9 +124,13 @@
         <!-- Right Column: Metrics & Sentiment -->
         <aside class="right-panel">
             <div class="panel glass">
-                <h3><i class="fas fa-chart-pie"></i> Consensus</h3>
+                <h3><i class="fas fa-chart-pie"></i> Consensus <i class="fas fa-question-circle help-icon"
+                        title="Agreement across different time periods (4H, 1D, 1W, 1M, 3M)"></i></h3>
                 <div class="consensus-meter">
                     <div id="confidence-pct">0%</div>
+                    <i class="fas fa-question-circle help-icon"
+                        title="How confident the AI is in this prediction based on data quality and model agreement"
+                        style="font-size: 0.75rem; margin-left: 8px;"></i>
                     <div class="meter-track">
                         <div id="confidence-fill" class="meter-fill"></div>
                     </div>
@@ -136,7 +148,8 @@
             <div class="panel glass metrics">
                 <h3><i class="fas fa-medal"></i> Model Performance</h3>
                 <div class="metric-row">
-                    <span>R² Score</span>
+                    <span>R² Score <i class="fas fa-question-circle help-icon"
+                            title="Measures prediction accuracy. 1.0 = perfect, 0.0 = random. Above 0.7 is good."></i></span>
                     <span id="r2-score">---</span>
                 </div>
                 <div class="metric-row">
@@ -149,6 +162,69 @@
                 </div>
             </div>
         </aside>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h3>Running AI Analysis...</h3>
+            <p id="loading-message">This may take 20-30 seconds</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Modal -->
+    <div id="welcome-modal" class="modal hidden">
+        <div class="modal-content glass">
+            <button class="modal-close" onclick="closeWelcome()">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="welcome-header">
+                <i class="fas fa-brain" style="font-size: 3rem; color: var(--primary);"></i>
+                <h2>Welcome to FinAdvice AI</h2>
+                <p>AI-powered trading predictions in 3 simple steps</p>
+            </div>
+
+            <div class="welcome-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h3>Choose Your Asset</h3>
+                        <p>Select from the dropdown or enter any ticker (e.g., AAPL, BTC-USD)</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h3>Sync Data</h3>
+                        <p>Click "Sync Data" to download the latest price history</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h3>Get Predictions</h3>
+                        <p>Click "Predict" to run AI analysis and get buy/sell targets</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-action primary" onclick="startWithSample()"
+                style="width: 100%; margin-bottom: 16px;">
+                Start with Sample (AAPL)
+            </button>
+
+            <label class="checkbox-label">
+                <input type="checkbox" id="dont-show-again">
+                Don't show this again
+            </label>
+        </div>
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>

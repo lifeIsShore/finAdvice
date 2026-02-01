@@ -240,6 +240,16 @@ async function updateDashboard(ticker) {
 
 
 
+
+        // Model Metrics
+        const perf = data.performance || { r2: 0, mae: 0, rmse: 0 };
+        document.getElementById('metric-r2').textContent = (perf.r2 || 0).toFixed(4);
+        document.getElementById('metric-mae').textContent = '$' + (perf.mae || 0).toFixed(2);
+        document.getElementById('metric-rmse').textContent = (perf.rmse || 0).toFixed(2);
+
+        // Last Trained
+        document.getElementById('last-trained').textContent = data.last_trained || '---';
+
         // Add predictions to chart if it exists
         if (priceChart) {
             priceChart.options.plugins.annotation = {

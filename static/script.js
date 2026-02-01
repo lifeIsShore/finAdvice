@@ -20,9 +20,10 @@ const USER_FRIENDLY_ERRORS = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Show welcome modal for first-time users
-    if (!localStorage.getItem('welcomed')) {
-        document.getElementById('welcome-modal').classList.remove('hidden');
+    // Show welcome modal for first-time users (if modal exists)
+    const welcomeModal = document.getElementById('welcome-modal');
+    if (welcomeModal && !localStorage.getItem('welcomed')) {
+        welcomeModal.classList.remove('hidden');
     }
 
     // Check for ticker in URL

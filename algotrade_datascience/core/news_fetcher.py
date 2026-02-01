@@ -28,19 +28,52 @@ class NewsFetcher:
         
         news_data = []
         for article in news:
-            publish_time_raw = article.get("providerPublishTime")
-            if publish_time_raw:
-                publish_time = datetime.fromtimestamp(publish_time_raw)
+            # Handle both old and new yfinance news structure
+            content = article.get("content", article) 
+            
+            # Extract title
+            title = content.get("title")
+            if not title: continue # Skip if no title
+            
+            # Extract link
+            link_obj = content.get("clickThroughUrl") or content.get("link")
+            if isinstance(link_obj, dict):
+                link = link_obj.get("url", "")
             else:
-                publish_time = datetime.now()
+                link = str(link_obj) if link_obj else ""
+            
+            # Extract publisher
+            provider = content.get("provider")
+            if isinstance(provider, dict):
+                publisher = provider.get("displayName") or provider.get("name")
+            else:
+                publisher = content.get("publisher")
+            
+            # Extract publish time
+            publish_time = datetime.now()
+            # Try new structure pubDate
+            pub_date_str = content.get("pubDate")
+            if pub_date_str:
+                try:
+                    publish_time = datetime.fromisoformat(pub_date_str.replace("Z", "+00:00"))
+                except:
+                    pass
+            else:
+                # Try old structure providerPublishTime
+                publish_time_raw = article.get("providerPublishTime")
+                if publish_time_raw:
+                    try:
+                        publish_time = datetime.fromtimestamp(publish_time_raw)
+                    except:
+                        pass
                 
             news_data.append({
                 "ticker": ticker_symbol,
-                "title": article.get("title"),
-                "publisher": article.get("publisher"),
-                "link": article.get("link"),
+                "title": title,
+                "publisher": publisher or "Unknown",
+                "link": link or "",
                 "publish_time": publish_time,
-                "type": article.get("type")
+                "type": article.get("type", "STORY")
             })
         
         df = pd.DataFrame(news_data)

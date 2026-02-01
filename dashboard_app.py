@@ -1,0 +1,185 @@
+import os
+import sys
+import subprocess
+import json
+import pandas as pd
+from flask import Flask, render_template, jsonify, request
+
+# Base directory
+BASE_DIR = os.getcwd()
+# Add algotrade_datascience to path so internal imports work
+sys.path.append(os.path.join(BASE_DIR, "algotrade_datascience"))
+
+from algotrade_datascience.core.data_storage import DataStorage
+from algotrade_datascience.core.news_fetcher import NewsFetcher
+from algotrade_datascience.features.sentiment_analysis import SentimentProcessor
+
+app = Flask(__name__)
+
+# Paths
+RAW_DATA_DIR = os.path.join(BASE_DIR, "data", "raw")
+DECISIONS_DIR = os.path.join(BASE_DIR, "data", "decisions")
+
+# Initialize storage for fetching metadata/tickers
+storage = DataStorage()
+news_fetcher = NewsFetcher()
+sentiment_processor = None # Lazy load
+
+def get_sentiment_processor():
+    global sentiment_processor
+    if sentiment_processor is None:
+        sentiment_processor = SentimentProcessor()
+    return sentiment_processor
+
+print(f"SERVER: Starting in {BASE_DIR}")
+print(f"SERVER: Decisions directory: {DECISIONS_DIR}")
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/api/tickers")
+def get_tickers():
+    try:
+        # Show tickers that have either raw data or decision files
+        tickers = set()
+        
+        # Check decisions
+        if os.path.exists(DECISIONS_DIR):
+            for f in os.listdir(DECISIONS_DIR):
+                if f.endswith("_premium_decision.json"):
+                    tickers.add(f.replace("_premium_decision.json", ""))
+        
+        # Check raw data folders if they contain at least one CSV
+        if os.path.exists(RAW_DATA_DIR):
+            for d in os.listdir(RAW_DATA_DIR):
+                if os.path.isdir(os.path.join(RAW_DATA_DIR, d)):
+                    tickers.add(d)
+        
+        res = sorted(list(tickers))
+        print(f"API: Found {len(res)} tickers: {res}")
+        return jsonify(res)
+    except Exception as e:
+        print(f"API Error in get_tickers: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/run_pipeline", methods=["POST"])
+def run_pipeline():
+    data = request.json
+    ticker = data.get("ticker", "AAPL")
+    try:
+        cmd = ["python", "algotrade_datascience/main_data_pipeline.py", "--mode", "manual", "--tickers", ticker]
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True, encoding='utf-8')
+        return jsonify({"status": "success", "output": result.stdout})
+    except subprocess.CalledProcessError as e:
+        return jsonify({"status": "error", "output": (e.stdout or "") + (e.stderr or "")}), 500
+
+@app.route("/api/run_ml", methods=["POST"])
+def run_ml():
+    data = request.json
+    ticker = data.get("ticker", "AAPL")
+    horizon = data.get("horizon", 60)
+    risk = data.get("risk", "conservative")
+    try:
+        # Pass horizon and risk to script
+        cmd = ["python", "algotrade_datascience/decision_making_ml.py", "--ticker", ticker, "--horizon", str(horizon), "--risk", risk]
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True, encoding='utf-8')
+        return jsonify({"status": "success", "output": result.stdout})
+    except subprocess.CalledProcessError as e:
+        return jsonify({"status": "error", "output": (e.stdout or "") + (e.stderr or "")}), 500
+
+@app.route("/api/history/<ticker>")
+def get_history(ticker):
+    try:
+        # Load 1d data for chart
+        df = storage.load_ticker_data(ticker, "1d")
+        if df is None or df.empty:
+            return jsonify({"error": "No data found"}), 404
+        
+        # Return last 100 points for chart
+        df = df.tail(100)
+        # Convert to records
+        if 'Date' in df.columns:
+            df['Date'] = df['Date'].astype(str)
+        else:
+            df = df.reset_index()
+            df['Date'] = df['Date'].astype(str)
+            
+        return jsonify(df.to_dict(orient="records"))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/test")
+def test_endpoint():
+    return jsonify({"message": "Server is running UPDATED code - v2", "timestamp": "2026-02-01 02:39"})
+
+@app.route("/api/sentiment/<ticker>")
+def get_sentiment(ticker):
+    try:
+        # Try to load cached news first (24 hour cache)
+        df = storage.load_news_data(ticker, max_age_hours=24)
+        cache_used = False
+        
+        if df is None or df.empty:
+            # Fallback to real-time fetch
+            print(f"DEBUG: No cached news for {ticker}, fetching real-time...", flush=True)
+            df = news_fetcher.fetch_ticker_news(ticker)
+            print(f"DEBUG: NewsFetcher returned {len(df)} items", flush=True)
+            
+            if df.empty:
+                return jsonify([])
+            
+            # Limit to 10 articles
+            df = df.head(10)
+            
+            # Cache the fetched news for future use
+            storage.save_news_data(ticker, df)
+        else:
+            cache_used = True
+            print(f"DEBUG: Using cached news for {ticker} ({len(df)} items)", flush=True)
+        
+        print(f"DEBUG: Processing {len(df)} items for sentiment...", flush=True)
+        processor = get_sentiment_processor()
+        
+        # Check if sentiment already exists in cached data
+        if 'sentiment' not in df.columns:
+            df_with_sentiment = processor.process_news_dataframe(df)
+        else:
+            df_with_sentiment = df
+        
+        print(f"DEBUG: After sentiment: {len(df_with_sentiment)} items", flush=True)
+        
+        results = []
+        for _, row in df_with_sentiment.iterrows():
+            results.append({
+                "title": str(row['title']),
+                "publisher": str(row['publisher']),
+                "link": str(row['link']),
+                "publish_time": row['publish_time'].strftime("%Y-%m-%d %H:%M"),
+                "sentiment": str(row['sentiment']),
+                "sentiment_score": float(row['sentiment_score']),
+                "cached": cache_used
+            })
+        print(f"DEBUG: Returning {len(results)} items (cached: {cache_used})", flush=True)
+        return jsonify(results)
+    except Exception as e:
+        import traceback
+        print(f"Sentiment API Error: {e}", flush=True)
+        print(traceback.format_exc(), flush=True)
+        return jsonify([])
+
+@app.route("/api/results/<ticker>")
+def get_results(ticker):
+    try:
+        path = os.path.join(DECISIONS_DIR, f"{ticker}_premium_decision.json")
+        if not os.path.exists(path):
+            return jsonify({"error": "No results found"}), 404
+            
+        with open(path, "r") as f:
+            data = json.load(f)
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == "__main__":
+    app.run(debug=False, port=5000, use_reloader=False)

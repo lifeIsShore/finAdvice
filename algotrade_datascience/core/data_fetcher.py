@@ -127,7 +127,7 @@ class DataFetcher:
                 # Select only required columns in correct order
                 df = df[['Date'] + REQUIRED_COLUMNS]
                 
-                logger.info(f"✓ Successfully fetched {len(df)} rows for {ticker} at {interval_key}")
+                logger.info(f"[OK] Successfully fetched {len(df)} rows for {ticker} at {interval_key}")
                 return df
                 
             except Exception as e:

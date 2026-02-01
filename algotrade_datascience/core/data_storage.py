@@ -29,11 +29,13 @@ class DataStorage:
     def __init__(self, base_dir: str = '.'):
         self.base_dir = base_dir
         self.raw_data_path = os.path.join(base_dir, RAW_DATA_DIR)
+        self.news_data_path = os.path.join(base_dir, 'data', 'news')
         self.metadata_path = os.path.join(base_dir, METADATA_FILE)
         self.metadata = self._load_metadata()
         
         # Ensure directories exist
         Path(self.raw_data_path).mkdir(parents=True, exist_ok=True)
+        Path(self.news_data_path).mkdir(parents=True, exist_ok=True)
     
     def _load_metadata(self) -> dict:
         """Load existing metadata or create new"""
@@ -91,7 +93,7 @@ class DataStorage:
         try:
             # Save to CSV
             df.to_csv(filepath, index=False)
-            logger.info(f"✓ Saved {ticker} {interval} to {filepath} ({len(df)} rows)")
+            logger.info(f"[OK] Saved {ticker} {interval} to {filepath} ({len(df)} rows)")
             
             # Update metadata
             self._update_metadata(ticker, interval, filepath, len(df))
@@ -287,6 +289,92 @@ class DataStorage:
             'metadata_path': self.metadata_path,
             'raw_data_path': self.raw_data_path
         }
+    
+    def save_news_data(self, ticker: str, news_df: pd.DataFrame) -> str:
+        """
+        Save news data as JSON file
+        
+        Args:
+            ticker: Stock symbol
+            news_df: DataFrame with news data
+            
+        Returns:
+            Path to saved file or None if failed
+        """
+        if news_df.empty:
+            logger.warning(f"No news data to save for {ticker}")
+            return None
+        
+        try:
+            filename = f"{ticker}_news.json"
+            filepath = os.path.join(self.news_data_path, filename)
+            
+            # Convert DataFrame to dict with metadata
+            news_data = {
+                'ticker': ticker,
+                'fetch_timestamp': datetime.now().isoformat(),
+                'article_count': len(news_df),
+                'articles': news_df.to_dict(orient='records')
+            }
+            
+            # Convert datetime objects to strings
+            for article in news_data['articles']:
+                if 'publish_time' in article and isinstance(article['publish_time'], pd.Timestamp):
+                    article['publish_time'] = article['publish_time'].isoformat()
+            
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(news_data, f, indent=2, ensure_ascii=False)
+            
+            logger.info(f"[OK] Saved {len(news_df)} news articles for {ticker} to {filepath}")
+            return filepath
+            
+        except Exception as e:
+            logger.error(f"Failed to save news for {ticker}: {e}")
+            return None
+    
+    def load_news_data(self, ticker: str, max_age_hours: int = 24) -> pd.DataFrame:
+        """
+        Load cached news data from JSON file
+        
+        Args:
+            ticker: Stock symbol
+            max_age_hours: Maximum age of cache in hours (default: 24)
+            
+        Returns:
+            DataFrame with news data or None if not found/stale
+        """
+        filename = f"{ticker}_news.json"
+        filepath = os.path.join(self.news_data_path, filename)
+        
+        if not os.path.exists(filepath):
+            logger.info(f"No cached news found for {ticker}")
+            return None
+        
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                news_data = json.load(f)
+            
+            # Check cache age
+            fetch_time = datetime.fromisoformat(news_data['fetch_timestamp'])
+            age_hours = (datetime.now() - fetch_time).total_seconds() / 3600
+            
+            if age_hours > max_age_hours:
+                logger.info(f"Cached news for {ticker} is {age_hours:.1f} hours old (max: {max_age_hours}h)")
+                return None
+            
+            # Convert back to DataFrame
+            df = pd.DataFrame(news_data['articles'])
+            
+            # Convert publish_time back to datetime
+            if 'publish_time' in df.columns:
+                df['publish_time'] = pd.to_datetime(df['publish_time'])
+            
+            logger.info(f"Loaded {len(df)} cached news articles for {ticker} (age: {age_hours:.1f}h)")
+            return df
+            
+        except Exception as e:
+            logger.error(f"Failed to load cached news for {ticker}: {e}")
+            return None
 
 
 if __name__ == "__main__":

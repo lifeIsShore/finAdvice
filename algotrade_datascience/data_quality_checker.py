@@ -179,10 +179,10 @@ class DataQualityChecker:
             
             if report['passed']:
                 self.quality_report['passed'] += 1
-                print(f"  ✓ PASSED")
+                print(f"  [OK] PASSED")
             else:
                 self.quality_report['failed'] += 1
-                print(f"  ✗ FAILED")
+                print(f"  [FAIL] FAILED")
                 for issue in report['issues']:
                     print(f"    - {issue}")
         
@@ -199,9 +199,9 @@ class DataQualityChecker:
         print(f"Failed: {self.quality_report['failed']}")
         
         if self.quality_report['failed'] == 0:
-            print("\n✅ ALL QUALITY CHECKS PASSED!")
+            print("\nALL QUALITY CHECKS PASSED!")
         else:
-            print(f"\n⚠️ {self.quality_report['failed']} files failed quality checks")
+            print(f"\nWARNING: {self.quality_report['failed']} files failed quality checks")
         
         print("="*80 + "\n")
         
@@ -215,7 +215,7 @@ class DataQualityChecker:
             with open(filepath, 'w') as f:
                 json.dump(self.quality_report, f, indent=2, default=str)
             
-            print(f"✓ Quality report saved to {filepath}")
+            print(f"[OK] Quality report saved to {filepath}")
         except Exception as e:
             logger.error(f"Failed to save quality report: {e}")
 

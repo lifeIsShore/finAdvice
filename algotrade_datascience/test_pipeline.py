@@ -46,19 +46,19 @@ try:
     print("="*80)
     
     if quality_report['failed'] == 0:
-        print("\n✅ SUCCESS! All datasets passed quality checks.")
+        print("\nSUCCESS! All datasets passed quality checks.")
         print("\nYou can now:")
         print("1. Check data/raw/ folder for CSV files")
         print("2. Review data/metadata.json for details")
         print("3. Read data/quality_report.json for metrics")
     else:
-        print(f"\n⚠️ WARNING: {quality_report['failed']} files failed quality checks")
+        print(f"\nWARNING: {quality_report['failed']} files failed quality checks")
         print("Review data/quality_report.json for details")
     
     print("\n" + "="*80 + "\n")
     
 except Exception as e:
-    print(f"\n❌ TEST FAILED: {e}")
+    print(f"\nERROR: TEST FAILED: {e}")
     import traceback
     traceback.print_exc()
     sys.exit(1)

@@ -617,4 +617,4 @@ def generate_one_ticker_card(ticker):
 
 if __name__ == "__main__":
     path = generate_interactive_report()
-    print(f"✅ Success: Interactive report updated with forecast signals at: {path}")
+    print(f"SUCCESS: Success: Interactive report updated with forecast signals at: {path}")

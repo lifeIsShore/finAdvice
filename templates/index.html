@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinAdvice AI | Command Center</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+    <div class="grid-layout">
+        <!-- Left Sidebar: Assets & Controls -->
+        <aside class="sidebar glass">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <span>FinAdvice AI</span>
+            </div>
+
+            <div class="section">
+                <div class="label">Asset Selection</div>
+                <div class="ticker-box">
+                    <select id="ticker-select" class="glass-select"></select>
+                    <div class="divider">OR</div>
+                    <input type="text" id="custom-ticker" placeholder="e.g. SOL-EUR" class="glass-input">
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="label">ML Controls</div>
+                <div class="controls-grid">
+                    <button id="run-pipeline" class="btn btn-action" title="Refresh Data">
+                        <i class="fas fa-sync"></i> <span>Sync Data</span>
+                    </button>
+                    <button id="run-ml" class="btn btn-action primary" title="Run Predictions">
+                        <i class="fas fa-bolt"></i> <span>Predict</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="label">ML Parameters</div>
+                <div class="param-row">
+                    <span>Horizon</span>
+                    <input type="number" id="param-horizon" value="60" min="1" max="180">
+                </div>
+                <div class="param-row">
+                    <span>Risk Mode</span>
+                    <select id="param-risk">
+                        <option value="conservative">Conservative</option>
+                        <option value="aggressive">Aggressive</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="status-footer">
+                <div class="pulse online"></div>
+                <span>AI Engine Online</span>
+            </div>
+        </aside>
+
+        <!-- Center Column: Analysis & Chart -->
+        <main class="main-body">
+            <header class="main-header">
+                <div class="ticker-info">
+                    <h1 id="current-ticker">---</h1>
+                    <div id="asset-type" class="badge">---</div>
+                </div>
+                <div class="price-hero">
+                    <span class="label">Current Price</span>
+                    <span id="price-val" class="value">---</span>
+                </div>
+            </header>
+
+            <!-- Quick Cards -->
+            <div class="cards-row">
+                <div class="card glass in">
+                    <span class="label">Buy Target</span>
+                    <span id="get-in-val" class="val">---</span>
+                </div>
+                <div class="card glass out">
+                    <span class="label">Sell Target</span>
+                    <span id="get-out-val" class="val">---</span>
+                </div>
+                <div class="card glass risk">
+                    <span class="label">Stop Loss</span>
+                    <span id="stop-loss-val" class="val">---</span>
+                </div>
+                <div class="card glass gain">
+                    <span class="label">Potential</span>
+                    <span id="gain-val" class="val">---</span>
+                </div>
+            </div>
+
+            <!-- Main Chart area -->
+            <div class="chart-container glass">
+                <canvas id="priceChart"></canvas>
+            </div>
+
+            <!-- Console Output -->
+            <div class="console glass">
+                <div class="console-head">
+                    <span><i class="fas fa-terminal"></i> Command Output</span>
+                    <button onclick="clearConsole()"><i class="fas fa-eraser"></i></button>
+                </div>
+                <div id="console-output" class="console-body">Initializing workspace...</div>
+            </div>
+        </main>
+
+        <!-- Right Column: Metrics & Sentiment -->
+        <aside class="right-panel">
+            <div class="panel glass">
+                <h3><i class="fas fa-chart-pie"></i> Consensus</h3>
+                <div class="consensus-meter">
+                    <div id="confidence-pct">0%</div>
+                    <div class="meter-track">
+                        <div id="confidence-fill" class="meter-fill"></div>
+                    </div>
+                </div>
+                <div id="consensus-details" class="details-list"></div>
+            </div>
+
+            <div class="panel glass sentiment">
+                <h3><i class="fas fa-newspaper"></i> Sentiment Pulse</h3>
+                <div id="sentiment-feed" class="feed">
+                    <div class="loading">Fetching news...</div>
+                </div>
+            </div>
+
+            <div class="panel glass metrics">
+                <h3><i class="fas fa-medal"></i> Model Performance</h3>
+                <div class="metric-row">
+                    <span>R² Score</span>
+                    <span id="r2-score">---</span>
+                </div>
+                <div class="metric-row">
+                    <span>Baseline Comp</span>
+                    <span id="model-status" class="status">---</span>
+                </div>
+                <div class="metric-row">
+                    <span>Last Trained</span>
+                    <span id="last-trained" style="font-size: 0.8rem; color: var(--text-dim);">---</span>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

@@ -76,14 +76,14 @@ class TickerSelector:
                 # Check if we got valid data
                 if info and ('symbol' in info or 'shortName' in info or 'longName' in info):
                     self.validated_tickers.append(ticker)
-                    logger.info(f"✓ Valid ticker: {ticker}")
+                    logger.info(f"[OK] Valid ticker: {ticker}")
                 else:
                     self.invalid_tickers.append(ticker)
-                    logger.warning(f"✗ Invalid ticker: {ticker} (no data returned)")
+                    logger.warning(f"[FAIL] Invalid ticker: {ticker} (no data returned)")
                     
             except Exception as e:
                 self.invalid_tickers.append(ticker)
-                logger.warning(f"✗ Invalid ticker: {ticker} (error: {str(e)})")
+                logger.warning(f"[FAIL] Invalid ticker: {ticker} (error: {str(e)})")
         
         # Report validation results
         total = len(self.tickers)

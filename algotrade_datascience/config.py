@@ -76,15 +76,15 @@ TIMEFRAME_CONFIG = {
     },
     '30m': {
         'interval': '30m',
-        'period': '2mo',   # 2 months of 30-minute data
-        'lookback_days': 60,  # ~2 months for intraday patterns
-        'description': '30-minute interval for last 2 months'
+        'period': '1mo',   # Stay within Yahoo Finance 60-day limit for intraday
+        'lookback_days': 30,
+        'description': '30-minute interval for last 30 days'
     },
     '15m': {
         'interval': '15m',
-        'period': '2mo',   # 2 months of 15-minute data
-        'lookback_days': 60,  # ~2 months for intraday patterns
-        'description': '15-minute interval for last 2 months'
+        'period': '1mo',   # Stay within Yahoo Finance 60-day limit for intraday
+        'lookback_days': 30,
+        'description': '15-minute interval for last 30 days'
     },
     '5m': {
         'interval': '5m',

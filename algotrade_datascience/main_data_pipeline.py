@@ -28,7 +28,7 @@ def setup_logging():
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         handlers=[
-            logging.FileHandler('data_pipeline.log'),
+            logging.FileHandler('data_pipeline.log', encoding='utf-8'),
             logging.StreamHandler(sys.stdout)
         ]
     )
@@ -81,14 +81,14 @@ def run_pipeline(mode: str = 'auto', tickers: list = None, count: int = 10):
     print(f"Success rate: {validation_report['success_rate']:.1%}")
     
     if validation_report['invalid_list']:
-        print(f"❌ Invalid: {validation_report['invalid_list']}")
+        print(f"ERROR: Invalid: {validation_report['invalid_list']}")
     
-    print(f"✓ Proceeding with: {validation_report['validated_list']}")
+    print(f"OK: Proceeding with: {validation_report['validated_list']}")
     
     validated_tickers = selector.get_validated_tickers()
     
     if not validated_tickers:
-        print("\n❌ ERROR: No valid tickers to process")
+        print("\nERROR: No valid tickers to process")
         return
     
     # ========================================================================
@@ -112,7 +112,7 @@ def run_pipeline(mode: str = 'auto', tickers: list = None, count: int = 10):
     print(f"Success rate: {fetch_summary['success_rate']:.1%}")
     
     if fetch_summary['errors']:
-        print(f"\n⚠️ Errors encountered: {len(fetch_summary['errors'])}")
+        print(f"\n- Errors encountered: {len(fetch_summary['errors'])}")
         for error in fetch_summary['errors'][:5]:  # Show first 5 errors
             print(f"  - {error['ticker']} {error['interval']}: {error['error']}")
     
@@ -132,6 +132,47 @@ def run_pipeline(mode: str = 'auto', tickers: list = None, count: int = 10):
     print(f"Success rate: {save_summary['success_rate']:.1%}")
     
     # ========================================================================
+    # STEP 4: News Fetching & Caching
+    # ========================================================================
+    print("\n" + "="*80)
+    print("STEP 4: NEWS FETCHING & CACHING")
+    print("="*80)
+    print(f"Fetching news for {len(validated_tickers)} tickers...")
+    
+    news_fetcher_obj = fetcher  # Reuse the DataFetcher's news_fetcher if available
+    from core.news_fetcher import NewsFetcher
+    news_fetcher_instance = NewsFetcher()
+    
+    news_saved = 0
+    news_failed = 0
+    
+    for ticker in validated_tickers:
+        try:
+            print(f"  Fetching news for {ticker}...", end=" ")
+            news_df = news_fetcher_instance.fetch_ticker_news(ticker)
+            
+            if not news_df.empty:
+                # Save top 10 news articles
+                news_df_limited = news_df.head(10)
+                filepath = storage.save_news_data(ticker, news_df_limited)
+                if filepath:
+                    news_saved += 1
+                    print(f"✓ ({len(news_df_limited)} articles)")
+                else:
+                    news_failed += 1
+                    print("✗ (save failed)")
+            else:
+                print("⚠ (no news available)")
+                news_failed += 1
+        except Exception as e:
+            print(f"✗ (error: {e})")
+            news_failed += 1
+    
+    print("\n--- News Fetch Summary ---")
+    print(f"Successfully cached: {news_saved}/{len(validated_tickers)}")
+    print(f"Failed/No news: {news_failed}/{len(validated_tickers)}")
+    
+    # ========================================================================
     # FINAL SUMMARY
     # ========================================================================
     print("\n" + "="*80)
@@ -139,14 +180,14 @@ def run_pipeline(mode: str = 'auto', tickers: list = None, count: int = 10):
     print("="*80)
     
     storage_summary = storage.get_storage_summary()
-    print(f"\n📊 Dataset Summary:")
+    print(f"\nSUMMARY: Dataset Summary:")
     print(f"  - Tickers stored: {storage_summary['total_tickers']}")
     print(f"  - Total files: {storage_summary['total_files']}")
     print(f"  - Total data rows: {storage_summary['total_rows']:,}")
     print(f"  - Storage location: {storage_summary['raw_data_path']}")
     print(f"  - Metadata file: {storage_summary['metadata_path']}")
     
-    print(f"\n✅ Phase 1 Complete!")
+    print(f"\nCOMPLETE: Phase 1 Complete!")
     print(f"End Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("="*80 + "\n")
     

@@ -21,7 +21,7 @@ if __name__ == "__main__":
         results = baseline.run_all_intervals()
     
     print(f"\n{'='*80}")
-    print("✅ ALL TICKERS COMPLETE!")
+    print("SUCCESS: ALL TICKERS COMPLETE!")
     print(f"{'='*80}")
     print("\nResults saved:")
     for ticker in tickers:

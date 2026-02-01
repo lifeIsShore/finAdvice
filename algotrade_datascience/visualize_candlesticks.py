@@ -76,7 +76,7 @@ class CandlestickVisualizer:
         # Load data
         df = self.storage.load_ticker_data(self.ticker, interval)
         if df is None or len(df) < num_candles:
-            print(f"    ⚠️ Insufficient data for {interval}")
+            print(f"    WARNING: Insufficient data for {interval}")
             return None
         
         # Get last N candles
@@ -88,7 +88,7 @@ class CandlestickVisualizer:
         df_features = df_features.dropna()
         
         if len(df_features) < 30:
-            print(f"    ⚠️ Insufficient feature data for {interval}")
+            print(f"    WARNING: Insufficient feature data for {interval}")
             return None
         
         # Train model
@@ -184,7 +184,7 @@ class CandlestickVisualizer:
         plt.savefig(output_file, dpi=300, bbox_inches='tight')
         plt.close()
         
-        print(f"    ✓ Saved to {output_file}")
+        print(f"    [OK] Saved to {output_file}")
         return output_file
     
     def create_all_candlestick_charts(self, intervals: list = None):
@@ -202,7 +202,7 @@ class CandlestickVisualizer:
             if file:
                 created_files.append(file)
         
-        print(f"\n✅ Created {len(created_files)} candlestick charts for {self.ticker}")
+        print(f"\nSUCCESS: Created {len(created_files)} candlestick charts for {self.ticker}")
         return created_files
 
 
@@ -224,7 +224,7 @@ def create_multi_ticker_report(tickers: list = ['AAPL', 'BTC-USD']):
         all_files[ticker] = files
     
     print(f"\n{'='*80}")
-    print("✅ ALL CANDLESTICK CHARTS CREATED!")
+    print("SUCCESS: ALL CANDLESTICK CHARTS CREATED!")
     print(f"{'='*80}")
     
     for ticker, files in all_files.items():

@@ -193,7 +193,7 @@ async function updateDashboard(ticker) {
 
     document.getElementById('current-ticker').textContent = ticker;
     fetchSentiment(ticker);
-    fetchHistoryAndDrawChart(ticker);
+    await fetchHistoryAndDrawChart(ticker);
 
     try {
         const response = await fetch(`/api/results/${ticker}`);

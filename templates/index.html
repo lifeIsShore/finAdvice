@@ -41,25 +41,36 @@
             </div>
 
             <div class="section">
-                <div class="label">ML Controls <i class="fas fa-question-circle help-icon" title="Actions to manage data and generate predictions" style="margin-left: 4px;"></i></div>
+                <div class="label">ML Controls <i class="fas fa-question-circle help-icon"
+                        title="Actions to manage data and generate predictions" style="margin-left: 4px;"></i></div>
                 <div class="controls-grid">
                     <button id="run-pipeline" class="btn btn-action" title="Refresh Data">
-                        <i class="fas fa-sync"></i> <span>Sync Data <i class="fas fa-question-circle help-icon" title="Fetches the latest market data for the selected asset" style="margin-left: 4px;"></i></span>
+                        <i class="fas fa-sync"></i> <span>Sync Data <i class="fas fa-question-circle help-icon"
+                                title="Fetches the latest market data for the selected asset"
+                                style="margin-left: 4px;"></i></span>
                     </button>
                     <button id="run-ml" class="btn btn-action primary" title="Run Predictions">
-                        <i class="fas fa-bolt"></i> <span>Predict <i class="fas fa-question-circle help-icon" title="Runs the machine learning models to generate new Buy/Sell signals" style="margin-left: 4px;"></i></span>
+                        <i class="fas fa-bolt"></i> <span>Predict <i class="fas fa-question-circle help-icon"
+                                title="Runs the machine learning models to generate new Buy/Sell signals"
+                                style="margin-left: 4px;"></i></span>
                     </button>
                 </div>
             </div>
 
             <div class="section">
-                <div class="label">ML Parameters <i class="fas fa-question-circle help-icon" title="Settings that influence the prediction model behavior" style="margin-left: 4px;"></i></div>
+                <div class="label">ML Parameters <i class="fas fa-question-circle help-icon"
+                        title="Settings that influence the prediction model behavior" style="margin-left: 4px;"></i>
+                </div>
                 <div class="param-row">
-                    <span>Horizon <i class="fas fa-question-circle help-icon" title="Prediction timeframe in days (e.g., predict price 60 days from now)" style="margin-left: 4px;"></i></span>
+                    <span>Horizon <i class="fas fa-question-circle help-icon"
+                            title="Prediction timeframe in days (e.g., predict price 60 days from now)"
+                            style="margin-left: 4px;"></i></span>
                     <input type="number" id="param-horizon" value="60" min="1" max="180">
                 </div>
                 <div class="param-row">
-                    <span>Risk Mode <i class="fas fa-question-circle help-icon" title="Adjusts the model's sensitivity to risk (Conservative vs Aggressive)" style="margin-left: 4px;"></i></span>
+                    <span>Risk Mode <i class="fas fa-question-circle help-icon"
+                            title="Adjusts the model's sensitivity to risk (Conservative vs Aggressive)"
+                            style="margin-left: 4px;"></i></span>
                     <select id="param-risk">
                         <option value="conservative">Conservative</option>
                         <option value="aggressive">Aggressive</option>
@@ -89,19 +100,24 @@
             <!-- Quick Cards -->
             <div class="cards-row">
                 <div class="card glass in">
-                    <span class="label">Buy Target <i class="fas fa-question-circle help-icon" title="Suggested price level to enter a long position" style="margin-left: 4px;"></i></span>
+                    <span class="label">Buy Target <i class="fas fa-question-circle help-icon"
+                            title="Suggested price level to enter a long position" style="margin-left: 4px;"></i></span>
                     <span id="get-in-val" class="val">---</span>
                 </div>
                 <div class="card glass out">
-                    <span class="label">Sell Target <i class="fas fa-question-circle help-icon" title="Suggested price level to exit the position for profit" style="margin-left: 4px;"></i></span>
+                    <span class="label">Sell Target <i class="fas fa-question-circle help-icon"
+                            title="Suggested price level to exit the position for profit"
+                            style="margin-left: 4px;"></i></span>
                     <span id="get-out-val" class="val">---</span>
                 </div>
                 <div class="card glass risk">
-                    <span class="label">Stop Loss <i class="fas fa-question-circle help-icon" title="Suggested price level to exit to limit losses" style="margin-left: 4px;"></i></span>
+                    <span class="label">Stop Loss <i class="fas fa-question-circle help-icon"
+                            title="Suggested price level to exit to limit losses" style="margin-left: 4px;"></i></span>
                     <span id="stop-loss-val" class="val">---</span>
                 </div>
                 <div class="card glass gain">
-                    <span class="label">Potential <i class="fas fa-question-circle help-icon" title="Projected percentage gain to the Sell Target" style="margin-left: 4px;"></i></span>
+                    <span class="label">Potential <i class="fas fa-question-circle help-icon"
+                            title="Projected percentage gain to the Sell Target" style="margin-left: 4px;"></i></span>
                     <span id="gain-val" class="val">---</span>
                 </div>
             </div>
@@ -146,19 +162,24 @@
             </div>
 
             <div class="panel glass metrics">
-                <h3><i class="fas fa-medal"></i> Model Performance <i class="fas fa-question-circle help-icon" title="Metrics showing how well the AI model is performing" style="margin-left: 8px;"></i></h3>
+                <h3><i class="fas fa-medal"></i> Model Performance <i class="fas fa-question-circle help-icon"
+                        title="Metrics showing how well the AI model is performing" style="margin-left: 8px;"></i></h3>
                 <div class="metric-row">
                     <span>R² Score <i class="fas fa-question-circle help-icon"
                             title="Measures prediction accuracy. 1.0 = perfect, 0.0 = random. Above 0.7 is good."></i></span>
                     <span id="r2-score">---</span>
                 </div>
                 <div class="metric-row">
-                    <span>Baseline Comp <i class="fas fa-question-circle help-icon" title="Comparison against a simple Buy & Hold strategy" style="margin-left: 4px;"></i></span>
+                    <span>Baseline Comp <i class="fas fa-question-circle help-icon"
+                            title="Comparison against a simple Buy & Hold strategy"
+                            style="margin-left: 4px;"></i></span>
                     <span id="model-status" class="status">---</span>
                 </div>
                 <div class="metric-row">
-                    <span>Last Trained <i class="fas fa-question-circle help-icon" title="The date and time when the model was last retrained" style="margin-left: 4px;"></i></span>
-                    <span id="last-trained" style="font-size: 0.8rem; color: var(--text-dim);">---</span>
+                    <span>Last Trained <i class="fas fa-question-circle help-icon"
+                            title="The date and time when the model was last retrained"
+                            style="margin-left: 4px;"></i></span>
+                    <span id="last-trained">---</span>
                 </div>
             </div>
         </aside>

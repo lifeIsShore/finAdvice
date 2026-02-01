@@ -246,6 +246,13 @@ async function updateDashboard(ticker) {
         status.textContent = winner ? 'WINNING' : 'RETRAIN';
         status.style.color = winner ? 'var(--accent-in)' : 'var(--accent-risk)';
 
+        // Last Trained
+        if (data.last_trained) {
+            document.getElementById('last-trained').textContent = data.last_trained;
+        } else {
+            document.getElementById('last-trained').textContent = '---';
+        }
+
         // Add predictions to chart if it exists
         if (priceChart) {
             priceChart.options.plugins.annotation = {
@@ -271,6 +278,7 @@ function clearMetrics() {
     document.getElementById('confidence-pct').textContent = '0%';
     document.getElementById('confidence-fill').style.width = '0%';
     document.getElementById('consensus-details').innerHTML = '';
+    document.getElementById('last-trained').textContent = '---';
 }
 
 async function fetchHistoryAndDrawChart(ticker) {

@@ -238,20 +238,7 @@ async function updateDashboard(ticker) {
             list.appendChild(row);
         }
 
-        // Performance
-        const perf = data.performance || { r2: 0, comparison: { is_better_r2: false } };
-        document.getElementById('r2-score').textContent = perf.r2.toFixed(4);
-        const status = document.getElementById('model-status');
-        const winner = perf.comparison.is_better_r2;
-        status.textContent = winner ? 'WINNING' : 'RETRAIN';
-        status.style.color = winner ? 'var(--accent-in)' : 'var(--accent-risk)';
 
-        // Last Trained
-        if (data.last_trained) {
-            document.getElementById('last-trained').textContent = data.last_trained;
-        } else {
-            document.getElementById('last-trained').textContent = '---';
-        }
 
         // Add predictions to chart if it exists
         if (priceChart) {

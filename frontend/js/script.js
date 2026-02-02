@@ -477,36 +477,12 @@ async function fetchHistoryAndDrawChart(ticker) {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                interaction: {
-                    mode: 'index',
-                    intersect: false,
-                },
                 scales: {
-                    x: {
-                        ticks: {
-                            color: '#94a3b8',
-                            maxRotation: 0,
-                            maxTicksLimit: 8
-                        },
-                        grid: { display: false }
-                    },
-                    y: {
-                        ticks: { color: '#94a3b8' },
-                        grid: { color: 'rgba(255,255,255,0.05)' }
-                    }
+                    x: { ticks: { color: '#94a3b8', maxRotation: 0 }, grid: { display: false } },
+                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
                 },
                 plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        enabled: true,
-                        mode: 'index',
-                        intersect: false,
-                        backgroundColor: 'rgba(15, 15, 20, 0.9)',
-                        titleColor: '#fff',
-                        bodyColor: '#cbd5e1',
-                        borderColor: 'rgba(255, 255, 255, 0.1)',
-                        borderWidth: 1
-                    }
+                    legend: { display: false }
                 }
             }
         });

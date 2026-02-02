@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FinAdvice AI | Command Center</title>
     <!-- Relative path to CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -74,27 +74,17 @@
             <header class="main-header">
                 <div class="ticker-info">
                     <div class="price-hero">
-                        <div class="hero-row">
-                            <!-- Group 1: Ticker -->
-                            <div class="hero-group">
-                                <div class="ticker-badge" id="ticker-badge" style="margin-bottom: 4px;">STOCK</div>
-                                <h2 id="current-ticker" style="margin: 0; line-height: 1;">---</h2>
-                            </div>
-
-                            <!-- Group 2: Price -->
-                            <div class="hero-group">
-                                <span class="label">Current Price</span>
-                                <span class="value" id="price-val">$---.--</span>
-                            </div>
-
-                            <!-- Group 3: Sentiment -->
-                            <div class="hero-group market-sentiment-indicator" id="market-sentiment-box"
-                                style="display: none; padding: 0; background: none; border: none; box-shadow: none;">
-                                <div class="sentiment-icon" id="sentiment-icon" style="font-size: 2rem;">➡️</div>
-                                <div class="sentiment-details">
-                                    <div class="sentiment-label" id="sentiment-label">Market Outlook</div>
-                                    <div class="sentiment-value" id="sentiment-value">Analyzing...</div>
-                                </div>
+                        <div class="ticker-badge" id="ticker-badge">STOCK</div>
+                        <h2 id="current-ticker">---</h2>
+                        <div class="current-price">
+                            <span class="label">Current Price</span>
+                            <span class="value" id="price-val">$---.--</span>
+                        </div>
+                        <div class="market-sentiment-indicator" id="market-sentiment-box" style="display: none;">
+                            <div class="sentiment-icon" id="sentiment-icon">➡️</div>
+                            <div class="sentiment-details">
+                                <div class="sentiment-label" id="sentiment-label">Market Outlook</div>
+                                <div class="sentiment-value" id="sentiment-value">Analyzing...</div>
                             </div>
                         </div>
                     </div>
@@ -163,9 +153,9 @@
                     <table class="model-table">
                         <thead>
                             <tr>
-                                <th style="color: #64748b;">Model</th>
-                                <th style="color: #64748b;">Acc %</th>
-                                <th style="color: #64748b;">RMSE</th>
+                                <th>Model</th>
+                                <th>Acc %</th>
+                                <th>RMSE</th>
                             </tr>
                         </thead>
                         <tbody id="model-table-body">
@@ -253,4 +243,7 @@
 
 
     <!-- Relative path to JS -->
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

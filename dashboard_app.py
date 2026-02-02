@@ -5,8 +5,8 @@ import json
 import pandas as pd
 from flask import Flask, render_template, jsonify, request
 
-# Base directory
-BASE_DIR = os.getcwd()
+# Use absolute path based on this file's location
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # Add algotrade_datascience to path so internal imports work
 sys.path.append(os.path.join(BASE_DIR, "algotrade_datascience"))
 
@@ -16,12 +16,27 @@ from algotrade_datascience.features.sentiment_analysis import SentimentProcessor
 
 app = Flask(__name__)
 
+@app.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
+
+# Add CORS headers to allow local HTML development
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return response
+
 # Paths
 RAW_DATA_DIR = os.path.join(BASE_DIR, "data", "raw")
 DECISIONS_DIR = os.path.join(BASE_DIR, "data", "decisions")
 
 # Initialize storage for fetching metadata/tickers
-storage = DataStorage()
+storage = DataStorage(base_dir=BASE_DIR)
 news_fetcher = NewsFetcher()
 sentiment_processor = None # Lazy load
 
@@ -191,7 +206,7 @@ def get_results(ticker):
         if not os.path.exists(path):
             return jsonify({"error": "No results found"}), 404
             
-        with open(path, "r") as f:
+        with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
         return jsonify(data)
     except Exception as e:
@@ -206,10 +221,16 @@ def get_model_metrics(ticker):
         if not os.path.exists(path):
              return jsonify({"error": "No model metrics found"}), 404
              
-        with open(path, "r") as f:
+        with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
             
+        # Try to get consensus if model_competition is missing/empty
         competition = data.get("model_competition", {})
+        if not competition:
+            # Fallback to new consensus format
+            # New format: data['consensus'] is a dict where keys are intervals '1h', '4h', etc.
+            competition = data.get("consensus", {})
+            
         return jsonify(competition)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -223,7 +244,7 @@ def get_model_diagnostics(ticker):
         if not os.path.exists(diagnostics_path):
             return jsonify({"error": "No diagnostics found. Run prediction first."}), 404
         
-        with open(diagnostics_path, "r") as f:
+        with open(diagnostics_path, "r", encoding="utf-8") as f:
             diagnostics = json.load(f)
         
         return jsonify(diagnostics)

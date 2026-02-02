@@ -57,60 +57,11 @@
             transform: translateY(-2px);
         }
 
-        .tabs-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 5px;
-            border-radius: 12px;
-            width: fit-content;
-        }
-
-        .tab-btn {
-            padding: 10px 25px;
-            border: none;
-            background: transparent;
-            color: #a0aec0;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .tab-btn.active {
-            background: #6366f1;
-            color: white;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-
-        .summary-section {
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 25px;
             margin-bottom: 30px;
-        }
-
-        .summary-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .summary-card .label {
-            color: #a0aec0;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .summary-card .val {
-            font-size: 1.5rem;
-            font-weight: 800;
         }
 
         .chart-card {
@@ -119,7 +70,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 25px;
-            margin-bottom: 30px;
         }
 
         .chart-card h3 {
@@ -150,20 +100,6 @@
             font-weight: 600;
         }
 
-        .badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            margin-left: 10px;
-        }
-
-        .winner {
-            background: rgba(16, 185, 129, 0.2);
-            color: #10b981;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-
         .loading {
             text-align: center;
             padding: 100px;
@@ -177,6 +113,12 @@
             border-radius: 12px;
             color: #ef4444;
             text-align: center;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 350px;
+            width: 100%;
         }
     </style>
 </head>
@@ -198,59 +140,71 @@
         <div id="error" class="error" style="display: none;"></div>
 
         <div id="content" style="display: none;">
-            <!-- Interval Selection Tabs -->
-            <div id="interval-tabs" class="tabs-container"></div>
-
-            <!-- Interval Summary -->
-            <div class="summary-section">
-                <div class="summary-card">
-                    <span class="label">Best ML Model</span>
-                    <span id="interval-winner" class="val">---</span>
-                </div>
-                <div class="summary-card">
-                    <span class="label">Timeframe Outlook</span>
-                    <span id="interval-sentiment" class="val">---</span>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;">
-                <!-- Comparison Chart -->
-                <div class="chart-card">
-                    <h3><i class="fas fa-chart-bar"></i> Performance Comparison</h3>
-                    <div style="height: 400px;">
-                        <canvas id="roc-chart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Explanation Box -->
-                <div class="chart-card">
-                    <h3><i class="fas fa-info-circle"></i> Why this model?</h3>
-                    <p style="color: #cbd5e1; line-height: 1.6;">
-                        Our ensemble engine evaluates multiple models (XGBoost, Random Forest, Linear Regression) for
-                        each timeframe.
-                    </p>
-                    <p style="color: #cbd5e1; line-height: 1.6;">
-                        The <strong>Winner</strong> is selected based on a weighted score of <strong>Directional
-                            Accuracy</strong> and <strong>Prediction Error (RMSE)</strong>.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Extended Metrics Table -->
-            <div class="chart-card">
-                <h3><i class="fas fa-table"></i> Detailed Model Metrics</h3>
+            <!-- Metrics Summary Table -->
+            <div class="chart-card" style="margin-bottom: 25px;">
+                <h3><i class="fas fa-table"></i> Extended Model Metrics (1d Timeframe)</h3>
                 <table class="metrics-table" id="extended-metrics">
                     <thead>
                         <tr>
                             <th>Model</th>
-                            <th>Accuracy</th>
-                            <th>RMSE</th>
-                            <th>R² Score</th>
-                            <th>MAPE</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1-Score</th>
+                            <th>AUC</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
+            </div>
+
+            <div class="grid">
+                <!-- ROC Curves -->
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-area"></i> ROC Curves</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="roc-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Feature Importance -->
+                <div class="chart-card">
+                    <h3><i class="fas fa-bars"></i> Top Feature Importance</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="feature-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Residual Plot -->
+                <div class="chart-card">
+                    <h3><i class="fas fa-wave-square"></i> Residual Plot (Best Model)</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="residual-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Confusion Matrix LR -->
+                <div class="chart-card">
+                    <h3><i class="fas fa-th"></i> Confusion Matrix (Linear Reg)</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="cm-lr"></canvas>
+                    </div>
+                </div>
+
+                <!-- Confusion Matrix RF -->
+                <div class="chart-card">
+                    <h3><i class="fas fa-th"></i> Confusion Matrix (Random Forest)</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="cm-rf"></canvas>
+                    </div>
+                </div>
+
+                <!-- Confusion Matrix XGB -->
+                <div class="chart-card">
+                    <h3><i class="fas fa-th"></i> Confusion Matrix (XGBoost)</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="cm-xgb"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

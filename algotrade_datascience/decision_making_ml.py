@@ -379,6 +379,14 @@ class DecisionMakingML:
             json.dump(predictions, f, indent=4, ensure_ascii=False)
         print(f"Saved decision to data/decisions/{self.ticker}_premium_decision.json")
 
+        # AUTO-GENERATE DEEP DIAGNOSTICS FOR ANALYTICS TAB
+        try:
+            print(f"Generating deep diagnostics for {self.ticker} analytics...")
+            self.baseline_models.run_all_intervals(['1d'])
+            print("✓ Deep diagnostics updated")
+        except Exception as e:
+            print(f"Warning: Failed to update deep diagnostics: {e}")
+
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description='Agile Decision Making ML')

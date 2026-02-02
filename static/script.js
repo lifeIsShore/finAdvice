@@ -684,5 +684,5 @@ function downloadReport() {
 
 function openAnalytics() {
     const ticker = document.getElementById('ticker-select').value || 'AAPL';
-    window.open(`analytics.html?ticker=${ticker}`, '_blank');
+    window.open(`/analytics/${ticker}`, '_blank');
 }

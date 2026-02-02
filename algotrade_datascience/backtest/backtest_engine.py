@@ -239,7 +239,7 @@ class BacktestEngine:
         # We only generate consensus for the primary interval to save time in backtest
         # Real world would check 1h, 4h, 1d... but we don't have all data synced for old dates easily
         # So we adapt: We run models on the truncated single-interval data
-        prediction = engine.predict_interval(mock_storage.load_ticker_data(self.ticker, None), 'backtest_interval')
+        prediction = engine.predict_interval(mock_storage.load_ticker_data(self.ticker, None), 'backtest_interval', is_backtest=True)
         
         if prediction:
             return prediction.confidence if prediction.change_percent > 0 else -prediction.confidence, prediction.confidence

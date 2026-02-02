@@ -144,7 +144,7 @@ class MultiTimeframeConsensus:
                 return sentiment
         return Sentiment.DRAMATICALLY_DOWN
     
-    def predict_interval(self, df: pd.DataFrame, interval: str) -> Optional[IntervalPrediction]:
+    def predict_interval(self, df: pd.DataFrame, interval: str, is_backtest: bool = False) -> Optional[IntervalPrediction]:
         """
         Generate prediction for a specific timeframe
         Runs multiple models and selects the best
@@ -152,47 +152,56 @@ class MultiTimeframeConsensus:
         Args:
             df: OHLCV dataframe for the interval
             interval: Timeframe code ('1h', '4h', etc)
+            is_backtest: If True, suppress print statements for cleaner backtesting logs.
             
         Returns:
             IntervalPrediction with model comparison
         """
-        if df is None or len(df) < 20:
-            print(f"  [Consensus] {interval}: Insufficient raw data ({len(df) if df is not None else 0} rows)")
+        if df is None or df.empty:
+            if not is_backtest:
+                print(f"  [Consensus] {interval}: No data provided")
+            return None
+        
+        if len(df) < 20:
+            if not is_backtest:
+                print(f"  [Consensus] {interval}: Insufficient raw data ({len(df)} rows)")
             return None
         
         # Add technical indicators
-        df = self._add_indicators(df)
+        processed_df = self.add_technical_indicators(df, interval, is_backtest=is_backtest)
         
-        if df is None or len(df) == 0:
-            print(f"  [Consensus] {interval}: Failed to add indicators or data became empty")
+        if processed_df is None or processed_df.empty:
+            if not is_backtest:
+                print(f"  [Consensus] {interval}: Failed to add indicators or data became empty")
             return None
         
         # Run multiple models
         models_results = []
         
         # Model 1: XGBoost Regressor
-        xgb_result = self._run_xgboost(df, interval)
+        xgb_result = self._run_xgboost(processed_df, interval, is_backtest=is_backtest)
         if xgb_result:
             models_results.append(xgb_result)
         
         # Model 2: Random Forest
-        rf_result = self._run_random_forest(df, interval)
+        rf_result = self._run_random_forest(processed_df, interval, is_backtest=is_backtest)
         if rf_result:
             models_results.append(rf_result)
         
-        # Model 3: Linear Regression (baseline)
-        lr_result = self._run_linear_regression(df, interval)
+        # Model 3: Linear Regression
+        lr_result = self._run_linear_regression(processed_df, interval, is_backtest=is_backtest)
         if lr_result:
             models_results.append(lr_result)
         
-        # Model 4: LSTM/Time Series (if enough data)
-        if len(df) > 50:
-            lstm_result = self._run_lstm(df, interval)
+        # Model 4: LSTM (Advanced)
+        if len(processed_df) > 50:
+            lstm_result = self._run_lstm(processed_df, interval, is_backtest=is_backtest)
             if lstm_result:
                 models_results.append(lstm_result)
         
         if not models_results:
-            print(f"  [Consensus] {interval}: All models failed to generate predictions")
+            if not is_backtest:
+                print(f"  [Consensus] {interval}: All models failed to generate predictions")
             return None
         
         # Select best model (Composite score: 80% Accuracy + 20% RMSE Score)
@@ -219,8 +228,18 @@ class MultiTimeframeConsensus:
         
         return prediction
     
-    def _add_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Add technical indicators for predictions"""
+    def add_technical_indicators(self, df: pd.DataFrame, interval: str, is_backtest: bool = False) -> Optional[pd.DataFrame]:
+        """
+        Add technical indicators for predictions
+        
+        Args:
+            df: OHLCV dataframe
+            interval: Timeframe code (for logging)
+            is_backtest: If True, suppress print statements.
+            
+        Returns:
+            DataFrame with added indicators, or None if an error occurs or data is insufficient.
+        """
         try:
             df = df.copy()
             
@@ -265,7 +284,8 @@ class MultiTimeframeConsensus:
             df = df.dropna()
             
             if len(df) < 20:
-                print(f"  [Indicators] Data reduced to {len(df)} rows after cleaning (need 20+)")
+                if not is_backtest:
+                    print(f"  [Indicators] Data reduced to {len(df)} rows after cleaning (need 20+)")
                 return None
                 
             return df
@@ -273,7 +293,7 @@ class MultiTimeframeConsensus:
             print(f"Error adding indicators: {e}")
             return None
     
-    def _run_xgboost(self, df: pd.DataFrame, interval: str) -> Optional[ModelPrediction]:
+    def _run_xgboost(self, df: pd.DataFrame, interval: str, is_backtest: bool = False) -> Optional[ModelPrediction]:
         """Run XGBoost model"""
         try:
             import xgboost as xgb
@@ -285,16 +305,15 @@ class MultiTimeframeConsensus:
             # Verify all features exist and no NaN values
             X = df[features].copy()
             # FIX: Use shift(-1) to predict NEXT period change (Forecasting)
-            # Old code was using current period (Nowcasting/Leakage)
             y = df['Close'].pct_change().shift(-1) * 100
             
-            # Drop NaN values from y (first row will be NaN)
             valid_idx = ~y.isna()
             X = X[valid_idx]
             y = y[valid_idx]
             
             if len(X) < 20 or len(y) < 20:
-                print(f"  [XGBoost] Insufficient data after initial filter (X={len(X)})")
+                if not is_backtest:
+                    print(f"  [XGBoost] Insufficient data after initial filter (X={len(X)})")
                 return None
             
             # Remove any remaining NaN or inf values
@@ -304,7 +323,8 @@ class MultiTimeframeConsensus:
             y = y[mask]
             
             if len(X) < 20:
-                print(f"  [XGBoost] Insufficient data after strict cleaning (X={len(X)})")
+                if not is_backtest:
+                    print(f"  [XGBoost] Insufficient data after strict cleaning (X={len(X)})")
                 return None
             
             split = int(len(X) * 0.8)
@@ -333,10 +353,11 @@ class MultiTimeframeConsensus:
                 change_percent=change_pct
             )
         except Exception as e:
-            print(f"XGBoost error for {interval}: {e}")
+            if not is_backtest:
+                print(f"XGBoost error for {interval}: {e}")
             return None
     
-    def _run_random_forest(self, df: pd.DataFrame, interval: str) -> Optional[ModelPrediction]:
+    def _run_random_forest(self, df: pd.DataFrame, interval: str, is_backtest: bool = False) -> Optional[ModelPrediction]:
         """Run Random Forest model"""
         try:
             from sklearn.ensemble import RandomForestRegressor
@@ -355,6 +376,8 @@ class MultiTimeframeConsensus:
             y = y[valid_idx]
             
             if len(X) < 20 or len(y) < 20:
+                if not is_backtest:
+                    print(f"  [RandomForest] Insufficient data after initial filter (X={len(X)})")
                 return None
             
             # Remove any remaining NaN or inf values
@@ -364,6 +387,8 @@ class MultiTimeframeConsensus:
             y = y[mask]
             
             if len(X) < 20:
+                if not is_backtest:
+                    print(f"  [RandomForest] Insufficient data after strict cleaning (X={len(X)})")
                 return None
             
             split = int(len(X) * 0.8)
@@ -392,10 +417,11 @@ class MultiTimeframeConsensus:
                 change_percent=change_pct
             )
         except Exception as e:
-            print(f"Random Forest error for {interval}: {e}")
+            if not is_backtest:
+                print(f"Random Forest error for {interval}: {e}")
             return None
     
-    def _run_linear_regression(self, df: pd.DataFrame, interval: str) -> Optional[ModelPrediction]:
+    def _run_linear_regression(self, df: pd.DataFrame, interval: str, is_backtest: bool = False) -> Optional[ModelPrediction]:
         """Run Linear Regression (baseline)"""
         try:
             from sklearn.linear_model import LinearRegression
@@ -414,6 +440,8 @@ class MultiTimeframeConsensus:
             y = y[valid_idx]
             
             if len(X) < 20 or len(y) < 20:
+                if not is_backtest:
+                    print(f"  [LinearRegression] Insufficient data after initial filter (X={len(X)})")
                 return None
             
             # Remove any remaining NaN or inf values
@@ -423,6 +451,8 @@ class MultiTimeframeConsensus:
             y = y[mask]
             
             if len(X) < 20:
+                if not is_backtest:
+                    print(f"  [LinearRegression] Insufficient data after strict cleaning (X={len(X)})")
                 return None
             
             split = int(len(X) * 0.8)
@@ -451,17 +481,19 @@ class MultiTimeframeConsensus:
                 change_percent=change_pct
             )
         except Exception as e:
-            print(f"Linear Regression error for {interval}: {e}")
+            if not is_backtest:
+                print(f"Linear Regression error for {interval}: {e}")
             return None
     
-    def _run_lstm(self, df: pd.DataFrame, interval: str) -> Optional[ModelPrediction]:
+    def _run_lstm(self, df: pd.DataFrame, interval: str, is_backtest: bool = False) -> Optional[ModelPrediction]:
         """Run LSTM model for time series prediction"""
         try:
             # LSTM implementation would require TensorFlow/Keras
             # Simplified version here - can be expanded
             return None
         except Exception as e:
-            print(f"LSTM error for {interval}: {e}")
+            if not is_backtest:
+                print(f"LSTM error for {interval}: {e}")
             return None
     
     def generate_consensus(self) -> Optional[ConsensusReport]:

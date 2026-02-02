@@ -66,6 +66,7 @@ class BacktestUI:
         
         # State
         self.engine = None
+        self.currency = "$" 
         
         # Main Container
         self.main_frame = ttk.Frame(self.root, padding="30")
@@ -132,7 +133,7 @@ class BacktestUI:
             "would have handled the last year."
         ))
         
-        ttk.Label(grid, text="Capital ($):").grid(row=1, column=2, sticky="w", pady=5)
+        ttk.Label(grid, text="Capital:").grid(row=1, column=2, sticky="w", pady=5)
         self.capital_var = tk.DoubleVar(value=10000.0)
         e_cap = ttk.Entry(grid, textvariable=self.capital_var)
         e_cap.grid(row=1, column=3, sticky="ew", pady=5, padx=5)
@@ -286,6 +287,16 @@ class BacktestUI:
         # Init state
         self.log("Terminal Ready. AI Engine Synchronized.")
 
+    def _get_currency_symbol(self, ticker: str) -> str:
+        """Guesses currency symbol from ticker name"""
+        ticker = ticker.upper()
+        if "EUR" in ticker: return "€"
+        if "GBP" in ticker: return "£"
+        if "JPY" in ticker: return "¥"
+        if "TRY" in ticker: return "₺"
+        if "BTC" in ticker or "ETH" in ticker: return "$" # Crypto usually USD
+        return "$" # Default
+
     def log(self, message):
         timestamp = datetime.now().strftime("%H:%M:%S")
         self.log_area.insert(tk.END, f"[{timestamp}] {message}\n")
@@ -311,7 +322,9 @@ class BacktestUI:
     def run_backtest(self):
         try:
             # Gather UI Inputs
-            ticker = self.ticker_var.get()
+            ticker = self.ticker_var.get().upper()
+            self.currency = self._get_currency_symbol(ticker)
+            
             start_date = self.start_date_var.get()
             capital = self.capital_var.get()
             interval = self.interval_var.get()
@@ -347,7 +360,7 @@ class BacktestUI:
             
             if result:
                 self.root.after(0, lambda: self.update_results(result))
-                self.log(f"SIMULATION SUCCESS: Terminal Balance ${result.final_value:.2f}")
+                self.log(f"SIMULATION SUCCESS: Terminal Balance {self.currency}{result.final_value:.2f}")
             elif self.engine.stop_requested:
                 self.log("SIMULATION ABORTED: Results discarded.")
             else:
@@ -376,7 +389,7 @@ class BacktestUI:
         
         m['mdd'].config(text=f"{result.max_drawdown_pct:.2f}%")
         m['trades'].config(text=f"{result.trade_count}")
-        m['final_val'].config(text=f"${result.final_value:,.2f}")
+        m['final_val'].config(text=f"{self.currency}{result.final_value:,.2f}")
         
         # Signal Colors
         success = "#27ae60"; danger = "#e74c3c"

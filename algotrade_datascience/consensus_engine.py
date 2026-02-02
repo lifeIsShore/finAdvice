@@ -195,8 +195,10 @@ class MultiTimeframeConsensus:
             print(f"  [Consensus] {interval}: All models failed to generate predictions")
             return None
         
-        # Select best model (highest R-squared or accuracy)
-        best_model = max(models_results, key=lambda m: m.r2_score)
+        # Select best model (Composite score: 80% Accuracy + 20% RMSE Score)
+        # We normalize RMSE by comparing against the best RMSE in the set
+        min_rmse = min([m.rmse for m in models_results]) if models_results else 1.0
+        best_model = max(models_results, key=lambda m: (m.accuracy * 0.8) + ((min_rmse / (m.rmse + 1e-9)) * 20))
         
         # Calculate ensemble prediction (average of all models)
         avg_change = np.mean([m.change_percent for m in models_results])
@@ -246,9 +248,16 @@ class MultiTimeframeConsensus:
             df['BB_Upper'] = df['BB_Mid'] + (df['BB_Std'] * 2)
             df['BB_Lower'] = df['BB_Mid'] - (df['BB_Std'] * 2)
             
-            # Volatility - CRITICAL FIX: Drop NaN AFTER computing pct_change
+            # Volatility (Standardized)
             pct_change = df['Close'].pct_change()
-            df['Volatility'] = pct_change.rolling(window=20).std()
+            df['Volatility'] = pct_change.rolling(window=20).std() * 100
+            
+            # Volume Ratio (New, Aligned)
+            df['volume_ratio'] = df['Volume'] / (df['Volume'].rolling(window=5).mean() + 1e-9)
+            
+            # Lag returns (New, Aligned)
+            for i in range(1, 4):
+                df[f'Lag_{i}'] = pct_change.shift(i) * 100
             
             # CRITICAL: Drop NaN values after all calculations
             df = df.dropna()
@@ -269,7 +278,7 @@ class MultiTimeframeConsensus:
             from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
             
             features = ['RSI', 'SMA_10', 'SMA_20', 'SMA_50', 'MACD', 'Signal_Line', 
-                       'BB_Upper', 'BB_Lower', 'Volatility']
+                       'BB_Upper', 'BB_Lower', 'Volatility', 'volume_ratio', 'Lag_1', 'Lag_2', 'Lag_3']
             
             # Verify all features exist and no NaN values
             X = df[features].copy()
@@ -327,7 +336,7 @@ class MultiTimeframeConsensus:
             from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
             
             features = ['RSI', 'SMA_10', 'SMA_20', 'SMA_50', 'MACD', 'Signal_Line', 
-                       'BB_Upper', 'BB_Lower', 'Volatility']
+                       'BB_Upper', 'BB_Lower', 'Volatility', 'volume_ratio', 'Lag_1', 'Lag_2', 'Lag_3']
             
             X = df[features].copy()
             y = df['Close'].pct_change() * 100
@@ -382,7 +391,7 @@ class MultiTimeframeConsensus:
             from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
             
             features = ['RSI', 'SMA_10', 'SMA_20', 'SMA_50', 'MACD', 'Signal_Line', 
-                       'BB_Upper', 'BB_Lower', 'Volatility']
+                       'BB_Upper', 'BB_Lower', 'Volatility', 'volume_ratio', 'Lag_1', 'Lag_2', 'Lag_3']
             
             X = df[features].copy()
             y = df['Close'].pct_change() * 100

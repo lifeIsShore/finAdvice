@@ -79,13 +79,16 @@ class DecisionMakingML:
             true_range = ranges.max(axis=1)
             df['ATR'] = true_range.rolling(window=14).mean()
             
-            # Momentum & Volatility
-            df['Momentum'] = df['Close'].pct_change(5)
-            df['Volatility'] = df['Close'].rolling(window=20).std()
+            # Momentum & Volatility (Standardized)
+            df['Momentum'] = df['Close'].pct_change(5) * 100
+            df['Volatility'] = df['Close'].pct_change().rolling(window=20).std() * 100
             
-            # Lagged target features
+            # Volume Ratio (Standardized)
+            df['volume_ratio'] = df['Volume'] / (df['Volume'].rolling(window=5).mean() + 1e-9)
+            
+            # Lagged Return features (Standardized)
             for i in range(1, 4):
-                df[f'Lag_{i}'] = df['Close'].shift(i)
+                df[f'Lag_{i}'] = df['Close'].pct_change().shift(i) * 100
             
             # CRITICAL FIX: Drop NaN values after all calculations
             df = df.dropna()
@@ -248,7 +251,7 @@ class DecisionMakingML:
             feature_cols = [
                 'Close', 'RSI', 'SMA_10', 'SMA_20', 'SMA_50', 'SMA_10_20_cross',
                 'BB_Upper', 'BB_Lower', 'MACD', 'Signal_Line', 'ATR', 'Momentum', 'Volatility',
-                'Lag_1', 'Lag_2', 'Lag_3'
+                'volume_ratio', 'Lag_1', 'Lag_2', 'Lag_3'
             ]
             
             # Verify all feature columns exist

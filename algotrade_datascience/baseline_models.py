@@ -43,39 +43,45 @@ class BaselineModels:
         
     def create_features(self, df: pd.DataFrame, include_target: bool = True) -> pd.DataFrame:
         """
-        Create simple features for baseline models
-        
-        Args:
-            df: Input OHLCV data
-            include_target: If True, adds 'target' column and drops rows with NaN
+        Create standardized features aligned with Consensus Engine
         """
         df = df.copy()
         
-        # Lag features (previous closes)
-        for i in range(1, 6):
-            df[f'close_lag_{i}'] = df['Close'].shift(i)
+        # 1. Technical Indicators (Standardized)
+        # RSI
+        delta = df['Close'].diff()
+        gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
+        loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
+        rs = gain / (loss + 1e-9)
+        df['RSI'] = 100 - (100 / (1 + rs))
         
-        # Moving averages
-        df['sma_5'] = df['Close'].rolling(window=5).mean()
-        df['sma_10'] = df['Close'].rolling(window=10).mean()
-        df['sma_20'] = df['Close'].rolling(window=20).mean()
+        # Moving Averages
+        df['SMA_10'] = df['Close'].rolling(window=10).mean()
+        df['SMA_20'] = df['Close'].rolling(window=20).mean()
+        df['SMA_50'] = df['Close'].rolling(window=50).mean()
         
-        # Returns
-        df['return_1'] = df['Close'].pct_change(1)
-        df['return_5'] = df['Close'].pct_change(5)
+        # MACD
+        exp1 = df['Close'].ewm(span=12, adjust=False).mean()
+        exp2 = df['Close'].ewm(span=26, adjust=False).mean()
+        df['MACD'] = exp1 - exp2
+        df['Signal_Line'] = df['MACD'].ewm(span=9, adjust=False).mean()
         
-        # Volatility
-        df['volatility_5'] = df['Close'].rolling(window=5).std()
-        df['volatility_10'] = df['Close'].rolling(window=10).std()
+        # Bollinger Bands
+        df['BB_Mid'] = df['Close'].rolling(window=20).mean()
+        df['BB_Upper'] = df['BB_Mid'] + (df['Close'].rolling(window=20).std() * 2)
+        df['BB_Lower'] = df['BB_Mid'] - (df['Close'].rolling(window=20).std() * 2)
         
-        # Volume features
-        df['volume_sma_5'] = df['Volume'].rolling(window=5).mean()
-        df['volume_ratio'] = df['Volume'] / df['volume_sma_5']
+        # Volume & Volatility
+        df['volatility_5'] = df['Close'].pct_change().rolling(window=5).std() * 100
+        df['volume_ratio'] = df['Volume'] / (df['Volume'].rolling(window=5).mean() + 1e-9)
+        
+        # Lag features (Standardized as returns)
+        for i in range(1, 4):
+            df[f'Lag_{i}'] = df['Close'].pct_change().shift(i) * 100
         
         if include_target:
-            # Target: next period's close
-            df['target'] = df['Close'].shift(-1)
-            # Drop NaN rows (first few because of lags/SMAs, last one because of target shift)
+            # Target: next period's percentage change (Standardized with Consensus Engine)
+            df['target'] = df['Close'].pct_change().shift(-1) * 100
             df = df.dropna()
         
         return df
@@ -167,9 +173,11 @@ class BaselineModels:
         
         y_true_series = pd.Series(y_true).reset_index(drop=True)
         y_pred_series = pd.Series(y_pred).reset_index(drop=True)
-        true_direction = (y_true_series.diff() > 0).astype(int)
-        pred_direction = (y_pred_series.diff() > 0).astype(int)
-        direction_accuracy = (true_direction == pred_direction).sum() / len(true_direction) * 100
+        
+        # Standardized Direction Accuracy: Correctly predicted sign of percentage change
+        true_direction = (y_true_series > 0).astype(int)
+        pred_direction = (y_pred_series > 0).astype(int)
+        direction_accuracy = (true_direction == pred_direction).mean() * 100
         
         return {
             'model': model_name,
@@ -181,7 +189,7 @@ class BaselineModels:
             'direction_accuracy': float(direction_accuracy)
         }
     
-    def predict_next(self, df: pd.DataFrame, trained_models: Dict, feature_cols: List[str]) -> Dict:
+    def predict_next(self, df: pd.DataFrame, trained_models: Dict, feature_cols: List[str], best_model_name: str = 'linear_regression') -> Dict:
         """
         Predict the next (future) period's price using the best model
         """
@@ -202,24 +210,19 @@ class BaselineModels:
             X_latest = last_row[feature_cols]
             
             # Use Best Model based on R2 on test set
-            best_model_name = 'linear_regression'
-            best_r2 = -999
-            
-            # We need the metrics to find the best model
-            # But here we just pick XGBoost if R2 is decent, otherwise LR
-            # For simplicity, let's just use LR as it's the most stable baseline
-            best_model = trained_models['linear_regression']
-            model_used_name = "Linear Regression"
-            
-            # However, if XGBoost is trained, let's use it as it's more powerful
-            if 'xgboost' in trained_models:
-                best_model = trained_models['xgboost']
-                model_used_name = "XGBoost"
+            # Use the best model name passed from the competition loop
+            if best_model_name in trained_models:
+                best_model = trained_models[best_model_name]
+                model_used_name = best_model_name.replace('_', ' ').title()
+            else:
+                best_model = trained_models['linear_regression']
+                model_used_name = "Linear Regression"
                 
-            predicted_next = float(best_model.predict(X_latest)[0])
+            predicted_next_pct = float(best_model.predict(X_latest)[0])
+            predicted_next = current_close * (1 + (predicted_next_pct / 100.0))
             
-            direction = "UP" if predicted_next > current_close else "DOWN"
-            pct_change = ((predicted_next - current_close) / current_close) * 100
+            direction = "UP" if predicted_next_pct > 0 else "DOWN"
+            pct_change = predicted_next_pct
             
             return {
                 'model_used': model_used_name,
@@ -255,12 +258,12 @@ class BaselineModels:
             'residuals': residuals.tolist()
         }
         
-        # 2. Classification metrics (direction prediction)
         y_true_series = pd.Series(y_true_clean).reset_index(drop=True)
         y_pred_series = pd.Series(y_pred_clean).reset_index(drop=True)
         
-        true_direction = (y_true_series.diff() > 0).astype(int).iloc[1:]  # Skip first NaN
-        pred_direction = (y_pred_series.diff() > 0).astype(int).iloc[1:]
+        # Standardized Directional Classification: Is the percentage change positive (UP) or negative (DOWN)?
+        true_direction = (y_true_series > 0).astype(int)
+        pred_direction = (y_pred_series > 0).astype(int)
         
         if len(true_direction) > 0:
             # Confusion Matrix
@@ -347,8 +350,11 @@ class BaselineModels:
             with open(diagnostics_file, 'w') as f:
                 json.dump(diagnostics, f, indent=2, default=str)
             
-            # Predict Next Period
-            next_pred_data = self.predict_next(df, train_results['models'], train_results['features'])
+            # Identify best model for this interval
+            winner_name = self.identify_winner(train_results['metrics'])
+            
+            # Predict Next Period using the winner
+            next_pred_data = self.predict_next(df, train_results['models'], train_results['features'], winner_name)
             
             if next_pred_data:
                 print(f"\n  [PREDICTION] Next for {interval}:")
@@ -360,6 +366,7 @@ class BaselineModels:
                 'interval': interval,
                 'data_rows': len(df),
                 'metrics': train_results['metrics'],
+                'winner': winner_name,
                 'next_prediction': next_pred_data,
                 'test_size': train_results['test_size'],
                 'diagnostics_file': str(diagnostics_file)

@@ -237,17 +237,18 @@ def get_model_metrics(ticker):
 
 @app.route("/api/model_diagnostics/<ticker>")
 def get_model_diagnostics(ticker):
-    """Serve detailed model diagnostics for analytics page"""
+    """Serve consensus data for analytics page"""
     try:
-        # Load diagnostics from the 1d interval (primary interval)
-        diagnostics_path = os.path.join("data", "model_diagnostics", f"{ticker}_1d_diagnostics.json")
-        if not os.path.exists(diagnostics_path):
-            return jsonify({"error": "No diagnostics found. Run prediction first."}), 404
+        # Load the main decision file which contains consensus data
+        path = os.path.join(DECISIONS_DIR, f"{ticker}_premium_decision.json")
+        if not os.path.exists(path):
+            return jsonify({"error": "No data found"}), 404
         
-        with open(diagnostics_path, "r", encoding="utf-8") as f:
-            diagnostics = json.load(f)
-        
-        return jsonify(diagnostics)
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            
+        # Return the 'consensus' part which has data for all intervals
+        return jsonify(data.get("consensus", {}))
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

@@ -817,8 +817,8 @@ body {
     color: white;
     font-size: 0.8rem;
     border-radius: 8px;
-    white-space: normal;
-    width: 220px;
+    width: 300px;
+    white-space: pre-line;
     opacity: 0;
     visibility: hidden;
     transition: all 0.2s ease;
@@ -862,4 +862,51 @@ body {
 .help-icon:hover {
     opacity: 1;
     color: var(--primary);
+}
+
+/* Feature Glossary Styles */
+.feature-glossary {
+    margin-top: 40px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.glossary-item {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glossary-item h4 {
+    color: var(--primary, #667eea);
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.glossary-item p {
+    font-size: 0.9rem;
+    color: #a0aec0;
+    line-height: 1.5;
+}
+
+.features-link {
+    font-size: 0.8rem;
+    color: var(--primary, #667eea);
+    text-decoration: none;
+    margin-left: 10px;
+    border-bottom: 1px dashed var(--primary);
+    cursor: pointer;
+}
+
+.features-link:hover {
+    filter: brightness(1.2);
 }

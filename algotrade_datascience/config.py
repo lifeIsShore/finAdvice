@@ -58,15 +58,15 @@ TIMEFRAME_CONFIG = {
     },
     '1mo': {
         'interval': '1mo',
-        'period': '5y',    # 5 years for comprehensive monthly analysis
-        'lookback_days': 1825,  # ~5 years (60 months) - captures multiple market cycles
-        'description': '1-month interval for last 5 years (60 months)'
+        'period': 'max',    # All historical data for comprehensive monthly analysis
+        'lookback_days': 7300,  # ~20 years for better indicator support
+        'description': '1-month interval for all available history'
     },
     '3mo': {
         'interval': '3mo',
-        'period': '5y',    # 5 years for quarterly analysis
-        'lookback_days': 1825,  # ~5 years (20 quarters)
-        'description': '3-month interval for last 5 years (20 quarters)'
+        'period': 'max',    # All historical data for quarterly analysis
+        'lookback_days': 7300,  # ~20 years
+        'description': '3-month interval for all available history'
     },
     '1h': {
         'interval': '1h',

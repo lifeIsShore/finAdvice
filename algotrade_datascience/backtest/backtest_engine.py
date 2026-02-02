@@ -118,8 +118,20 @@ class BacktestEngine:
             else:
                 raise ValueError(f"Could not fetch data for {self.ticker}. Please check connectivity or ticker symbol.")
             
-        # Ensure Date column is datetime
+        # Ensure Date column is datetime and timezone-naive to avoid comparison errors
         full_df['Date'] = pd.to_datetime(full_df['Date'])
+        if full_df['Date'].dt.tz is not None:
+            full_df['Date'] = full_df['Date'].dt.tz_localize(None)
+        
+        # Ensure start/end dates are also naive for comparison
+        if not isinstance(self.start_date, pd.Timestamp):
+            self.start_date = pd.Timestamp(self.start_date)
+        if not isinstance(self.end_date, pd.Timestamp):
+            self.end_date = pd.Timestamp(self.end_date)
+            
+        self.start_date = self.start_date.tz_localize(None) if self.start_date.tzinfo else self.start_date
+        self.end_date = self.end_date.tz_localize(None) if self.end_date.tzinfo else self.end_date
+        
         full_df = full_df.sort_values('Date')
         
         # Filter for the backtest range (but we need some history before start_date for training)
@@ -138,10 +150,10 @@ class BacktestEngine:
             sim_date = pd.to_datetime(sim_date)
             
             # 1. Truncate data to simulate "today" (No Leakage)
-            # We only show the model data that existed before sim_date
             current_df = full_df[full_df['Date'] < sim_date]
             
-            if len(current_df) < 50: # Need enough data to train
+            # Need at least 30-50 rows to calculate indicators (RSI, MA20, etc.)
+            if len(current_df) < 50:
                 continue
                 
             # Current price (at the open of sim_date or close of previous date)

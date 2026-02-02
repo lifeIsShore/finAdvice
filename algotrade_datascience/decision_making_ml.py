@@ -8,6 +8,7 @@ import numpy as np
 import json
 from datetime import datetime
 from pathlib import Path
+from typing import Dict, List, Tuple
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -165,10 +166,10 @@ class DecisionMakingML:
             return {"level": "Dramatic DOWN", "emoji": "---", "color": "#2c3e50", "label": "DRAMATICALLY_DOWN"}
 
 
-    def get_multi_timeframe_consensus(self):
+    def get_multi_timeframe_consensus(self, baseline_results: Dict = None):
         """
         Run a full model competition for EACH timeframe using the Consensus Engine.
-        Returns detailed consensus data.
+        Optional: Use pre-calculated baseline_results to ensure consistency.
         """
         try:
             print("\n=== MULTI-TIMEFRAME ML CONSENSUS ===")
@@ -178,16 +179,37 @@ class DecisionMakingML:
             report = engine.generate_consensus()
             
             if not report:
-                print("  [Warning] Could not generate consensus report (insufficient data or model failures)")
-                # Return a valid empty structure instead of just 0, {} to avoid frontend breaking entirely?
-                # But user said "Should be 45-95%", so 0 is correct signal of failure.
+                print("  [Warning] Could not generate consensus report")
                 return 0.0, {}
+            
+            # PATCH: Overwrite consensus metrics with baseline metrics if provided
+            # This ensures Dashboard and Analytics match EXACTLY
+            if baseline_results:
+                print("  [Sync] Patching consensus metrics with baseline models results...")
+                for interval, results in baseline_results.items():
+                    if interval in report.intervals:
+                        consensus_interval = report.intervals[interval]
+                        baseline_metrics = results['metrics']
+                        
+                        # Map metrics by model name (normalization)
+                        for c_model in consensus_interval.models:
+                            # Normalize names for matching
+                            m_name_lookup = c_model.model_name.lower().replace(' ', '_')
+                            if m_name_lookup in baseline_metrics:
+                                b_m = baseline_metrics[m_name_lookup]
+                                c_model.accuracy = b_m['direction_accuracy']
+                                c_model.rmse = b_m['rmse']
+                                c_model.r2_score = b_m['r2']
+                                c_model.mape = b_m['mape']
+                
+                # Re-select winning models after patching to ensure consistency in best_model
+                for interval, data in report.intervals.items():
+                    if data.models:
+                        min_rmse = min([m.rmse for m in data.models])
+                        data.best_model = max(data.models, key=lambda m: (m.accuracy * 0.8) + ((min_rmse / (m.rmse + 1e-9)) * 20))
             
             # Print summary to console
             print(f"  Consensus Generated! Confidence: {report.overall_confidence:.1f}%")
-            for interval, data in report.intervals.items():
-                print(f"  {interval}: {data.sentiment.emoji} {data.sentiment.label:12} | {data.change_percent:+.2f}% | {data.confidence:.0f}% | {data.best_model.model_name if data.best_model else 'N/A'}")
-            
             return report.overall_confidence, report.to_dict()['intervals']
             
         except Exception as e:
@@ -237,7 +259,7 @@ class DecisionMakingML:
             print(f"Error building model competition data: {e}")
             return {}
 
-    def train_and_predict(self, df: pd.DataFrame, horizon: int = 60, risk: str = 'conservative'):
+    def train_and_predict(self, df: pd.DataFrame, horizon: int = 60, risk: str = 'conservative', baseline_results: Dict = None):
         """Train models and make predictions for the current date"""
         try:
             df_rich = self.add_technical_indicators(df)
@@ -289,8 +311,8 @@ class DecisionMakingML:
             predicted_max_ret = float(np.nan_to_num(model_high.predict(X_latest)[0], nan=0.0))
             predicted_min_ret = float(np.nan_to_num(model_low.predict(X_latest)[0], nan=0.0))
             
-            # IMPORTANT: Run the NEW Multi-Timeframe Consensus
-            confidence, consensus_details = self.get_multi_timeframe_consensus()
+            # IMPORTANT: Run the NEW Multi-Timeframe Consensus with baseline synchronization
+            confidence, consensus_details = self.get_multi_timeframe_consensus(baseline_results=baseline_results)
             
             # Apply sentiment multiplier
             s_multiplier, s_score = self.get_sentiment_multiplier()
@@ -358,11 +380,17 @@ class DecisionMakingML:
         print(f"Prediction Horizon: {horizon} days | Mode: {risk.upper()}")
         
         try:
-            predictions = self.train_and_predict(df, horizon=horizon, risk=risk)
+            # Shifted order: Run baseline models FIRST to use as Single Source of Truth for metrics
+            print(f"Generating comprehensive model results...")
+            baseline_results = self.baseline_models.run_all_intervals()
+            
+            predictions = self.train_and_predict(df, horizon=horizon, risk=risk, baseline_results=baseline_results)
         except Exception as e:
             print(f"Failed to generate predictions: {e}")
+            import traceback
+            traceback.print_exc()
             return
-        
+
         print("\n=== PREMIUM STRATEGY REPORT ===")
         print(f"Ticker: {self.ticker} | Date: {predictions['current_date']}")
         print(f"Current Price: ${predictions['current_price']:.2f}")
@@ -382,13 +410,8 @@ class DecisionMakingML:
             json.dump(predictions, f, indent=4, ensure_ascii=False)
         print(f"Saved decision to data/decisions/{self.ticker}_premium_decision.json")
 
-        # AUTO-GENERATE DEEP DIAGNOSTICS FOR ANALYTICS TAB
-        try:
-            print(f"Generating deep diagnostics for {self.ticker} analytics...")
-            self.baseline_models.run_all_intervals(['1d'])
-            print("OK: Deep diagnostics updated")
-        except Exception as e:
-            print(f"Warning: Failed to update deep diagnostics: {e}")
+        # Baseline models are now run BEFORE predictions for sync
+        print("OK: All metrics and diagnostics synchronized")
 
 if __name__ == "__main__":
     import argparse

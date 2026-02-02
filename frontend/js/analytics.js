@@ -14,9 +14,16 @@ const API_BASE_URL = getApiBaseUrl();
 // Get ticker from URL or global variable
 const currentTickerId = window.currentTicker || new URLSearchParams(window.location.search).get('ticker') || 'AAPL';
 
-async function loadDiagnostics() {
+let currentCharts = [];
+
+async function loadDiagnostics(interval = '1d') {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/model_diagnostics/${currentTickerId}`);
+        // Reset view
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('content').style.display = 'none';
+        document.getElementById('error').style.display = 'none';
+
+        const response = await fetch(`${API_BASE_URL}/api/model_diagnostics/${currentTickerId}?interval=${interval}`);
         const data = await response.json();
 
         if (data.error) {
@@ -27,6 +34,10 @@ async function loadDiagnostics() {
         document.getElementById('loading').style.display = 'none';
         const content = document.getElementById('content');
         if (content) content.style.display = 'block';
+
+        // Clear existing charts to prevent overlaps
+        currentCharts.forEach(chart => chart.destroy());
+        currentCharts = [];
 
         // Render all visualizations
         renderExtendedMetrics(data);
@@ -64,8 +75,11 @@ function renderExtendedMetrics(data) {
             const roc = data[model].roc_curve || {};
 
             const row = document.createElement('tr');
+            const accuracy = metrics.accuracy || (metrics.direction_accuracy) || 0;
+
             row.innerHTML = `
                 <td><strong>${modelNames[model]}</strong></td>
+                <td>${accuracy.toFixed(1)}%</td>
                 <td>${(metrics.precision * 100).toFixed(1)}%</td>
                 <td>${(metrics.recall * 100).toFixed(1)}%</td>
                 <td>${(metrics.f1_score * 100).toFixed(1)}%</td>
@@ -114,7 +128,7 @@ function renderROCCurves(data) {
         fill: false
     });
 
-    new Chart(ctx, {
+    const chart = new Chart(ctx, {
         type: 'line',
         data: { datasets },
         options: {
@@ -126,6 +140,7 @@ function renderROCCurves(data) {
             }
         }
     });
+    currentCharts.push(chart);
 }
 
 function renderFeatureImportance(data) {
@@ -136,7 +151,7 @@ function renderFeatureImportance(data) {
     let featureData = data.random_forest?.feature_importance || data.xgboost?.feature_importance;
     if (!featureData || featureData.length === 0) return;
 
-    new Chart(ctx, {
+    const chart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: featureData.map(f => f.feature),
@@ -144,6 +159,7 @@ function renderFeatureImportance(data) {
         },
         options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false }
     });
+    currentCharts.push(chart);
 }
 
 function renderConfusionMatrices(data) {
@@ -169,7 +185,7 @@ function renderConfusionMatrix(canvasId, matrix, modelName) {
     const labels = ['Predicted Down (Actual Down)', 'Predicted Up (Actual Down)', 'Predicted Down (Actual Up)', 'Predicted Up (Actual Up)'];
     const values = [matrix[0][0], matrix[0][1], matrix[1][0], matrix[1][1]];
 
-    new Chart(ctx, {
+    const chart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -177,6 +193,7 @@ function renderConfusionMatrix(canvasId, matrix, modelName) {
         },
         options: { responsive: true, maintainAspectRatio: false }
     });
+    currentCharts.push(chart);
 }
 
 function renderResidualPlot(data) {
@@ -187,13 +204,19 @@ function renderResidualPlot(data) {
     if (!residuals || !residuals.actual) return;
 
     const points = residuals.actual.map((actual, i) => ({ x: residuals.predicted[i], y: residuals.residuals[i] }));
-    new Chart(ctx, {
+    const chart = new Chart(ctx, {
         type: 'scatter',
         data: {
             datasets: [{ label: 'Residuals', data: points, backgroundColor: 'rgba(102, 126, 234, 0.5)' }]
         },
         options: { responsive: true, maintainAspectRatio: false }
     });
+    currentCharts.push(chart);
 }
+
+// Handle Interval Change
+document.getElementById('interval-select')?.addEventListener('change', (e) => {
+    loadDiagnostics(e.target.value);
+});
 
 loadDiagnostics();

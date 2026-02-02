@@ -174,10 +174,11 @@ class BaselineModels:
         y_true_series = pd.Series(y_true).reset_index(drop=True)
         y_pred_series = pd.Series(y_pred).reset_index(drop=True)
         
-        # Standardized Direction Accuracy: Correctly predicted sign of percentage change
+        # Standardized Directional Classification: Is the percentage change positive (UP) or negative (DOWN)?
+        # Matches Analytics/Diagnostics logic for consistency
         true_direction = (y_true_series > 0).astype(int)
         pred_direction = (y_pred_series > 0).astype(int)
-        direction_accuracy = (true_direction == pred_direction).mean() * 100
+        direction_accuracy = np.mean(true_direction == pred_direction) * 100
         
         return {
             'model': model_name,
@@ -272,6 +273,9 @@ class BaselineModels:
             
             # Precision, Recall, F1
             try:
+                # Local accuracy calculation
+                accuracy = (true_direction == pred_direction).mean() * 100
+                
                 precision = precision_score(true_direction, pred_direction, zero_division=0)
                 recall = recall_score(true_direction, pred_direction, zero_division=0)
                 f1 = f1_score(true_direction, pred_direction, zero_division=0)
@@ -279,10 +283,12 @@ class BaselineModels:
                 diagnostics['classification_metrics'] = {
                     'precision': float(precision),
                     'recall': float(recall),
-                    'f1_score': float(f1)
+                    'f1_score': float(f1),
+                    'accuracy': float(accuracy)
                 }
             except:
-                diagnostics['classification_metrics'] = {'precision': 0, 'recall': 0, 'f1_score': 0}
+                accuracy = (true_direction == pred_direction).mean() * 100 if len(true_direction) > 0 else 0
+                diagnostics['classification_metrics'] = {'precision': 0, 'recall': 0, 'f1_score': 0, 'accuracy': float(accuracy)}
             
             # ROC Curve (using prediction probabilities if available, else use predictions as scores)
             try:
@@ -298,7 +304,7 @@ class BaselineModels:
                 diagnostics['roc_curve'] = {'fpr': [], 'tpr': [], 'auc': 0.5}
         
         # 3. Feature Importance (for tree-based models)
-        if model_name in ['Random Forest', 'XGBoost'] and hasattr(model, 'feature_importances_'):
+        if model_name.lower().replace(' ', '_') in ['random_forest', 'xgboost'] and hasattr(model, 'feature_importances_'):
             importances = model.feature_importances_
             feature_importance = [
                 {'feature': feat, 'importance': float(imp)} 
@@ -397,38 +403,32 @@ class BaselineModels:
     def identify_winner(self, metrics: Dict) -> str:
         """
         Identify the winning model based on a composite score.
-        Score = (Direction_Accuracy * 0.6) + ((1 - normalized_rmse) * 0.4)
+        Score = (Direction_Accuracy * 0.8) + (RMSE_Ratio * 20)
         """
         best_score = -float('inf')
         winner = "linear_regression" # Default fallback
         
-        # We need to normalize RMSE to make it comparable
-        # Find max RMSE to normalize
-        all_rmses = [m['rmse'] for m in metrics.values() if m['rmse'] is not None]
+        # Find min RMSE to create a ratio-based score
+        all_rmses = [m['rmse'] for m in metrics.values() if m['rmse'] is not None and m['rmse'] > 0]
         if not all_rmses:
             return winner
             
-        max_rmse = max(all_rmses) if max(all_rmses) > 0 else 1.0
+        min_rmse = min(all_rmses)
         
         print("\n*** MODEL COMPETITION ***")
         print(f"{'Model':<20} | {'Acc %':<8} | {'RMSE':<8} | {'Score':<8}")
         print("-" * 55)
         
         for model_name, m in metrics.items():
-            if m['rmse'] is None: 
+            if m['rmse'] is None or m.get('direction_accuracy') is None: 
                 continue
                 
-            # Direction Accuracy (0-100) -> normalize to 0-1
-            acc = m['direction_accuracy'] / 100.0
-            
-            # RMSE Score (0-1): Lower RMSE is better. 
-            # 1 - (rmse / max_rmse) gives 1 for best (0 error) and 0 for worst (max error)
-            rmse_score = 1.0 - (m['rmse'] / max_rmse)
-            
-            # Composite Score
-            # Weight Accuracy MUCH higher (0.8) because Direction is KEY for trading
-            # RMSE is secondary (0.2) - we care more about getting direction right than exact price
-            final_score = (acc * 0.8) + (rmse_score * 0.2)
+            # Composite Score (aligned with Consensus Engine)
+            # 80% Weight on Directional Accuracy (0-100)
+            # 20% Weight on RMSE Score (based on min_rmse ratio)
+            acc_score = m['direction_accuracy'] * 0.8
+            rmse_score = (min_rmse / (m['rmse'] + 1e-9)) * 20
+            final_score = acc_score + rmse_score
             
             print(f"{model_name:<20} | {m['direction_accuracy']:<8.1f} | {m['rmse']:<8.4f} | {final_score:<8.4f}")
             

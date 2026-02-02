@@ -248,18 +248,20 @@ class MultiTimeframeConsensus:
             df['BB_Upper'] = df['BB_Mid'] + (df['BB_Std'] * 2)
             df['BB_Lower'] = df['BB_Mid'] - (df['BB_Std'] * 2)
             
-            # Volatility (Standardized)
+            # Volatility (Standardized to 5-period to match baseline_models)
             pct_change = df['Close'].pct_change()
-            df['Volatility'] = pct_change.rolling(window=20).std() * 100
+            df['volatility_5'] = pct_change.rolling(window=5).std() * 100
             
-            # Volume Ratio (New, Aligned)
+            # Volume Ratio
             df['volume_ratio'] = df['Volume'] / (df['Volume'].rolling(window=5).mean() + 1e-9)
             
-            # Lag returns (New, Aligned)
+            # Lag returns
             for i in range(1, 4):
                 df[f'Lag_{i}'] = pct_change.shift(i) * 100
             
-            # CRITICAL: Drop NaN values after all calculations
+            # CRITICAL: Drop NaN values only AFTER all feature calculations
+            # But we keep targets for the training loop specifically.
+            # In Consensus Engine, we drop NaNs here for general "indicators" prep.
             df = df.dropna()
             
             if len(df) < 20:
@@ -278,11 +280,13 @@ class MultiTimeframeConsensus:
             from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
             
             features = ['RSI', 'SMA_10', 'SMA_20', 'SMA_50', 'MACD', 'Signal_Line', 
-                       'BB_Upper', 'BB_Lower', 'Volatility', 'volume_ratio', 'Lag_1', 'Lag_2', 'Lag_3']
+                       'BB_Upper', 'BB_Lower', 'volatility_5', 'volume_ratio', 'Lag_1', 'Lag_2', 'Lag_3']
             
             # Verify all features exist and no NaN values
             X = df[features].copy()
-            y = df['Close'].pct_change() * 100  # % change as target
+            # FIX: Use shift(-1) to predict NEXT period change (Forecasting)
+            # Old code was using current period (Nowcasting/Leakage)
+            y = df['Close'].pct_change().shift(-1) * 100
             
             # Drop NaN values from y (first row will be NaN)
             valid_idx = ~y.isna()
@@ -312,7 +316,10 @@ class MultiTimeframeConsensus:
             y_pred = model.predict(X_test)
             
             change_pct = float(np.nan_to_num(y_pred[-1], nan=0.0))
-            accuracy = float(np.mean(np.sign(y_pred) == np.sign(y_test)) * 100)
+            # Standardized Directional Classification: Is the percentage change positive (UP) or negative (DOWN)?
+            true_direction = (y_test > 0).astype(int)
+            pred_direction = (y_pred > 0).astype(int)
+            accuracy = float(np.mean(true_direction == pred_direction) * 100)
             r2 = float(np.nan_to_num(r2_score(y_test, y_pred), nan=0.0))
             rmse = float(np.nan_to_num(np.sqrt(mean_squared_error(y_test, y_pred)), nan=0.0))
             mape = float(np.nan_to_num(np.mean(np.abs((y_test - y_pred) / (np.abs(y_test) + 1e-9))) * 100, nan=0.0))
@@ -336,10 +343,11 @@ class MultiTimeframeConsensus:
             from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
             
             features = ['RSI', 'SMA_10', 'SMA_20', 'SMA_50', 'MACD', 'Signal_Line', 
-                       'BB_Upper', 'BB_Lower', 'Volatility', 'volume_ratio', 'Lag_1', 'Lag_2', 'Lag_3']
+                       'BB_Upper', 'BB_Lower', 'volatility_5', 'volume_ratio', 'Lag_1', 'Lag_2', 'Lag_3']
             
             X = df[features].copy()
-            y = df['Close'].pct_change() * 100
+            # FIX: Use shift(-1) for forecasting
+            y = df['Close'].pct_change().shift(-1) * 100
             
             # Drop NaN values
             valid_idx = ~y.isna()
@@ -367,7 +375,10 @@ class MultiTimeframeConsensus:
             y_pred = model.predict(X_test)
             
             change_pct = float(np.nan_to_num(y_pred[-1], nan=0.0))
-            accuracy = float(np.mean(np.sign(y_pred) == np.sign(y_test)) * 100)
+            # Standardized Directional Classification: Is the percentage change positive (UP) or negative (DOWN)?
+            true_direction = (y_test > 0).astype(int)
+            pred_direction = (y_pred > 0).astype(int)
+            accuracy = float(np.mean(true_direction == pred_direction) * 100)
             r2 = float(np.nan_to_num(r2_score(y_test, y_pred), nan=0.0))
             rmse = float(np.nan_to_num(np.sqrt(mean_squared_error(y_test, y_pred)), nan=0.0))
             mape = float(np.nan_to_num(np.mean(np.abs((y_test - y_pred) / (np.abs(y_test) + 1e-9))) * 100, nan=0.0))
@@ -391,10 +402,11 @@ class MultiTimeframeConsensus:
             from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
             
             features = ['RSI', 'SMA_10', 'SMA_20', 'SMA_50', 'MACD', 'Signal_Line', 
-                       'BB_Upper', 'BB_Lower', 'Volatility', 'volume_ratio', 'Lag_1', 'Lag_2', 'Lag_3']
+                       'BB_Upper', 'BB_Lower', 'volatility_5', 'volume_ratio', 'Lag_1', 'Lag_2', 'Lag_3']
             
             X = df[features].copy()
-            y = df['Close'].pct_change() * 100
+            # FIX: Use shift(-1) for forecasting
+            y = df['Close'].pct_change().shift(-1) * 100
             
             # Drop NaN values
             valid_idx = ~y.isna()
@@ -422,7 +434,10 @@ class MultiTimeframeConsensus:
             y_pred = model.predict(X_test)
             
             change_pct = float(np.nan_to_num(y_pred[-1], nan=0.0))
-            accuracy = float(np.mean(np.sign(y_pred) == np.sign(y_test)) * 100)
+            # Standardized Directional Classification: Is the percentage change positive (UP) or negative (DOWN)?
+            true_direction = (y_test > 0).astype(int)
+            pred_direction = (y_pred > 0).astype(int)
+            accuracy = float(np.mean(true_direction == pred_direction) * 100)
             r2 = float(np.nan_to_num(r2_score(y_test, y_pred), nan=0.0))
             rmse = float(np.nan_to_num(np.sqrt(mean_squared_error(y_test, y_pred)), nan=0.0))
             mape = float(np.nan_to_num(np.mean(np.abs((y_test - y_pred) / (np.abs(y_test) + 1e-9))) * 100, nan=0.0))

@@ -168,8 +168,8 @@ class BacktestUI:
         ToolTip(e_bsize, "Additional % of cash used when Confidence > Boost Threshold.")
 
         # Protection Toggles
-        protect_row = ttk.Frame(adv_frame, pady=10)
-        protect_row.pack(fill=tk.X)
+        protect_row = ttk.Frame(adv_frame)
+        protect_row.pack(fill=tk.X, pady=10)
         
         self.profit_guard_var = tk.BooleanVar(value=False)
         chk_profit = ttk.Checkbutton(protect_row, text="Profit Guard (No loss selling)", variable=self.profit_guard_var)

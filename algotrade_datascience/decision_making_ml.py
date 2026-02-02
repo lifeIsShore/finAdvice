@@ -147,19 +147,19 @@ class DecisionMakingML:
     def get_sentiment_level(self, pct_change: float) -> dict:
         """Return emoji, color, and level based on % change"""
         if pct_change > 2.0:
-            return {"level": "Dramatic ↑", "emoji": "📈", "color": "#00C853", "label": "DRAMATICALLY_UP"}
+            return {"level": "Dramatic UP", "emoji": "+++", "color": "#00C853", "label": "DRAMATICALLY_UP"}
         elif pct_change > 1.0:
-            return {"level": "Strong ↑", "emoji": "↗️", "color": "#2ecc71", "label": "STRONGLY_UP"}
+            return {"level": "Strong UP", "emoji": "++", "color": "#2ecc71", "label": "STRONGLY_UP"}
         elif pct_change > 0.2:
-            return {"level": "Up", "emoji": "📊", "color": "#3498db", "label": "UP"}
+            return {"level": "Up", "emoji": "+", "color": "#3498db", "label": "UP"}
         elif pct_change > -0.2:
-            return {"level": "Neutral", "emoji": "➡️", "color": "#95a5a6", "label": "NEUTRAL"}
+            return {"level": "Neutral", "emoji": "=", "color": "#95a5a6", "label": "NEUTRAL"}
         elif pct_change > -1.0:
-            return {"level": "Down", "emoji": "📉", "color": "#e74c3c", "label": "DOWN"}
+            return {"level": "Down", "emoji": "-", "color": "#e74c3c", "label": "DOWN"}
         elif pct_change > -2.0:
-            return {"level": "Strong ↓", "emoji": "↙️", "color": "#c0392b", "label": "STRONGLY_DOWN"}
+            return {"level": "Strong DOWN", "emoji": "--", "color": "#c0392b", "label": "STRONGLY_DOWN"}
         else:
-            return {"level": "Dramatic ↓", "emoji": "⬇️", "color": "#2c3e50", "label": "DRAMATICALLY_DOWN"}
+            return {"level": "Dramatic DOWN", "emoji": "---", "color": "#2c3e50", "label": "DRAMATICALLY_DOWN"}
 
 
     def get_multi_timeframe_consensus(self):
@@ -383,7 +383,7 @@ class DecisionMakingML:
         try:
             print(f"Generating deep diagnostics for {self.ticker} analytics...")
             self.baseline_models.run_all_intervals(['1d'])
-            print("✓ Deep diagnostics updated")
+            print("OK: Deep diagnostics updated")
         except Exception as e:
             print(f"Warning: Failed to update deep diagnostics: {e}")
 

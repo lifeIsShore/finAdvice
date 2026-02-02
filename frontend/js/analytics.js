@@ -1,10 +1,18 @@
-// Analytics Page JavaScript - FIXED VERSION
-// FIX #3: Proper confusion matrix rendering using bar charts instead of scatter
+// Analytics Page JavaScript - UNIVERSAL VERSION
+// Synchronized with frontend/js/analytics.js
 
-const API_BASE_URL = 'http://127.0.0.1:5000'; // Define the API base URL
+// Dynamic API Base Detection
+const getApiBaseUrl = () => {
+    if (window.location.protocol !== 'file:') {
+        return window.location.origin;
+    }
+    return 'http://127.0.0.1:5000';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Get ticker from URL or global variable
-const ticker = window.currentTicker || new URLSearchParams(window.location.search).get('ticker');
+const ticker = window.currentTicker || new URLSearchParams(window.location.search).get('ticker') || 'AAPL';
 
 async function loadDiagnostics() {
     try {
@@ -17,7 +25,8 @@ async function loadDiagnostics() {
         }
 
         document.getElementById('loading').style.display = 'none';
-        document.getElementById('content').style.display = 'block';
+        const content = document.getElementById('content');
+        if (content) content.style.display = 'block';
 
         // Render all visualizations
         renderExtendedMetrics(data);
@@ -32,14 +41,18 @@ async function loadDiagnostics() {
 }
 
 function showError(message) {
-    document.getElementById('loading').style.display = 'none';
+    const loading = document.getElementById('loading');
+    if (loading) loading.style.display = 'none';
     const errorDiv = document.getElementById('error');
-    errorDiv.textContent = message;
-    errorDiv.style.display = 'block';
+    if (errorDiv) {
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+    }
 }
 
 function renderExtendedMetrics(data) {
     const tbody = document.querySelector('#extended-metrics tbody');
+    if (!tbody) return;
     tbody.innerHTML = '';
 
     const models = ['linear_regression', 'random_forest', 'xgboost'];
@@ -64,7 +77,9 @@ function renderExtendedMetrics(data) {
 }
 
 function renderROCCurves(data) {
-    const ctx = document.getElementById('roc-chart').getContext('2d');
+    const canvas = document.getElementById('roc-chart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
 
     const datasets = [];
     const models = ['linear_regression', 'random_forest', 'xgboost'];
@@ -104,72 +119,30 @@ function renderROCCurves(data) {
         data: { datasets },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             scales: {
-                x: {
-                    type: 'linear',
-                    title: { display: true, text: 'False Positive Rate', color: '#a0aec0' },
-                    grid: { color: 'rgba(255,255,255,0.1)' },
-                    ticks: { color: '#a0aec0' }
-                },
-                y: {
-                    type: 'linear',
-                    title: { display: true, text: 'True Positive Rate', color: '#a0aec0' },
-                    grid: { color: 'rgba(255,255,255,0.1)' },
-                    ticks: { color: '#a0aec0' }
-                }
-            },
-            plugins: {
-                legend: { labels: { color: '#fff' } }
+                x: { type: 'linear', title: { display: true, text: 'False Positive Rate' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                y: { type: 'linear', title: { display: true, text: 'True Positive Rate' }, grid: { color: 'rgba(255,255,255,0.1)' } }
             }
         }
     });
 }
 
 function renderFeatureImportance(data) {
-    const ctx = document.getElementById('feature-chart').getContext('2d');
+    const canvas = document.getElementById('feature-chart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
 
-    // Use Random Forest or XGBoost (whichever has feature importance)
     let featureData = data.random_forest?.feature_importance || data.xgboost?.feature_importance;
-
-    if (!featureData || featureData.length === 0) {
-        ctx.canvas.parentElement.innerHTML = '<p style="color: #a0aec0; text-align: center;">No feature importance data available</p>';
-        return;
-    }
-
-    const labels = featureData.map(f => f.feature);
-    const values = featureData.map(f => f.importance);
+    if (!featureData || featureData.length === 0) return;
 
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels,
-            datasets: [{
-                label: 'Importance',
-                data: values,
-                backgroundColor: 'rgba(102, 126, 234, 0.6)',
-                borderColor: '#667eea',
-                borderWidth: 1
-            }]
+            labels: featureData.map(f => f.feature),
+            datasets: [{ label: 'Importance', data: featureData.map(f => f.importance), backgroundColor: 'rgba(102, 126, 234, 0.6)' }]
         },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: true,
-            scales: {
-                x: {
-                    grid: { color: 'rgba(255,255,255,0.1)' },
-                    ticks: { color: '#a0aec0' }
-                },
-                y: {
-                    grid: { display: false },
-                    ticks: { color: '#a0aec0' }
-                }
-            },
-            plugins: {
-                legend: { display: false }
-            }
-        }
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false }
     });
 }
 
@@ -181,157 +154,46 @@ function renderConfusionMatrices(data) {
     ];
 
     models.forEach(({ key, canvasId, name }) => {
+        const el = document.getElementById(canvasId);
+        if (!el) return;
         const cm = data[key]?.confusion_matrix;
-        if (!cm || cm.length === 0) {
-            document.getElementById(canvasId).parentElement.innerHTML = '<p style="color: #a0aec0; text-align: center;">No data</p>';
-            return;
-        }
-
+        if (!cm || cm.length === 0) return;
         renderConfusionMatrix(canvasId, cm, name);
     });
 }
 
 function renderConfusionMatrix(canvasId, matrix, modelName) {
-    const ctx = document.getElementById(canvasId).getContext('2d');
-
-    // Matrix format: [[TN, FP], [FN, TP]]
-    // Extract values
-    const tn = matrix[0][0];  // True Negatives (Correct Down predictions)
-    const fp = matrix[0][1];  // False Positives (Predicted Up but was Down)
-    const fn = matrix[1][0];  // False Negatives (Predicted Down but was Up)
-    const tp = matrix[1][1];  // True Positives (Correct Up predictions)
-
-    // Create bar chart with 2x2 grid representation
-    const labels = ['Predicted Down\n(Actual Down)', 'Predicted Up\n(Actual Down)',
-        'Predicted Down\n(Actual Up)', 'Predicted Up\n(Actual Up)'];
-    const values = [tn, fp, fn, tp];
-    const colors = [
-        'rgba(76, 175, 80, 0.7)',    // TN - Green (correct)
-        'rgba(255, 152, 0, 0.7)',    // FP - Orange (false alarm)
-        'rgba(244, 67, 54, 0.7)',    // FN - Red (miss)
-        'rgba(76, 175, 80, 0.7)'     // TP - Green (correct)
-    ];
-    const borderColors = [
-        '#4CAF50',    // TN
-        '#FF9800',    // FP
-        '#F44336',    // FN
-        '#4CAF50'     // TP
-    ];
-
-    // Calculate max for scaling
-    const maxValue = Math.max(...values);
+    const el = document.getElementById(canvasId);
+    if (!el) return;
+    const ctx = el.getContext('2d');
+    const labels = ['Predicted Down (Actual Down)', 'Predicted Up (Actual Down)', 'Predicted Down (Actual Up)', 'Predicted Up (Actual Up)'];
+    const values = [matrix[0][0], matrix[0][1], matrix[1][0], matrix[1][1]];
 
     new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
-            datasets: [{
-                label: 'Count',
-                data: values,
-                backgroundColor: colors,
-                borderColor: borderColors,
-                borderWidth: 2,
-                borderRadius: 4
-            }]
+            datasets: [{ label: 'Count', data: values, backgroundColor: ['#4CAF50', '#FF9800', '#F44336', '#4CAF50'] }]
         },
-        options: {
-            indexAxis: 'x',
-            responsive: true,
-            maintainAspectRatio: true,
-            scales: {
-                x: {
-                    stacked: false,
-                    grid: { display: false },
-                    ticks: { color: '#a0aec0' }
-                },
-                y: {
-                    beginAtZero: true,
-                    max: Math.ceil(maxValue * 1.1),  // Add 10% padding
-                    grid: { color: 'rgba(255,255,255,0.1)' },
-                    ticks: { color: '#a0aec0', stepSize: 5 }
-                }
-            },
-            plugins: {
-                legend: { display: true, labels: { color: '#fff' } },
-                tooltip: {
-                    callbacks: {
-                        afterLabel: function (context) {
-                            const idx = context.dataIndex;
-                            const labels_info = [
-                                'True Negatives - Correctly predicted DOWN',
-                                'False Positives - Wrongly predicted UP',
-                                'False Negatives - Wrongly predicted DOWN',
-                                'True Positives - Correctly predicted UP'
-                            ];
-                            return labels_info[idx];
-                        }
-                    },
-                    backgroundColor: 'rgba(0,0,0,0.8)',
-                    titleColor: '#fff',
-                    bodyColor: '#a0aec0'
-                }
-            }
-        }
+        options: { responsive: true, maintainAspectRatio: false }
     });
 }
 
 function renderResidualPlot(data) {
-    const ctx = document.getElementById('residual-chart').getContext('2d');
-
-    // Use the best model's residuals (linear_regression as default)
+    const canvas = document.getElementById('residual-chart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
     const residuals = data.linear_regression?.residuals;
+    if (!residuals || !residuals.actual) return;
 
-    if (!residuals || !residuals.actual) {
-        ctx.canvas.parentElement.innerHTML = '<p style="color: #a0aec0; text-align: center;">No residual data available</p>';
-        return;
-    }
-
-    const points = residuals.actual.map((actual, i) => ({
-        x: residuals.predicted[i],
-        y: residuals.residuals[i]
-    }));
-
+    const points = residuals.actual.map((actual, i) => ({ x: residuals.predicted[i], y: residuals.residuals[i] }));
     new Chart(ctx, {
         type: 'scatter',
         data: {
-            datasets: [{
-                label: 'Residuals',
-                data: points,
-                backgroundColor: 'rgba(102, 126, 234, 0.5)',
-                borderColor: '#667eea',
-                pointRadius: 4
-            }, {
-                label: 'Zero Line',
-                type: 'line',
-                data: [{ x: Math.min(...residuals.predicted), y: 0 }, { x: Math.max(...residuals.predicted), y: 0 }],
-                borderColor: '#ff6b6b',
-                borderDash: [5, 5],
-                borderWidth: 2,
-                pointRadius: 0,
-                fill: false
-            }]
+            datasets: [{ label: 'Residuals', data: points, backgroundColor: 'rgba(102, 126, 234, 0.5)' }]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            scales: {
-                x: {
-                    title: { display: true, text: 'Predicted Values', color: '#a0aec0' },
-                    grid: { color: 'rgba(255,255,255,0.1)' },
-                    ticks: { color: '#a0aec0' }
-                },
-                y: {
-                    title: { display: true, text: 'Residuals', color: '#a0aec0' },
-                    grid: { color: 'rgba(255,255,255,0.1)' },
-                    ticks: { color: '#a0aec0' }
-                }
-            },
-            plugins: {
-                legend: { labels: { color: '#fff' } }
-            }
-        }
+        options: { responsive: true, maintainAspectRatio: false }
     });
 }
 
-// Load diagnostics on page load
 loadDiagnostics();

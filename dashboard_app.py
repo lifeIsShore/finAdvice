@@ -15,21 +15,22 @@ from algotrade_datascience.core.data_storage import DataStorage
 from algotrade_datascience.core.news_fetcher import NewsFetcher
 from algotrade_datascience.features.sentiment_analysis import SentimentProcessor
 
-app = Flask(__name__)
+app = Flask(__name__, 
+            static_folder='frontend',
+            static_url_path='',
+            template_folder='frontend')
 
-@app.after_request
-def add_header(response):
-    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
-    response.headers['Pragma'] = 'no-cache'
-    response.headers['Expires'] = '0'
-    return response
-
-# Add CORS headers to allow local HTML development
 @app.after_request
 def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    origin = request.headers.get('Origin')
+    if origin:
+        response.headers['Access-Control-Allow-Origin'] = origin
+    else:
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,OPTIONS'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
     return response
 
 # Paths
@@ -50,9 +51,16 @@ def get_sentiment_processor():
 print(f"SERVER: Starting in {BASE_DIR}")
 print(f"SERVER: Decisions directory: {DECISIONS_DIR}")
 
-@app.route("/")
+@app.route("/", methods=["GET", "OPTIONS"])
 def index():
-    return render_template("index.html")
+    if request.method == "OPTIONS":
+        return "", 204
+    # We serve the static index.html from the frontend folder
+    return app.send_static_file('index.html')
+
+@app.route("/api/<path:path>", methods=["OPTIONS"])
+def api_options(path):
+    return "", 204
 
 @app.route("/api/tickers")
 def get_tickers():
@@ -264,7 +272,8 @@ def get_model_diagnostics(ticker):
 @app.route("/analytics/<ticker>")
 def analytics_page(ticker):
     """Serve the analytics page"""
-    return render_template("analytics.html", ticker=ticker)
+    # Simply serve the static analytics.html
+    return app.send_static_file('analytics.html')
 
 @app.route("/api/kill_server", methods=["POST"])
 def kill_server():

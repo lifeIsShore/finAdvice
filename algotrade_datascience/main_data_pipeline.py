@@ -157,15 +157,15 @@ def run_pipeline(mode: str = 'auto', tickers: list = None, count: int = 10):
                 filepath = storage.save_news_data(ticker, news_df_limited)
                 if filepath:
                     news_saved += 1
-                    print(f"✓ ({len(news_df_limited)} articles)")
+                    print(f"OK ({len(news_df_limited)} articles)")
                 else:
                     news_failed += 1
-                    print("✗ (save failed)")
+                    print("FAILED (save failed)")
             else:
-                print("⚠ (no news available)")
+                print("WARNING (no news available)")
                 news_failed += 1
         except Exception as e:
-            print(f"✗ (error: {e})")
+            print(f"FAILED (error: {e})")
             news_failed += 1
     
     print("\n--- News Fetch Summary ---")

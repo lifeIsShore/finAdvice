@@ -230,7 +230,7 @@ class BaselineModels:
                 'timestamp': datetime.now().isoformat()
             }
         except Exception as e:
-            print(f"    ⚠️ Prediction error: {e}")
+            print(f"    [WARNING] Prediction error: {e}")
             return None
     
     def generate_diagnostics(self, y_true, y_pred, model, model_name: str, feature_cols: List[str]) -> Dict:

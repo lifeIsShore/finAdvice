@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Model Analytics</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -141,10 +141,17 @@
                     <thead>
                         <tr>
                             <th>Model</th>
-                            <th>Precision</th>
-                            <th>Recall</th>
-                            <th>F1-Score</th>
-                            <th>AUC</th>
+                            <th
+                                data-tooltip="Precision: When the model predicts UP, how often is it correct? Higher is better.">
+                                Precision</th>
+                            <th
+                                data-tooltip="Recall: How many of the actual UP movements did the model catch? Higher is better.">
+                                Recall</th>
+                            <th data-tooltip="F1-Score: A balance between Precision and Recall. Higher is better.">
+                                F1-Score</th>
+                            <th
+                                data-tooltip="AUC: Overall ability of the model to distinguish between UP and DOWN. Higher is better.">
+                                AUC</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -154,35 +161,45 @@
             <div class="grid">
                 <!-- ROC Curves -->
                 <div class="chart-card">
-                    <h3><i class="fas fa-chart-area"></i> ROC Curves</h3>
+                    <h3><i class="fas fa-chart-area"></i> ROC Curves <i class="fas fa-question-circle help-icon"
+                            data-tooltip="Shows the model's accuracy. The closer the line is to the top-left corner, the more accurate the model is."></i>
+                    </h3>
                     <canvas id="roc-chart"></canvas>
                 </div>
 
                 <!-- Feature Importance -->
                 <div class="chart-card">
-                    <h3><i class="fas fa-bars"></i> Feature Importance (Top Models)</h3>
+                    <h3><i class="fas fa-bars"></i> Feature Importance <i class="fas fa-question-circle help-icon"
+                            data-tooltip="Lists the factors (like past price or volume) that the AI focuses on most when making a prediction."></i>
+                    </h3>
                     <canvas id="feature-chart"></canvas>
                 </div>
 
                 <!-- Confusion Matrices -->
                 <div class="chart-card">
-                    <h3><i class="fas fa-th"></i> Confusion Matrix - Linear Regression</h3>
+                    <h3><i class="fas fa-th"></i> Confusion Matrix - LR <i class="fas fa-question-circle help-icon"
+                            data-tooltip="Shows exactly where the model was right and where it made mistakes. Green bars are correct guesses."></i>
+                    </h3>
                     <canvas id="cm-lr"></canvas>
                 </div>
 
                 <div class="chart-card">
-                    <h3><i class="fas fa-th"></i> Confusion Matrix - Random Forest</h3>
+                    <h3><i class="fas fa-th"></i> Confusion Matrix - RF <i class="fas fa-question-circle help-icon"
+                            data-tooltip="Shows correct vs incorrect predictions for this model."></i></h3>
                     <canvas id="cm-rf"></canvas>
                 </div>
 
                 <div class="chart-card">
-                    <h3><i class="fas fa-th"></i> Confusion Matrix - XGBoost</h3>
+                    <h3><i class="fas fa-th"></i> Confusion Matrix - XGB <i class="fas fa-question-circle help-icon"
+                            data-tooltip="Shows correct vs incorrect predictions for this model."></i></h3>
                     <canvas id="cm-xgb"></canvas>
                 </div>
 
                 <!-- Residual Plot -->
                 <div class="chart-card">
-                    <h3><i class="fas fa-scatter-chart"></i> Residual Plot - Best Model</h3>
+                    <h3><i class="fas fa-scatter-chart"></i> Residual Plot <i class="fas fa-question-circle help-icon"
+                            data-tooltip="Shows the prediction errors. Ideally, dots should be randomly scattered around the center line."></i>
+                    </h3>
                     <canvas id="residual-chart"></canvas>
                 </div>
             </div>
@@ -199,7 +216,7 @@
         // Pass ticker to analytics.js via global var or meta
         window.currentTicker = ticker;
     </script>
-    <script src="js/analytics.js"></script>
+    <script src="/js/analytics.js"></script>
 </body>
 
 </html>

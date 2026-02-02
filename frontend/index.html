@@ -50,13 +50,16 @@
                 </div>
             </div>
             <div class="section">
-                <div class="label">Parameters</div>
+                <div class="label">Parameters <i class="fas fa-question-circle help-icon"
+                        data-tooltip="Adjust AI settings for your prediction strategy."></i></div>
                 <div class="param-row">
-                    <span>Horizon</span>
+                    <span>Horizon <i class="fas fa-question-circle help-icon"
+                            data-tooltip="How many days into the future the AI model is looking to predict the price."></i></span>
                     <input type="number" id="param-horizon" value="60" min="1" max="180">
                 </div>
                 <div class="param-row">
-                    <span>Risk Mode</span>
+                    <span>Risk Mode <i class="fas fa-question-circle help-icon"
+                            data-tooltip="Conservative: Safer targets. Aggressive: Higher potential gains but higher risk."></i></span>
                     <select id="param-risk">
                         <option value="conservative">Conservative</option>
                         <option value="aggressive">Aggressive</option>
@@ -81,7 +84,7 @@
                             <span class="value" id="price-val">$---.--</span>
                         </div>
                         <div class="market-sentiment-indicator" id="market-sentiment-box" style="display: none;">
-                            <div class="sentiment-icon" id="sentiment-icon">➡️</div>
+                            <div class="sentiment-icon" id="sentiment-icon">=</div>
                             <div class="sentiment-details">
                                 <div class="sentiment-label" id="sentiment-label">Market Outlook</div>
                                 <div class="sentiment-value" id="sentiment-value">Analyzing...</div>
@@ -92,19 +95,20 @@
             </header>
 
             <div class="cards-row">
-                <div class="card glass in">
+                <div class="card glass in" data-tooltip="Price point where the AI suggests entering a position.">
                     <span class="label">Buy Target</span>
                     <span id="get-in-val" class="val">---</span>
                 </div>
-                <div class="card glass out">
+                <div class="card glass out" data-tooltip="Price point where the AI suggests taking profits.">
                     <span class="label">Sell Target</span>
                     <span id="get-out-val" class="val">---</span>
                 </div>
-                <div class="card glass risk">
+                <div class="card glass risk"
+                    data-tooltip="Safety net: AI suggests selling here to prevent further losses.">
                     <span class="label">Stop Loss</span>
                     <span id="stop-loss-val" class="val">---</span>
                 </div>
-                <div class="card glass gain">
+                <div class="card glass gain" data-tooltip="Estimated percentage gain if Sell Target is reached.">
                     <span class="label">Potential</span>
                     <span id="gain-val" class="val">---</span>
                 </div>
@@ -126,7 +130,9 @@
         <!-- Right Panel -->
         <aside class="right-panel">
             <div class="panel glass">
-                <h3><i class="fas fa-chart-pie"></i> Consensus</h3>
+                <h3><i class="fas fa-chart-pie"></i> Consensus <i class="fas fa-question-circle help-icon"
+                        data-tooltip="Overall agreement between different models and timeframes. 100% means strong agreement."></i>
+                </h3>
                 <div class="consensus-meter">
                     <div id="confidence-pct">0%</div>
                     <div class="meter-track">
@@ -154,8 +160,11 @@
                         <thead>
                             <tr>
                                 <th>Model</th>
-                                <th>Acc %</th>
-                                <th>RMSE</th>
+                                <th
+                                    data-tooltip="Accuracy: How often the model correctly guessed the direction (Up/Down). Higher is better!">
+                                    Acc %</th>
+                                <th data-tooltip="Error: Average distance from the actual price. Lower is better!">RMSE
+                                </th>
                             </tr>
                         </thead>
                         <tbody id="model-table-body">

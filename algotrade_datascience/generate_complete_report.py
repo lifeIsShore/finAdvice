@@ -461,7 +461,7 @@ def generate_one_ticker_card(ticker):
         summary_boxes = f"""
         <div class="grid">
             <div class="stat-box">
-                <div class="stat-label">Max Predictive R²</div>
+                <div class="stat-label">Max Predictive R2</div>
                 <div class="stat-value">{(best_r2*100):.1f}%</div>
             </div>
             <div class="stat-box">
@@ -482,7 +482,7 @@ def generate_one_ticker_card(ticker):
             forecast_html = ""
             if pred:
                 color = "var(--success)" if pred['direction'] == "UP" else "var(--danger)"
-                icon = "▲" if pred['direction'] == "UP" else "▼"
+                icon = "[UP]" if pred['direction'] == "UP" else "[DOWN]"
                 forecast_html = f"""
                 <div class="forecast-card" style="border-left: 5px solid {color}">
                     <div class="forecast-label">NEXT {interval.upper()} SIGNAL</div>
@@ -511,7 +511,7 @@ def generate_one_ticker_card(ticker):
                         <tr>
                             <th>Model</th>
                             <th>RMSE</th>
-                            <th>R² Score</th>
+                            <th>R2 Score</th>
                             <th>Error (MAPE)</th>
                             <th>Direction Acc.</th>
                         </tr>
@@ -575,7 +575,7 @@ def generate_one_ticker_card(ticker):
         <h2>Performance Deep-Dive</h2>
         <div class="grid">
             <div class="chart-box">
-                <h3>R² Comparison Across Models</h3>
+                <h3>R2 Comparison Across Models</h3>
                 <div class="img-container">
                     <img src="visualizations/{ticker}/r2_comparison.png" onerror="this.style.display='none'"/>
                 </div>

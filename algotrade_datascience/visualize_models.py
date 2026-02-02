@@ -48,7 +48,7 @@ class ModelVisualizer:
             r2_values = [self.results[interval]['metrics'][model]['r2'] if self.results[interval]['metrics'][model]['r2'] is not None else 0 for interval in intervals]
             ax.bar(x + i * width, r2_values, width, label=name)
         
-        ax.set_title(f'R² Score by Interval - {self.ticker}')
+        ax.set_title(f'R2 Score by Interval - {self.ticker}')
         ax.set_xticks(x + width * 1.5)
         ax.set_xticklabels([i.upper() for i in intervals])
         ax.legend()
@@ -112,7 +112,7 @@ class ModelVisualizer:
         df = pd.DataFrame(data, index=model_names, columns=[i.upper() for i in intervals])
         plt.figure(figsize=(10, 4))
         sns.heatmap(df, annot=True, cmap='RdYlGn', vmin=-1, vmax=1)
-        plt.title(f'R² Score Heatmap - {self.ticker}')
+        plt.title(f'R2 Score Heatmap - {self.ticker}')
         plt.tight_layout()
         plt.savefig(self.output_dir / 'metrics_heatmap.png', dpi=150)
         plt.close()
@@ -125,4 +125,4 @@ if __name__ == "__main__":
             viz = ModelVisualizer(ticker)
             viz.generate_all()
         except Exception as e:
-            print(f"  ⚠️ Skipping {ticker}: {str(e)}")
+            print(f"  [WARNING] Skipping {ticker}: {str(e)}")

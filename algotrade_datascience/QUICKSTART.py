@@ -77,28 +77,28 @@ COMMON ISSUES
 =============
 
 1. "ModuleNotFoundError: No module named 'yfinance'"
-   → pip install yfinance pandas
+   - Run: pip install yfinance pandas
 
 2. "No valid tickers to process"
-   → Check ticker spelling (must be uppercase)
-   → Verify internet connection
-   → Try: python ticker_selector.py
+   - Check ticker spelling (must be uppercase)
+   - Verify internet connection
+   - Try: python ticker_selector.py
 
 3. Quality checks failing
-   → Review data/quality_report.json
-   → Some tickers may have limited historical data
-   → Re-run for specific tickers
+   - Review data/quality_report.json
+   - Some tickers may have limited historical data
+   - Re-run for specific tickers
 
 4. Slow execution
-   → Normal! yfinance rate limits requests
-   → Expect ~30 seconds per ticker
-   → Reduce ticker count for faster testing
+   - Normal! yfinance rate limits requests
+   - Expect ~30 seconds per ticker
+   - Reduce ticker count for faster testing
 
 
 NEXT STEPS
 ==========
 Once Phase 1 data is validated:
-→ Phase 2: Feature Engineering (coming next)
+- Phase 2: Feature Engineering (coming next)
    - Rolling windows
    - Technical indicators (RSI, MACD, Bollinger Bands)
    - Momentum, volatility, volume features
@@ -113,7 +113,7 @@ Check these files for help:
   data/quality_report.json   - Data quality metrics
 
 ==============================================================================
-                    Ready to build your trading model! 🚀
+                    Ready to build your trading model! SUCCESS
 ==============================================================================
 """
 

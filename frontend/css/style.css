@@ -799,3 +799,67 @@ body {
         text-align: center;
     }
 }
+
+/* Enhanced Tooltips */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 15px;
+    background: rgba(15, 23, 42, 0.95);
+    color: white;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    white-space: normal;
+    width: 220px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--glass-border);
+    z-index: 1000;
+    text-align: center;
+    line-height: 1.4;
+    font-weight: 400;
+    pointer-events: none;
+}
+
+[data-tooltip]:after {
+    content: '';
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: rgba(15, 23, 42, 0.95);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.help-icon {
+    margin-left: 6px;
+    opacity: 0.5;
+    font-size: 0.9em;
+    cursor: help;
+}
+
+.help-icon:hover {
+    opacity: 1;
+    color: var(--primary);
+}

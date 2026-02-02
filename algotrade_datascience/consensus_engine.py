@@ -13,14 +13,14 @@ import json
 from datetime import datetime
 
 class Sentiment(Enum):
-    """Sentiment levels with emoji representations"""
-    DRAMATICALLY_UP = ("📈", "Dramatic ↑", 2.0, "#27ae60")
-    STRONGLY_UP = ("↗️", "Strong ↑", 1.5, "#2ecc71")
-    UP = ("📊", "Up", 1.0, "#3498db")
-    NEUTRAL = ("➡️", "Neutral", 0.0, "#95a5a6")
-    DOWN = ("📉", "Down", -1.0, "#e74c3c")
-    STRONGLY_DOWN = ("↙️", "Strong ↓", -1.5, "#c0392b")
-    DRAMATICALLY_DOWN = ("⬇️", "Dramatic ↓", -2.0, "#8b0000")
+    """Sentiment levels with text representations (Unicode-safe)"""
+    DRAMATICALLY_UP = ("+++", "Dramatic UP", 2.0, "#27ae60")
+    STRONGLY_UP = ("++", "Strong UP", 1.5, "#2ecc71")
+    UP = ("+", "Up", 1.0, "#3498db")
+    NEUTRAL = ("=", "Neutral", 0.0, "#95a5a6")
+    DOWN = ("-", "Down", -1.0, "#e74c3c")
+    STRONGLY_DOWN = ("--", "Strong DOWN", -1.5, "#c0392b")
+    DRAMATICALLY_DOWN = ("---", "Dramatic DOWN", -2.0, "#8b0000")
 
     @property
     def emoji(self):
@@ -195,7 +195,7 @@ class MultiTimeframeConsensus:
             print(f"  [Consensus] {interval}: All models failed to generate predictions")
             return None
         
-        # Select best model (highest R² or accuracy)
+        # Select best model (highest R-squared or accuracy)
         best_model = max(models_results, key=lambda m: m.r2_score)
         
         # Calculate ensemble prediction (average of all models)
@@ -462,9 +462,9 @@ class MultiTimeframeConsensus:
                 
                 if prediction:
                     self.predictions[interval] = prediction
-                    print(f"  [Consensus] ✅ Success for {interval}: {prediction.sentiment.name}")
+                    print(f"  [Consensus] SUCCESS for {interval}: {prediction.sentiment.name}")
                 else:
-                    print(f"  [Consensus] ❌ Failed to generate prediction for {interval}")
+                    print(f"  [Consensus] FAILED to generate prediction for {interval}")
             except Exception as e:
                 print(f"Failed to generate prediction for {interval}: {e}")
                 continue

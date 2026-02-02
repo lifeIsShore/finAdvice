@@ -101,26 +101,47 @@ class BacktestUI:
         self.ticker_var = tk.StringVar(value="BTC-USD")
         e_ticker = ttk.Entry(grid, textvariable=self.ticker_var)
         e_ticker.grid(row=0, column=1, sticky="ew", pady=5, padx=(5, 15))
-        ToolTip(e_ticker, "Symbol from Yahoo Finance (e.g. BTC-USD, TSLA).\nAuto-downloads if missing.")
+        ToolTip(e_ticker, (
+            "🔍 SEARCH SYMBOL\n"
+            "Tell the bot which asset to analyze.\n\n"
+            "Example: 'AAPL' for Apple, 'BTC-USD' for Bitcoin.\n"
+            "Tip: We use Yahoo Finance symbols."
+        ))
         
         ttk.Label(grid, text="Interval:").grid(row=0, column=2, sticky="w", pady=5)
         self.interval_var = tk.StringVar(value="1d")
         cb_interval = ttk.Combobox(grid, textvariable=self.interval_var, values=["1h", "4h", "1d", "1wk"])
         cb_interval.grid(row=0, column=3, sticky="ew", pady=5, padx=5)
-        ToolTip(cb_interval, "Trading frequency. Higher timeframes usually yield more stable signals.")
+        ToolTip(cb_interval, (
+            "🕒 REFRESH SPEED\n"
+            "How often should the AI check the price?\n\n"
+            "1h = Hourly (Fast/Scalping)\n"
+            "1d = Daily (Recommended for beginners)\n"
+            "1wk = Weekly (Long-term investing)"
+        ))
         
         # Row 1: Start Date & Initial Capital
         ttk.Label(grid, text="Start:").grid(row=1, column=0, sticky="w", pady=5)
         self.start_date_var = tk.StringVar(value="2024-01-01")
         e_start = ttk.Entry(grid, textvariable=self.start_date_var)
         e_start.grid(row=1, column=1, sticky="ew", pady=5, padx=(5, 15))
-        ToolTip(e_start, "Backtest start date (YYYY-MM-DD).")
+        ToolTip(e_start, (
+            "📅 TIME TRAVEL\n"
+            "When should the simulation start?\n\n"
+            "Example: 2023-01-01 to see how the bot\n"
+            "would have handled the last year."
+        ))
         
         ttk.Label(grid, text="Capital ($):").grid(row=1, column=2, sticky="w", pady=5)
         self.capital_var = tk.DoubleVar(value=10000.0)
         e_cap = ttk.Entry(grid, textvariable=self.capital_var)
         e_cap.grid(row=1, column=3, sticky="ew", pady=5, padx=5)
-        ToolTip(e_cap, "Starting virtual cash balance.")
+        ToolTip(e_cap, (
+            "💵 STARTING STACK\n"
+            "How much paper money do you want to start with?\n\n"
+            "Note: This is just for the test, it doesn't\n"
+            "use your real money!"
+        ))
 
         # --- 2. ADVANCED STRATEGY & SCALING ---
         adv_frame = ttk.LabelFrame(left_col, text=" 2. Advanced Strategy & Scaling ", padding="15")
@@ -134,13 +155,24 @@ class BacktestUI:
         self.buy_thresh_var = tk.DoubleVar(value=50.0)
         e_buy = ttk.Entry(thresh_row, textvariable=self.buy_thresh_var, width=8)
         e_buy.pack(side=tk.LEFT, padx=(5, 20))
-        ToolTip(e_buy, "Minimum AI certainty to Buy (0-100).")
+        ToolTip(e_buy, (
+            "🚀 BUY THRESHOLD\n"
+            "This is the AI's 'Confidence Gate'.\n\n"
+            "Example: If set to 50, the bot ONLY buys when the AI is 50% sure.\n"
+            "Set to 80 for 'Safe/Sniping' mode.\n"
+            "Set to 30 for 'Aggressive' mode."
+        ))
         
         ttk.Label(thresh_row, text="Sell Thresh (%):").pack(side=tk.LEFT)
         self.sell_thresh_var = tk.DoubleVar(value=0.0)
         e_sell = ttk.Entry(thresh_row, textvariable=self.sell_thresh_var, width=8)
         e_sell.pack(side=tk.LEFT, padx=5)
-        ToolTip(e_sell, "Exit signal. 0 = Exit when no longer bullish. -50 = Exit during crash.")
+        ToolTip(e_sell, (
+            "🛑 SELL THRESHOLD\n"
+            "When should the bot panic and exit?\n\n"
+            "Example: 0 means 'Sell the moment AI is no longer bullish'.\n"
+            "Example: -50 means 'Hold until the AI is screaming that a CRASH is coming'."
+        ))
         
         # Position Scaling (Pyramiding)
         scaling_label = ttk.Label(adv_frame, text="Position Scaling (Pyramiding)", style="SubHeader.TLabel")
@@ -153,19 +185,35 @@ class BacktestUI:
         self.pos_size_var = tk.DoubleVar(value=100.0)
         e_psize = ttk.Entry(scaling_row, textvariable=self.pos_size_var, width=8)
         e_psize.grid(row=0, column=1, sticky="w", pady=5, padx=5)
-        ToolTip(e_psize, "Percent of available cash used for each Buy. \nSet <100 to Buy several times (Pyramiding).")
+        ToolTip(e_psize, (
+            "💰 BASE BUY SIZE\n"
+            "How much of your wallet to use for the FIRST buy.\n\n"
+            "Example: If set to 25%, the bot buys 1/4 of your cash.\n"
+            "This allows the bot to 'Buy more' later if things look good (Pyramiding)!\n"
+            "Set to 100% to go 'All-In' on the first signal."
+        ))
         
         ttk.Label(scaling_row, text="Confidence Boost (>%):").grid(row=0, column=2, sticky="w", pady=5, padx=(20, 0))
         self.boost_thresh_var = tk.DoubleVar(value=80.0)
         e_bthresh = ttk.Entry(scaling_row, textvariable=self.boost_thresh_var, width=8)
         e_bthresh.grid(row=0, column=3, sticky="w", pady=5, padx=5)
-        ToolTip(e_bthresh, "AI level that triggers an extra 'Power Buy'.")
+        ToolTip(e_bthresh, (
+            "🔥 CONFIDENCE BOOST\n"
+            "The 'Super Signal' Level.\n\n"
+            "Example: If set to 80, the bot treats any AI score above 80 as a 'Gold Mine'.\n"
+            "It will then add the 'Boost Size' extra cash on top of the normal buy."
+        ))
         
         ttk.Label(scaling_row, text="Boost Size (+%):").grid(row=0, column=4, sticky="w", pady=5, padx=(20, 0))
         self.boost_size_var = tk.DoubleVar(value=0.0)
         e_bsize = ttk.Entry(scaling_row, textvariable=self.boost_size_var, width=8)
         e_bsize.grid(row=0, column=5, sticky="w", pady=5, padx=5)
-        ToolTip(e_bsize, "Additional % of cash used when Confidence > Boost Threshold.")
+        ToolTip(e_bsize, (
+            "🏗️ EXTRA BOOST AMOUNT\n"
+            "How much EXTRA to buy during a Gold Mine signal.\n\n"
+            "Example: If Base is 20% and Boost is 30%,\n"
+            "the bot will buy 50% total when confidence is very high."
+        ))
 
         # Protection Toggles
         protect_row = ttk.Frame(adv_frame)
@@ -174,7 +222,12 @@ class BacktestUI:
         self.profit_guard_var = tk.BooleanVar(value=False)
         chk_profit = ttk.Checkbutton(protect_row, text="Profit Guard (No loss selling)", variable=self.profit_guard_var)
         chk_profit.pack(side=tk.LEFT, padx=(0, 20))
-        ToolTip(chk_profit, "Ignore sell signals if price is below purchase point.")
+        ToolTip(chk_profit, (
+            "🛡️ PROFIT GUARD\n"
+            "The 'Diamond Hands' mode.\n\n"
+            "If on: The bot will REFUSE to sell if the price is lower\n"
+            "than what you paid. It only sells for a win!"
+        ))
         
         self.sl_enabled_var = tk.BooleanVar(value=False)
         chk_sl = ttk.Checkbutton(protect_row, text="Stop Loss (%)", variable=self.sl_enabled_var)
@@ -182,7 +235,12 @@ class BacktestUI:
         self.sl_val_var = tk.DoubleVar(value=5.0)
         e_sl = ttk.Entry(protect_row, textvariable=self.sl_val_var, width=6)
         e_sl.pack(side=tk.LEFT, padx=10)
-        ToolTip(chk_sl, "Emergency exit if trade drops X% below entry price.")
+        ToolTip(chk_sl, (
+            "⚓ STOP LOSS\n"
+            "Your 'Escape Hatch'.\n\n"
+            "If the trade goes wrong by X%, we sell everything\n"
+            "immediately to save the rest of your money."
+        ))
 
         # --- Button Area ---
         btn_frame = ttk.Frame(left_col)

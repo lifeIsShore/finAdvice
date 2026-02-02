@@ -21,7 +21,7 @@ Welcome to the **FinAdvice** documentation! This index helps you find exactly wh
 
 ### 📋 Project Information
 
-8. **[user-stories.json](user-stories.json)** - Feature specifications
+8. **[docs/user-stories.json](docs/user-stories.json)** - Feature specifications
 9. **[LICENSE](LICENSE)** - MIT License
 
 ---
@@ -76,7 +76,7 @@ Welcome to the **FinAdvice** documentation! This index helps you find exactly wh
 finAdvice/
 ├── README.md                    # Main entry point
 ├── LICENSE                      # MIT License
-├── user-stories.json            # Specs
+├── docs/user-stories.json       # Specs
 │
 ├── docs/                        # Deep dive docs
 │   ├── ARCHITECTURE.md
@@ -161,9 +161,6 @@ finAdvice/
 # Main README
 cat README.md
 
-# Quick reference
-cat QUICK_REFERENCE.md
-
 # Getting started
 cat algotrade_datascience/START_HERE.md
 
@@ -240,8 +237,8 @@ python data_quality_checker.py
 
 ---
 
-**Last Updated**: January 22, 2026  
-**Documentation Version**: 1.0.0  
+**Last Updated**: February 2, 2026  
+**Documentation Version**: 2.1.0  
 **Total Documentation**: 13 files, ~151KB  
 
 ---

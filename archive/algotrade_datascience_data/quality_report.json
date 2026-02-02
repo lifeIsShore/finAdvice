@@ -1,0 +1,1913 @@
+{
+  "tickers_checked": 2,
+  "files_checked": 84,
+  "passed": 82,
+  "failed": 2,
+  "issues": [],
+  "detailed_reports": [
+    {
+      "ticker": "AAPL",
+      "interval": "4h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 116,
+        "min_expected_rows": 100,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 12:00:00+00:00",
+          "end": "2026-01-22 12:00:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.008620689655172414
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1d",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 345,
+        "min_expected_rows": 300,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-09-06 00:00:00",
+          "end": "2026-01-22 00:00:00",
+          "span_days": 503
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1wk",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 104,
+        "min_expected_rows": 80,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-01-29 00:00:00",
+          "end": "2026-01-19 00:00:00",
+          "span_days": 721
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 50,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-02-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1795
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-04-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1736
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "4h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 116,
+        "min_expected_rows": 100,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 12:00:00+00:00",
+          "end": "2026-01-22 12:00:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1d",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 345,
+        "min_expected_rows": 300,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-09-06 00:00:00",
+          "end": "2026-01-22 00:00:00",
+          "span_days": 503
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1wk",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 104,
+        "min_expected_rows": 80,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-01-29 00:00:00",
+          "end": "2026-01-19 00:00:00",
+          "span_days": 721
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 50,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-02-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1795
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-04-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1736
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "4h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 116,
+        "min_expected_rows": 100,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 12:00:00+00:00",
+          "end": "2026-01-22 12:00:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.008620689655172414
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1d",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 345,
+        "min_expected_rows": 300,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-09-06 00:00:00",
+          "end": "2026-01-22 00:00:00",
+          "span_days": 503
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1wk",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 104,
+        "min_expected_rows": 80,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-01-29 00:00:00",
+          "end": "2026-01-19 00:00:00",
+          "span_days": 721
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 50,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-02-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1795
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-04-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1736
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 267,
+        "min_expected_rows": 250,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 14:30:00+00:00",
+          "end": "2026-01-22 15:30:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.00749063670411985
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "30m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 52,
+        "min_expected_rows": 50,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-15 15:30:00+00:00",
+          "end": "2026-01-22 15:00:00+00:00",
+          "span_days": 6
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "15m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 104,
+        "min_expected_rows": 100,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-15 15:30:00+00:00",
+          "end": "2026-01-22 15:15:00+00:00",
+          "span_days": 6
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "5m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 180,
+        "min_expected_rows": 150,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-20 14:30:00+00:00",
+          "end": "2026-01-22 16:25:00+00:00",
+          "span_days": 2
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:27:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "2m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 30,
+        "min_expected_rows": 20,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:28:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.03333333333333333
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 30,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:29:00+00:00",
+          "end": "2026-01-22 16:28:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.016666666666666666
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "4h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 116,
+        "min_expected_rows": 100,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 12:00:00+00:00",
+          "end": "2026-01-22 12:00:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1d",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 345,
+        "min_expected_rows": 300,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-09-06 00:00:00",
+          "end": "2026-01-22 00:00:00",
+          "span_days": 503
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1wk",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 104,
+        "min_expected_rows": 80,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-01-29 00:00:00",
+          "end": "2026-01-19 00:00:00",
+          "span_days": 721
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 50,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-02-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1795
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-04-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1736
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 267,
+        "min_expected_rows": 250,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 14:30:00+00:00",
+          "end": "2026-01-22 15:30:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.003745318352059925
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "30m",
+      "passed": false,
+      "issues": [
+        "File not found or could not be loaded"
+      ],
+      "metrics": {}
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "15m",
+      "passed": false,
+      "issues": [
+        "File not found or could not be loaded"
+      ],
+      "metrics": {}
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "5m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 180,
+        "min_expected_rows": 150,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-20 14:30:00+00:00",
+          "end": "2026-01-22 16:25:00+00:00",
+          "span_days": 2
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:27:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "2m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 30,
+        "min_expected_rows": 20,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:28:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 30,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:29:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.016666666666666666
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "4h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 116,
+        "min_expected_rows": 100,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 12:00:00+00:00",
+          "end": "2026-01-22 12:00:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.008620689655172414
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1d",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 345,
+        "min_expected_rows": 300,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-09-06 00:00:00",
+          "end": "2026-01-22 00:00:00",
+          "span_days": 503
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1wk",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 104,
+        "min_expected_rows": 80,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-01-29 00:00:00",
+          "end": "2026-01-19 00:00:00",
+          "span_days": 721
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 50,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-02-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1795
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-04-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1736
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 267,
+        "min_expected_rows": 250,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 14:30:00+00:00",
+          "end": "2026-01-22 15:30:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.00749063670411985
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "5m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 180,
+        "min_expected_rows": 150,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-20 14:30:00+00:00",
+          "end": "2026-01-22 16:25:00+00:00",
+          "span_days": 2
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:27:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "2m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 30,
+        "min_expected_rows": 20,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:28:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.03333333333333333
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 30,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:29:00+00:00",
+          "end": "2026-01-22 16:28:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.016666666666666666
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "4h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 116,
+        "min_expected_rows": 100,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 12:00:00+00:00",
+          "end": "2026-01-22 12:00:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.008620689655172414
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1d",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 345,
+        "min_expected_rows": 300,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-09-06 00:00:00",
+          "end": "2026-01-22 00:00:00",
+          "span_days": 503
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1wk",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 104,
+        "min_expected_rows": 80,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-01-29 00:00:00",
+          "end": "2026-01-19 00:00:00",
+          "span_days": 721
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 50,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-02-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1795
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-04-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1736
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 267,
+        "min_expected_rows": 250,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 14:30:00+00:00",
+          "end": "2026-01-22 15:30:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.00749063670411985
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "5m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 180,
+        "min_expected_rows": 150,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-20 14:30:00+00:00",
+          "end": "2026-01-22 16:25:00+00:00",
+          "span_days": 2
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:27:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "2m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 30,
+        "min_expected_rows": 20,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:28:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.03333333333333333
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 30,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:29:00+00:00",
+          "end": "2026-01-22 16:28:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.016666666666666666
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "4h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 116,
+        "min_expected_rows": 100,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 12:00:00+00:00",
+          "end": "2026-01-22 12:00:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1d",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 345,
+        "min_expected_rows": 300,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-09-06 00:00:00",
+          "end": "2026-01-22 00:00:00",
+          "span_days": 503
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1wk",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 104,
+        "min_expected_rows": 80,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-01-29 00:00:00",
+          "end": "2026-01-19 00:00:00",
+          "span_days": 721
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 50,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-02-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1795
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-04-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1736
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 267,
+        "min_expected_rows": 250,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 14:30:00+00:00",
+          "end": "2026-01-22 15:30:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.003745318352059925
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "5m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 180,
+        "min_expected_rows": 150,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-20 14:30:00+00:00",
+          "end": "2026-01-22 16:25:00+00:00",
+          "span_days": 2
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:27:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "2m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 30,
+        "min_expected_rows": 20,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:28:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 30,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:29:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.016666666666666666
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "4h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 116,
+        "min_expected_rows": 100,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 12:00:00+00:00",
+          "end": "2026-01-22 12:00:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.008620689655172414
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1d",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 345,
+        "min_expected_rows": 300,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-09-06 00:00:00",
+          "end": "2026-01-22 00:00:00",
+          "span_days": 503
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1wk",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 104,
+        "min_expected_rows": 80,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-01-29 00:00:00",
+          "end": "2026-01-19 00:00:00",
+          "span_days": 721
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 50,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-02-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1795
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-04-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1736
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 267,
+        "min_expected_rows": 250,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 14:30:00+00:00",
+          "end": "2026-01-22 15:30:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.00749063670411985
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "5m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 180,
+        "min_expected_rows": 150,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-20 14:30:00+00:00",
+          "end": "2026-01-22 16:25:00+00:00",
+          "span_days": 2
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:27:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "2m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 30,
+        "min_expected_rows": 20,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:28:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.03333333333333333
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 30,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:29:00+00:00",
+          "end": "2026-01-22 16:28:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.016666666666666666
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "4h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 116,
+        "min_expected_rows": 100,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 12:00:00+00:00",
+          "end": "2026-01-22 12:00:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1d",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 345,
+        "min_expected_rows": 300,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-09-06 00:00:00",
+          "end": "2026-01-22 00:00:00",
+          "span_days": 503
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1wk",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 104,
+        "min_expected_rows": 80,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2024-01-29 00:00:00",
+          "end": "2026-01-19 00:00:00",
+          "span_days": 721
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 50,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-02-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1795
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3mo",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2021-04-01 00:00:00",
+          "end": "2026-01-01 00:00:00",
+          "span_days": 1736
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1h",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 267,
+        "min_expected_rows": 250,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2025-11-24 14:30:00+00:00",
+          "end": "2026-01-22 15:30:00+00:00",
+          "span_days": 59
+        },
+        "zero_volume_pct": 0.003745318352059925
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "5m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 180,
+        "min_expected_rows": 150,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-20 14:30:00+00:00",
+          "end": "2026-01-22 16:25:00+00:00",
+          "span_days": 2
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 20,
+        "min_expected_rows": 15,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:27:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "2m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 30,
+        "min_expected_rows": 20,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:28:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.0
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1m",
+      "passed": true,
+      "issues": [],
+      "metrics": {
+        "row_count": 60,
+        "min_expected_rows": 30,
+        "missing_data": {
+          "Open": 0.0,
+          "High": 0.0,
+          "Low": 0.0,
+          "Close": 0.0,
+          "Volume": 0.0
+        },
+        "date_range": {
+          "start": "2026-01-22 15:30:00+00:00",
+          "end": "2026-01-22 16:29:00+00:00",
+          "span_days": 0
+        },
+        "zero_volume_pct": 0.016666666666666666
+      }
+    }
+  ]
+}

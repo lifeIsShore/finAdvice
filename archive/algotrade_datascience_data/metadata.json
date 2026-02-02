@@ -1,0 +1,2358 @@
+{
+  "fetches": [
+    {
+      "ticker": "AAPL",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_4h_20260122.csv",
+      "row_count": 27,
+      "timestamp": "2026-01-22T16:14:21.062835",
+      "date_range": {
+        "start": "2026-01-08 16:00:00+00:00",
+        "end": "2026-01-22 12:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1d_20260122.csv",
+      "row_count": 19,
+      "timestamp": "2026-01-22T16:14:21.093888",
+      "date_range": {
+        "start": "2025-12-24",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1wk_20260122.csv",
+      "row_count": 13,
+      "timestamp": "2026-01-22T16:14:21.121804",
+      "date_range": {
+        "start": "2025-10-27",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1mo_20260122.csv",
+      "row_count": 12,
+      "timestamp": "2026-01-22T16:14:21.149809",
+      "date_range": {
+        "start": "2025-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_3mo_20260122.csv",
+      "row_count": 8,
+      "timestamp": "2026-01-22T16:14:21.182802",
+      "date_range": {
+        "start": "2024-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_4h_20260122.csv",
+      "row_count": 27,
+      "timestamp": "2026-01-22T16:14:21.213813",
+      "date_range": {
+        "start": "2026-01-08 16:00:00+00:00",
+        "end": "2026-01-22 12:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1d_20260122.csv",
+      "row_count": 19,
+      "timestamp": "2026-01-22T16:14:21.246903",
+      "date_range": {
+        "start": "2025-12-24",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1wk_20260122.csv",
+      "row_count": 13,
+      "timestamp": "2026-01-22T16:14:21.276946",
+      "date_range": {
+        "start": "2025-10-27",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1mo_20260122.csv",
+      "row_count": 12,
+      "timestamp": "2026-01-22T16:14:21.310309",
+      "date_range": {
+        "start": "2025-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_3mo_20260122.csv",
+      "row_count": 8,
+      "timestamp": "2026-01-22T16:14:21.341359",
+      "date_range": {
+        "start": "2024-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_4h_20260122.csv",
+      "row_count": 27,
+      "timestamp": "2026-01-22T16:28:16.824367",
+      "date_range": {
+        "start": "2026-01-08 16:00:00+00:00",
+        "end": "2026-01-22 12:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1d_20260122.csv",
+      "row_count": 19,
+      "timestamp": "2026-01-22T16:28:16.872915",
+      "date_range": {
+        "start": "2025-12-24",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1wk_20260122.csv",
+      "row_count": 13,
+      "timestamp": "2026-01-22T16:28:16.912907",
+      "date_range": {
+        "start": "2025-10-27",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1mo_20260122.csv",
+      "row_count": 12,
+      "timestamp": "2026-01-22T16:28:16.950069",
+      "date_range": {
+        "start": "2025-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_3mo_20260122.csv",
+      "row_count": 8,
+      "timestamp": "2026-01-22T16:28:16.990497",
+      "date_range": {
+        "start": "2024-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1h_20260122.csv",
+      "row_count": 28,
+      "timestamp": "2026-01-22T16:28:17.032275",
+      "date_range": {
+        "start": "2026-01-15 15:30:00+00:00",
+        "end": "2026-01-22 14:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "30m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_30m_20260122.csv",
+      "row_count": 52,
+      "timestamp": "2026-01-22T16:28:17.075651",
+      "date_range": {
+        "start": "2026-01-15 15:30:00+00:00",
+        "end": "2026-01-22 15:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "15m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_15m_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T16:28:17.115975",
+      "date_range": {
+        "start": "2026-01-15 15:30:00+00:00",
+        "end": "2026-01-22 15:15:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_5m_20260122.csv",
+      "row_count": 12,
+      "timestamp": "2026-01-22T16:28:17.170314",
+      "date_range": {
+        "start": "2026-01-22 14:30:00+00:00",
+        "end": "2026-01-22 15:25:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T16:28:17.204691",
+      "date_range": {
+        "start": "2026-01-22 14:30:00+00:00",
+        "end": "2026-01-22 15:27:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_2m_20260122.csv",
+      "row_count": 29,
+      "timestamp": "2026-01-22T16:28:17.252548",
+      "date_range": {
+        "start": "2026-01-22 14:30:00+00:00",
+        "end": "2026-01-22 15:26:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1m_20260122.csv",
+      "row_count": 58,
+      "timestamp": "2026-01-22T16:28:17.289061",
+      "date_range": {
+        "start": "2026-01-22 14:30:00+00:00",
+        "end": "2026-01-22 15:27:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_4h_20260122.csv",
+      "row_count": 27,
+      "timestamp": "2026-01-22T16:28:17.333925",
+      "date_range": {
+        "start": "2026-01-08 16:00:00+00:00",
+        "end": "2026-01-22 12:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1d_20260122.csv",
+      "row_count": 19,
+      "timestamp": "2026-01-22T16:28:17.382033",
+      "date_range": {
+        "start": "2025-12-24",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1wk_20260122.csv",
+      "row_count": 13,
+      "timestamp": "2026-01-22T16:28:17.425611",
+      "date_range": {
+        "start": "2025-10-27",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1mo_20260122.csv",
+      "row_count": 12,
+      "timestamp": "2026-01-22T16:28:17.457606",
+      "date_range": {
+        "start": "2025-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_3mo_20260122.csv",
+      "row_count": 8,
+      "timestamp": "2026-01-22T16:28:17.489048",
+      "date_range": {
+        "start": "2024-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1h_20260122.csv",
+      "row_count": 28,
+      "timestamp": "2026-01-22T16:28:17.520758",
+      "date_range": {
+        "start": "2026-01-15 15:30:00+00:00",
+        "end": "2026-01-22 14:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "30m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_30m_20260122.csv",
+      "row_count": 52,
+      "timestamp": "2026-01-22T16:28:17.551806",
+      "date_range": {
+        "start": "2026-01-15 15:30:00+00:00",
+        "end": "2026-01-22 15:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "15m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_15m_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T16:28:17.587717",
+      "date_range": {
+        "start": "2026-01-15 15:30:00+00:00",
+        "end": "2026-01-22 15:15:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_5m_20260122.csv",
+      "row_count": 12,
+      "timestamp": "2026-01-22T16:28:17.620550",
+      "date_range": {
+        "start": "2026-01-22 14:30:00+00:00",
+        "end": "2026-01-22 15:25:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T16:28:17.650067",
+      "date_range": {
+        "start": "2026-01-22 14:30:00+00:00",
+        "end": "2026-01-22 15:27:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T16:28:17.687052",
+      "date_range": {
+        "start": "2026-01-22 14:30:00+00:00",
+        "end": "2026-01-22 15:28:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1m_20260122.csv",
+      "row_count": 59,
+      "timestamp": "2026-01-22T16:28:17.723367",
+      "date_range": {
+        "start": "2026-01-22 14:30:00+00:00",
+        "end": "2026-01-22 15:28:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_4h_20260122.csv",
+      "row_count": 116,
+      "timestamp": "2026-01-22T16:50:24.012492",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 12:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T16:50:24.083370",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T16:50:24.130387",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T16:50:24.245596",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T16:50:24.286948",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1h_20260122.csv",
+      "row_count": 267,
+      "timestamp": "2026-01-22T16:50:24.333394",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 15:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_5m_20260122.csv",
+      "row_count": 173,
+      "timestamp": "2026-01-22T16:50:24.401040",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 15:50:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T16:50:24.445665",
+      "date_range": {
+        "start": "2026-01-22 14:51:00+00:00",
+        "end": "2026-01-22 15:48:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T16:50:24.482021",
+      "date_range": {
+        "start": "2026-01-22 14:52:00+00:00",
+        "end": "2026-01-22 15:50:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T16:50:24.519667",
+      "date_range": {
+        "start": "2026-01-22 14:51:00+00:00",
+        "end": "2026-01-22 15:50:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_4h_20260122.csv",
+      "row_count": 116,
+      "timestamp": "2026-01-22T16:59:00.097437",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 12:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T16:59:00.151017",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T16:59:00.195778",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T16:59:00.238164",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T16:59:00.276008",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1h_20260122.csv",
+      "row_count": 267,
+      "timestamp": "2026-01-22T16:59:00.325694",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 15:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_5m_20260122.csv",
+      "row_count": 174,
+      "timestamp": "2026-01-22T16:59:00.380269",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 15:55:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T16:59:00.417232",
+      "date_range": {
+        "start": "2026-01-22 15:00:00+00:00",
+        "end": "2026-01-22 15:57:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T16:59:00.455715",
+      "date_range": {
+        "start": "2026-01-22 15:00:00+00:00",
+        "end": "2026-01-22 15:58:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T16:59:00.496336",
+      "date_range": {
+        "start": "2026-01-22 14:59:00+00:00",
+        "end": "2026-01-22 15:58:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_4h_20260122.csv",
+      "row_count": 116,
+      "timestamp": "2026-01-22T16:59:00.543445",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 12:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T16:59:00.578893",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T16:59:00.622081",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T16:59:00.666518",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T16:59:00.719628",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1h_20260122.csv",
+      "row_count": 267,
+      "timestamp": "2026-01-22T16:59:00.759719",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 15:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_5m_20260122.csv",
+      "row_count": 174,
+      "timestamp": "2026-01-22T16:59:00.793692",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 15:55:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T16:59:00.832224",
+      "date_range": {
+        "start": "2026-01-22 15:00:00+00:00",
+        "end": "2026-01-22 15:57:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T16:59:00.866275",
+      "date_range": {
+        "start": "2026-01-22 15:00:00+00:00",
+        "end": "2026-01-22 15:58:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T16:59:00.895782",
+      "date_range": {
+        "start": "2026-01-22 14:59:00+00:00",
+        "end": "2026-01-22 15:58:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_4h_20260122.csv",
+      "row_count": 116,
+      "timestamp": "2026-01-22T17:29:09.080414",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 12:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T17:29:09.144033",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T17:29:09.202727",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T17:29:09.253220",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T17:29:09.309910",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1h_20260122.csv",
+      "row_count": 267,
+      "timestamp": "2026-01-22T17:29:09.364478",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 15:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_5m_20260122.csv",
+      "row_count": 180,
+      "timestamp": "2026-01-22T17:29:09.446589",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 16:25:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T17:29:09.502259",
+      "date_range": {
+        "start": "2026-01-22 15:30:00+00:00",
+        "end": "2026-01-22 16:27:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T17:29:09.560782",
+      "date_range": {
+        "start": "2026-01-22 15:30:00+00:00",
+        "end": "2026-01-22 16:28:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T17:29:09.609461",
+      "date_range": {
+        "start": "2026-01-22 15:29:00+00:00",
+        "end": "2026-01-22 16:28:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_4h_20260122.csv",
+      "row_count": 116,
+      "timestamp": "2026-01-22T17:29:09.670791",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 12:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T17:29:09.745131",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T17:29:09.821668",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T17:29:09.879925",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T17:29:09.946419",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1h_20260122.csv",
+      "row_count": 267,
+      "timestamp": "2026-01-22T17:29:10.024460",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 15:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_5m_20260122.csv",
+      "row_count": 180,
+      "timestamp": "2026-01-22T17:29:10.112578",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 16:25:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T17:29:10.150697",
+      "date_range": {
+        "start": "2026-01-22 15:30:00+00:00",
+        "end": "2026-01-22 16:27:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T17:29:10.197170",
+      "date_range": {
+        "start": "2026-01-22 15:30:00+00:00",
+        "end": "2026-01-22 16:28:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T17:29:10.240696",
+      "date_range": {
+        "start": "2026-01-22 15:30:00+00:00",
+        "end": "2026-01-22 16:29:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_4h_20260122.csv",
+      "row_count": 117,
+      "timestamp": "2026-01-22T18:01:32.113024",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T18:01:32.189589",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T18:01:32.253354",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:01:32.319731",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:01:32.383790",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1h_20260122.csv",
+      "row_count": 268,
+      "timestamp": "2026-01-22T18:01:32.497900",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 16:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_5m_20260122.csv",
+      "row_count": 187,
+      "timestamp": "2026-01-22T18:01:32.609458",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 17:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:01:32.703164",
+      "date_range": {
+        "start": "2026-01-22 16:03:00+00:00",
+        "end": "2026-01-22 17:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T18:01:32.758072",
+      "date_range": {
+        "start": "2026-01-22 16:02:00+00:00",
+        "end": "2026-01-22 17:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:01:32.822492",
+      "date_range": {
+        "start": "2026-01-22 16:02:00+00:00",
+        "end": "2026-01-22 17:01:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_4h_20260122.csv",
+      "row_count": 117,
+      "timestamp": "2026-01-22T18:01:32.880600",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T18:01:32.943376",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T18:01:33.036160",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:01:33.159631",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:01:33.277700",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1h_20260122.csv",
+      "row_count": 268,
+      "timestamp": "2026-01-22T18:01:33.392629",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 16:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_5m_20260122.csv",
+      "row_count": 187,
+      "timestamp": "2026-01-22T18:01:33.557826",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 17:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:01:33.734984",
+      "date_range": {
+        "start": "2026-01-22 16:03:00+00:00",
+        "end": "2026-01-22 17:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T18:01:33.827479",
+      "date_range": {
+        "start": "2026-01-22 16:02:00+00:00",
+        "end": "2026-01-22 17:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:01:33.919990",
+      "date_range": {
+        "start": "2026-01-22 16:02:00+00:00",
+        "end": "2026-01-22 17:01:00+00:00"
+      }
+    },
+    {
+      "ticker": "BTC-USD",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\BTC-USD\\BTC-USD_4h_20260122.csv",
+      "row_count": 348,
+      "timestamp": "2026-01-22T18:01:34.039767",
+      "date_range": {
+        "start": "2025-11-23 20:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "BTC-USD",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\BTC-USD\\BTC-USD_1d_20260122.csv",
+      "row_count": 504,
+      "timestamp": "2026-01-22T18:01:34.152208",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "BTC-USD",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\BTC-USD\\BTC-USD_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T18:01:34.265348",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "BTC-USD",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\BTC-USD\\BTC-USD_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:01:34.359887",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "BTC-USD",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\BTC-USD\\BTC-USD_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:01:34.457315",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "BTC-USD",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\BTC-USD\\BTC-USD_1h_20260122.csv",
+      "row_count": 1384,
+      "timestamp": "2026-01-22T18:01:34.608441",
+      "date_range": {
+        "start": "2025-11-23 18:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "BTC-USD",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\BTC-USD\\BTC-USD_5m_20260122.csv",
+      "row_count": 1356,
+      "timestamp": "2026-01-22T18:01:34.801073",
+      "date_range": {
+        "start": "2026-01-18 00:00:00+00:00",
+        "end": "2026-01-22 16:55:00+00:00"
+      }
+    },
+    {
+      "ticker": "BTC-USD",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\BTC-USD\\BTC-USD_3m_20260122.csv",
+      "row_count": 19,
+      "timestamp": "2026-01-22T18:01:34.925791",
+      "date_range": {
+        "start": "2026-01-22 16:03:00+00:00",
+        "end": "2026-01-22 16:57:00+00:00"
+      }
+    },
+    {
+      "ticker": "BTC-USD",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\BTC-USD\\BTC-USD_2m_20260122.csv",
+      "row_count": 29,
+      "timestamp": "2026-01-22T18:01:35.053407",
+      "date_range": {
+        "start": "2026-01-22 16:02:00+00:00",
+        "end": "2026-01-22 16:58:00+00:00"
+      }
+    },
+    {
+      "ticker": "BTC-USD",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\BTC-USD\\BTC-USD_1m_20260122.csv",
+      "row_count": 56,
+      "timestamp": "2026-01-22T18:01:35.164634",
+      "date_range": {
+        "start": "2026-01-22 16:02:00+00:00",
+        "end": "2026-01-22 16:58:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_4h_20260122.csv",
+      "row_count": 117,
+      "timestamp": "2026-01-22T18:08:52.824250",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T18:08:52.898638",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T18:08:52.963239",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:53.016175",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:53.064130",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1h_20260122.csv",
+      "row_count": 268,
+      "timestamp": "2026-01-22T18:08:53.107257",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 16:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_5m_20260122.csv",
+      "row_count": 188,
+      "timestamp": "2026-01-22T18:08:53.151242",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 17:05:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:53.196433",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T18:08:53.256270",
+      "date_range": {
+        "start": "2026-01-22 16:08:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\AAPL\\AAPL_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:53.299016",
+      "date_range": {
+        "start": "2026-01-22 16:07:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_4h_20260122.csv",
+      "row_count": 117,
+      "timestamp": "2026-01-22T18:08:53.352556",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T18:08:53.430580",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T18:08:53.520812",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:53.573615",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:53.628090",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1h_20260122.csv",
+      "row_count": 268,
+      "timestamp": "2026-01-22T18:08:53.672882",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 16:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_5m_20260122.csv",
+      "row_count": 188,
+      "timestamp": "2026-01-22T18:08:53.724288",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 17:05:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:53.778523",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T18:08:53.817022",
+      "date_range": {
+        "start": "2026-01-22 16:08:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\MSFT\\MSFT_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:53.846398",
+      "date_range": {
+        "start": "2026-01-22 16:07:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\AMZN\\AMZN_4h_20260122.csv",
+      "row_count": 117,
+      "timestamp": "2026-01-22T18:08:53.896519",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\AMZN\\AMZN_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T18:08:53.984382",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\AMZN\\AMZN_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T18:08:54.049540",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\AMZN\\AMZN_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:54.103979",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\AMZN\\AMZN_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:54.184645",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\AMZN\\AMZN_1h_20260122.csv",
+      "row_count": 268,
+      "timestamp": "2026-01-22T18:08:54.244986",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 16:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\AMZN\\AMZN_5m_20260122.csv",
+      "row_count": 188,
+      "timestamp": "2026-01-22T18:08:54.301362",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 17:05:00+00:00"
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\AMZN\\AMZN_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:54.360896",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\AMZN\\AMZN_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T18:08:54.429537",
+      "date_range": {
+        "start": "2026-01-22 16:08:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\AMZN\\AMZN_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:54.499940",
+      "date_range": {
+        "start": "2026-01-22 16:08:00+00:00",
+        "end": "2026-01-22 17:07:00+00:00"
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\NVDA\\NVDA_4h_20260122.csv",
+      "row_count": 117,
+      "timestamp": "2026-01-22T18:08:54.608040",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\NVDA\\NVDA_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T18:08:54.644091",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\NVDA\\NVDA_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T18:08:54.682067",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\NVDA\\NVDA_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:54.743884",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\NVDA\\NVDA_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:54.821471",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\NVDA\\NVDA_1h_20260122.csv",
+      "row_count": 268,
+      "timestamp": "2026-01-22T18:08:54.874593",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 16:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\NVDA\\NVDA_5m_20260122.csv",
+      "row_count": 188,
+      "timestamp": "2026-01-22T18:08:54.936647",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 17:05:00+00:00"
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\NVDA\\NVDA_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:54.999118",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\NVDA\\NVDA_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T18:08:55.048101",
+      "date_range": {
+        "start": "2026-01-22 16:08:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\NVDA\\NVDA_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:55.104768",
+      "date_range": {
+        "start": "2026-01-22 16:08:00+00:00",
+        "end": "2026-01-22 17:07:00+00:00"
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\GOOGL\\GOOGL_4h_20260122.csv",
+      "row_count": 117,
+      "timestamp": "2026-01-22T18:08:55.169254",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\GOOGL\\GOOGL_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T18:08:55.233920",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\GOOGL\\GOOGL_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T18:08:55.289635",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\GOOGL\\GOOGL_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:55.324686",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\GOOGL\\GOOGL_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:55.356948",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\GOOGL\\GOOGL_1h_20260122.csv",
+      "row_count": 268,
+      "timestamp": "2026-01-22T18:08:55.390990",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 16:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\GOOGL\\GOOGL_5m_20260122.csv",
+      "row_count": 188,
+      "timestamp": "2026-01-22T18:08:55.430296",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 17:05:00+00:00"
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\GOOGL\\GOOGL_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:55.465224",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\GOOGL\\GOOGL_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T18:08:55.507182",
+      "date_range": {
+        "start": "2026-01-22 16:08:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\GOOGL\\GOOGL_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:55.546549",
+      "date_range": {
+        "start": "2026-01-22 16:08:00+00:00",
+        "end": "2026-01-22 17:07:00+00:00"
+      }
+    },
+    {
+      "ticker": "META",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\META\\META_4h_20260122.csv",
+      "row_count": 117,
+      "timestamp": "2026-01-22T18:08:55.588885",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "META",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\META\\META_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T18:08:55.647805",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "META",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\META\\META_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T18:08:55.694950",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "META",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\META\\META_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:55.744066",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "META",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\META\\META_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:55.809279",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "META",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\META\\META_1h_20260122.csv",
+      "row_count": 268,
+      "timestamp": "2026-01-22T18:08:55.851198",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 16:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "META",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\META\\META_5m_20260122.csv",
+      "row_count": 188,
+      "timestamp": "2026-01-22T18:08:55.896411",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 17:05:00+00:00"
+      }
+    },
+    {
+      "ticker": "META",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\META\\META_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:55.931295",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "META",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\META\\META_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T18:08:55.976164",
+      "date_range": {
+        "start": "2026-01-22 16:08:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "META",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\META\\META_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:56.022340",
+      "date_range": {
+        "start": "2026-01-22 16:08:00+00:00",
+        "end": "2026-01-22 17:07:00+00:00"
+      }
+    },
+    {
+      "ticker": "BRK-B",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\BRK-B\\BRK-B_4h_20260122.csv",
+      "row_count": 117,
+      "timestamp": "2026-01-22T18:08:56.064834",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "BRK-B",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\BRK-B\\BRK-B_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T18:08:56.108236",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "BRK-B",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\BRK-B\\BRK-B_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T18:08:56.173478",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "BRK-B",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\BRK-B\\BRK-B_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:56.227465",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "BRK-B",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\BRK-B\\BRK-B_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:56.289485",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "BRK-B",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\BRK-B\\BRK-B_1h_20260122.csv",
+      "row_count": 268,
+      "timestamp": "2026-01-22T18:08:56.343524",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 16:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "BRK-B",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\BRK-B\\BRK-B_5m_20260122.csv",
+      "row_count": 188,
+      "timestamp": "2026-01-22T18:08:56.413667",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 17:05:00+00:00"
+      }
+    },
+    {
+      "ticker": "BRK-B",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\BRK-B\\BRK-B_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:56.460568",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "BRK-B",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\BRK-B\\BRK-B_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T18:08:56.520286",
+      "date_range": {
+        "start": "2026-01-22 16:10:00+00:00",
+        "end": "2026-01-22 17:08:00+00:00"
+      }
+    },
+    {
+      "ticker": "BRK-B",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\BRK-B\\BRK-B_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:56.593678",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:08:00+00:00"
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\TSLA\\TSLA_4h_20260122.csv",
+      "row_count": 117,
+      "timestamp": "2026-01-22T18:08:56.634987",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\TSLA\\TSLA_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T18:08:56.698011",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\TSLA\\TSLA_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T18:08:56.759495",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\TSLA\\TSLA_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:56.815248",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\TSLA\\TSLA_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:56.870399",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\TSLA\\TSLA_1h_20260122.csv",
+      "row_count": 268,
+      "timestamp": "2026-01-22T18:08:56.938945",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 16:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\TSLA\\TSLA_5m_20260122.csv",
+      "row_count": 188,
+      "timestamp": "2026-01-22T18:08:57.011366",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 17:05:00+00:00"
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\TSLA\\TSLA_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:57.071956",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\TSLA\\TSLA_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T18:08:57.108158",
+      "date_range": {
+        "start": "2026-01-22 16:10:00+00:00",
+        "end": "2026-01-22 17:08:00+00:00"
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\TSLA\\TSLA_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:57.164575",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:08:00+00:00"
+      }
+    },
+    {
+      "ticker": "LLY",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\LLY\\LLY_4h_20260122.csv",
+      "row_count": 117,
+      "timestamp": "2026-01-22T18:08:57.250764",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "LLY",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\LLY\\LLY_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T18:08:57.328646",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "LLY",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\LLY\\LLY_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T18:08:57.366299",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "LLY",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\LLY\\LLY_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:57.408001",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "LLY",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\LLY\\LLY_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:57.466751",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "LLY",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\LLY\\LLY_1h_20260122.csv",
+      "row_count": 268,
+      "timestamp": "2026-01-22T18:08:57.522229",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 16:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "LLY",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\LLY\\LLY_5m_20260122.csv",
+      "row_count": 188,
+      "timestamp": "2026-01-22T18:08:57.579568",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 17:05:00+00:00"
+      }
+    },
+    {
+      "ticker": "LLY",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\LLY\\LLY_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:57.624506",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "LLY",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\LLY\\LLY_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T18:08:57.659082",
+      "date_range": {
+        "start": "2026-01-22 16:10:00+00:00",
+        "end": "2026-01-22 17:08:00+00:00"
+      }
+    },
+    {
+      "ticker": "LLY",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\LLY\\LLY_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:57.708006",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:08:00+00:00"
+      }
+    },
+    {
+      "ticker": "V",
+      "interval": "4h",
+      "filepath": ".\\data/raw\\V\\V_4h_20260122.csv",
+      "row_count": 117,
+      "timestamp": "2026-01-22T18:08:57.752954",
+      "date_range": {
+        "start": "2025-11-24 12:00:00+00:00",
+        "end": "2026-01-22 16:00:00+00:00"
+      }
+    },
+    {
+      "ticker": "V",
+      "interval": "1d",
+      "filepath": ".\\data/raw\\V\\V_1d_20260122.csv",
+      "row_count": 345,
+      "timestamp": "2026-01-22T18:08:57.809315",
+      "date_range": {
+        "start": "2024-09-06",
+        "end": "2026-01-22"
+      }
+    },
+    {
+      "ticker": "V",
+      "interval": "1wk",
+      "filepath": ".\\data/raw\\V\\V_1wk_20260122.csv",
+      "row_count": 104,
+      "timestamp": "2026-01-22T18:08:57.876472",
+      "date_range": {
+        "start": "2024-01-29",
+        "end": "2026-01-19"
+      }
+    },
+    {
+      "ticker": "V",
+      "interval": "1mo",
+      "filepath": ".\\data/raw\\V\\V_1mo_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:57.922634",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "V",
+      "interval": "3mo",
+      "filepath": ".\\data/raw\\V\\V_3mo_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:58.000239",
+      "date_range": {
+        "start": "2021-04-01",
+        "end": "2026-01-01"
+      }
+    },
+    {
+      "ticker": "V",
+      "interval": "1h",
+      "filepath": ".\\data/raw\\V\\V_1h_20260122.csv",
+      "row_count": 268,
+      "timestamp": "2026-01-22T18:08:58.065108",
+      "date_range": {
+        "start": "2025-11-24 14:30:00+00:00",
+        "end": "2026-01-22 16:30:00+00:00"
+      }
+    },
+    {
+      "ticker": "V",
+      "interval": "5m",
+      "filepath": ".\\data/raw\\V\\V_5m_20260122.csv",
+      "row_count": 188,
+      "timestamp": "2026-01-22T18:08:58.132208",
+      "date_range": {
+        "start": "2026-01-20 14:30:00+00:00",
+        "end": "2026-01-22 17:05:00+00:00"
+      }
+    },
+    {
+      "ticker": "V",
+      "interval": "3m",
+      "filepath": ".\\data/raw\\V\\V_3m_20260122.csv",
+      "row_count": 20,
+      "timestamp": "2026-01-22T18:08:58.203638",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:06:00+00:00"
+      }
+    },
+    {
+      "ticker": "V",
+      "interval": "2m",
+      "filepath": ".\\data/raw\\V\\V_2m_20260122.csv",
+      "row_count": 30,
+      "timestamp": "2026-01-22T18:08:58.257559",
+      "date_range": {
+        "start": "2026-01-22 16:10:00+00:00",
+        "end": "2026-01-22 17:08:00+00:00"
+      }
+    },
+    {
+      "ticker": "V",
+      "interval": "1m",
+      "filepath": ".\\data/raw\\V\\V_1m_20260122.csv",
+      "row_count": 60,
+      "timestamp": "2026-01-22T18:08:58.310934",
+      "date_range": {
+        "start": "2026-01-22 16:09:00+00:00",
+        "end": "2026-01-22 17:08:00+00:00"
+      }
+    }
+  ]
+}

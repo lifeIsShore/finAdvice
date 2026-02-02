@@ -62,8 +62,8 @@ finAdvice/
 │   ├── main_data_pipeline.py          # Data Ingestion Orchestrator
 │   ├── core/                          # Data Fetching & Storage Modules
 │   └── features/                      # Sentiment Analysis (FinBERT)
-├── static/                            # Frontend Assets (JS, CSS)
-├── templates/                         # HTML Templates
+├── frontend/                          # Decoupled Frontend (HTML, JS, CSS)
+├── docs/                              # Project Documentation
 └── data/                              # Local Data Store (CSV & JSON)
 ```
 

@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0] - 2026-02-02
+
+### 🧹 Project Cleanup & Documentation Refresh
+
+#### Added
+- Root `archive/` directory for historical and unused files.
+- `docs/INDEX.md` as the primary documentation entry point.
+- `docs/user-stories.json` (moved from root).
+
+#### Changed
+- Consolidated data management: removed redundant `algotrade_datascience/data` directory.
+- Updated `PROJECT_STRUCTURE.md` to reflect the complete system hierarchy.
+- Fixed outdated paths in `README.md` and `START_HERE.md` (e.g., `static/` -> `frontend/`).
+- Cleaned up root directory by moving logs and backups to the archive.
+
+#### Removed
+- Deleted redundant data caches and backup scripts.
+- Removed missing references to `QUICK_REFERENCE.md`.
+
+---
+
 ## [2.0.0] - 2026-02-01
 
 ### 🚀 MVP Release - Full Stack AI Dashboard

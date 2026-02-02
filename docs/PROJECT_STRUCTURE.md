@@ -12,16 +12,18 @@ finAdvice/
 ├── README.md                                    # Project overview and quick start
 ├── LICENSE                                      # MIT License
 ├── .gitignore                                   # Git ignore rules
-├── user-stories.json                            # Complete user stories
 ├── dashboard_app.py                             # Main Flask API & Server
 ├── start_ui.bat                                 # Shortcut to open local UI
+├── PROJECT_STABILITY_RULES.md                   # Development stability rules
 │
 ├── docs/                                        # Documentation
 │   ├── ARCHITECTURE.md                          # System architecture and design
 │   ├── API.md                                   # API documentation
 │   ├── CONTRIBUTING.md                          # Contribution guidelines
 │   ├── CHANGELOG.md                             # Version history and changes
-│   └── PROJECT_STRUCTURE.md                     # This file
+│   ├── INDEX.md                                 # Documentation entry point
+│   ├── PROJECT_STRUCTURE.md                     # This file
+│   └── user-stories.json                        # Complete user stories
 │
 ├── frontend/                                    # New Decoupled Frontend
 │   ├── index.html                               # Main Dashboard UI
@@ -34,13 +36,23 @@ finAdvice/
 │   ├── core/                                    # Data fetching & storage
 │   ├── features/                                # Feature engineering
 │   ├── modeling/                                # ML modeling
-│   └── consensus_engine.py                      # Multi-timeframe logic
+│   ├── orchestration/                           # Pipeline orchestration
+│   ├── visualization/                           # Plotting utilities
+│   ├── utils/                                   # General utilities
+│   ├── requirements.txt                         # Dependencies
+│   ├── config.py                                # System configuration
+│   ├── consensus_engine.py                      # Multi-timeframe logic
+│   ├── baseline_models.py                       # ML comparison logic
+│   └── decision_making_ml.py                    # Core prediction brain
 │
 ├── data/                                        # Persistent data storage
 │   ├── raw/                                     # Historical price data
 │   ├── decisions/                               # ML prediction results
 │   ├── model_diagnostics/                       # Detailed model stats
-│   └── news_cache/                              # Cached sentiment data
+│   ├── news/                                    # Cached sentiment data
+│   └── metadata.json                            # Data fetch logs
+│
+├── archive/                                     # Historical & unused files
 │
 └── tests/                                       # Test suite
 ```

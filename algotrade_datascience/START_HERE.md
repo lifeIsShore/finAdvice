@@ -79,7 +79,7 @@ When you click "Predict", the following happens in real-time:
 | `algotrade_datascience/decision_making_ml.py` | The "Brain". Contains the prediction logic. |
 | `algotrade_datascience/baseline_models.py` | The ML Competition logic. |
 | `algotrade_datascience/core/data_storage.py` | Handles CSV and News (JSON) caching. |
-| `static/script.js` | Frontend logic (Charts, API calls). |
+| `frontend/js/script.js` | Frontend logic (Charts, API calls). |
 
 ---
 

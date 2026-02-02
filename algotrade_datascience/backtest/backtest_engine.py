@@ -56,12 +56,14 @@ class BacktestEngine:
                  start_date: str, 
                  end_date: Optional[str] = None,
                  initial_capital: float = 10000.0,
-                 fee_pct: float = 0.001):  # 0.1% fee
+                 fee_pct: float = 0.001,
+                 log_callback: Optional[callable] = None):  # 0.1% fee
         self.ticker = ticker
         self.start_date = pd.to_datetime(start_date)
         self.end_date = pd.to_datetime(end_date) if end_date else datetime.now()
         self.initial_capital = initial_capital
         self.fee_pct = fee_pct
+        self.log_callback = log_callback
         
         self.storage = DataStorage(base_dir=os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
         self.portfolio = {
@@ -72,13 +74,26 @@ class BacktestEngine:
         self.trades = []
         self.equity_history = []
         
-    def run(self, interval: str = '1d', consensus_threshold: float = 50.0, sell_threshold: float = 0.0) -> BacktestResult:
+    def log(self, message: str):
+        if self.log_callback:
+            self.log_callback(message)
+        else:
+            print(message)
+
+    def run(self, 
+            interval: str = '1d', 
+            consensus_threshold: float = 50.0, 
+            sell_threshold: float = 0.0,
+            sell_only_at_profit: bool = False,
+            stop_loss_pct: Optional[float] = None) -> BacktestResult:
         """
         Run the simulation
         """
-        print(f"\n[BACKTEST] Starting simulation for {self.ticker}...")
-        print(f"  Range: {self.start_date.date()} to {self.end_date.date()}")
-        print(f"  Interval: {interval}, Buy Threshold: {consensus_threshold}%, Sell Threshold: {sell_threshold}%")
+        self.log(f"\n[BACKTEST] Starting simulation for {self.ticker}...")
+        self.log(f"  Range: {self.start_date.date()} to {self.end_date.date()}")
+        self.log(f"  Interval: {interval}, Buy Thresh: {consensus_threshold}%, Sell Thresh: {sell_threshold}%")
+        if sell_only_at_profit: self.log("  Strategy: PROTECT PROFITS (Sell only if Price > Entry)")
+        if stop_loss_pct: self.log(f"  Strategy: STOP LOSS enabled at {stop_loss_pct}%")
         
         # Load full historical data for the ticker interval
         full_df = self.storage.load_ticker_data(self.ticker, interval)
@@ -118,6 +133,16 @@ class BacktestEngine:
             consensus_val, confidence = self._get_simulated_consensus(sim_date, full_df)
             
             # 3. Apply Trading Signal (Long Only)
+            entry_price = self.trades[-1].price if self.trades and self.trades[-1].type == 'BUY' and self.portfolio['position'] > 0 else None
+            
+            # Check Stop Loss First
+            if stop_loss_pct is not None and entry_price:
+                pct_change = (current_price - entry_price) / entry_price * 100
+                if pct_change <= -abs(stop_loss_pct):
+                    self.log(f"  [STOP LOSS] Activated at {current_price:.2f} ({pct_change:.1f}%)")
+                    self._execute_trade('SELL', sim_date, current_price, consensus_val, reason="STOP_LOSS")
+                    continue
+
             if consensus_val >= consensus_threshold:
                 # BUY Signal
                 if self.portfolio['cash'] > 10: # Only buy if we have cash
@@ -125,7 +150,12 @@ class BacktestEngine:
             elif consensus_val <= sell_threshold: # SELL Signal
                 # SELL Signal
                 if self.portfolio['position'] > 0:
-                    self._execute_trade('SELL', sim_date, current_price, consensus_val)
+                    # Optional: Profit Protection
+                    if sell_only_at_profit and entry_price and current_price < entry_price:
+                        # self.log(f"  [HOLD] Sell signal ignored (Price {current_price:.2f} < Entry {entry_price:.2f})")
+                        pass
+                    else:
+                        self._execute_trade('SELL', sim_date, current_price, consensus_val)
             
             # Record Equity Tracker
             total_value = self.portfolio['cash'] + (self.portfolio['position'] * price_row['Close'])
@@ -140,7 +170,7 @@ class BacktestEngine:
             
             # Print progress every 10 steps
             if len(self.equity_history) % 10 == 0:
-                print(f"  {sim_date.date()} | Equity: {total_value:.2f} | Consensus: {consensus_val:.1f}%")
+                self.log(f"  {sim_date.date()} | Equity: {total_value:.2f} | Consensus: {consensus_val:.1f}%")
 
         return self._finalize_results(full_df)
 
@@ -173,7 +203,7 @@ class BacktestEngine:
             return prediction.confidence if prediction.change_percent > 0 else -prediction.confidence, prediction.confidence
         return 0, 0
 
-    def _execute_trade(self, side: str, date: datetime, price: float, consensus: float):
+    def _execute_trade(self, side: str, date: datetime, price: float, consensus: float, reason: str = "SIGNAL"):
         if side == 'BUY':
             # Buy with all available cash
             fee = self.portfolio['cash'] * self.fee_pct
@@ -186,7 +216,7 @@ class BacktestEngine:
             
             trade = Trade('BUY', date, price, amount, value, fee, consensus)
             self.trades.append(trade)
-            print(f"  >>> BUY at {price:.2f} (Consensus: {consensus:.1f}%)")
+            self.log(f"  >>> BUY at {price:.2f} (Consensus: {consensus:.1f}%)")
             
         elif side == 'SELL':
             # Sell all positions
@@ -200,7 +230,7 @@ class BacktestEngine:
             
             trade = Trade('SELL', date, price, amount, net_value, fee, consensus)
             self.trades.append(trade)
-            print(f"  <<< SELL at {price:.2f} (Consensus: {consensus:.1f}%)")
+            self.log(f"  <<< SELL at {price:.2f} (Consensus: {consensus:.1f}%) [{reason}]")
 
     def _finalize_results(self, full_df: pd.DataFrame) -> BacktestResult:
         equity_df = pd.DataFrame(self.equity_history)

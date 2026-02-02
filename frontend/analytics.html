@@ -318,37 +318,63 @@
                 </div>
                 <!-- Feature Glossary -->
                 <div class="feature-glossary" id="glossary">
-                    <h3><i class="fas fa-book"></i> Feature Glossary</h3>
+                    <h3><i class="fas fa-book"></i> Full Feature Glossary</h3>
+                    <p style="color: var(--text-dim); margin-bottom: 20px; font-size: 0.9rem;">
+                        The AI processes 17+ distinct signals for every prediction. Below is the breakdown of what these
+                        signals indicate.
+                    </p>
                     <div class="glossary-grid">
                         <div class="glossary-item">
-                            <h4 data-tooltip="Standardized returns used to detect momentum.">Returns (Lag 1-3)</h4>
-                            <p>Measures how much the price changed in the previous steps. Helps the AI identify if the
-                                current trend is accelerating or slowing down.</p>
+                            <h4 data-tooltip="Standardized returns used to detect momentum.">Price Returns (Lag 1-3)
+                            </h4>
+                            <p>Measures price change over the last 3 periods. Helps AI detect if a trend is accelerating
+                                (Momentum).</p>
                         </div>
                         <div class="glossary-item">
-                            <h4 data-tooltip="Relative Strength Index">RSI</h4>
-                            <p>Indicates if an asset is overbought (too expensive) or oversold (too cheap). A high RSI
-                                suggests a potential drop, while low RSI suggests a bounce.</p>
+                            <h4 data-tooltip="Relative Strength Index">RSI (14)</h4>
+                            <p>Shows if an asset is Overbought (RSI > 70) or Oversold (RSI < 30). Used to predict
+                                    potential reversals.</p>
                         </div>
                         <div class="glossary-item">
-                            <h4 data-tooltip="Moving Average Convergence Divergence">MACD</h4>
-                            <p>A trend-following momentum indicator that shows the relationship between two moving
-                                averages of an asset's price.</p>
+                            <h4 data-tooltip="Moving Averages (10, 20, 50)">Trend Baselines (SMAs)</h4>
+                            <p>Standard averages that identify the 'path of least resistance.' The 50-period SMA is a
+                                major institutional level.</p>
                         </div>
                         <div class="glossary-item">
-                            <h4 data-tooltip="Standard Deviation of price changes.">Volatility</h4>
-                            <p>Calculates the risk level by measuring price swings. High volatility leads to wider Stop
-                                Loss margins to avoid early exits.</p>
+                            <h4 data-tooltip="Moving Average Convergence Divergence">MACD & Signal</h4>
+                            <p>Detects changes in trend strength and direction. A 'Signal Line Cross' is a classic
+                                buy/sell trigger.</p>
                         </div>
                         <div class="glossary-item">
-                            <h4 data-tooltip="Market participation strength.">Volume</h4>
-                            <p>The total number of units traded. High volume confirms the strength of a price move,
-                                while low volume suggests a weak trend.</p>
+                            <h4 data-tooltip="Volatility bands based on standard deviation.">Bollinger Bands (BB)</h4>
+                            <p>Creates a price channel. Prices touching the Upper Band are 'stretched,' while Lower Band
+                                touches are 'discounts.'</p>
                         </div>
                         <div class="glossary-item">
-                            <h4 data-tooltip="Upper and Lower price bands.">Bollinger Bands</h4>
-                            <p>Measures price volatility and identifies potential 'breakout' levels where the price
-                                might jump or crash.</p>
+                            <h4 data-tooltip="Average True Range">ATR (Volatility)</h4>
+                            <p>Measures the average 'size' of a price swing. The AI uses this to prevent setting Stop
+                                Losses too close to normal noise.</p>
+                        </div>
+                        <div class="glossary-item">
+                            <h4 data-tooltip="When two averages cross each other.">SMA 10/20 Cross</h4>
+                            <p>A specific signal where short-term trend crosses long-term trend. Used to confirm a new
+                                direction.</p>
+                        </div>
+                        <div class="glossary-item">
+                            <h4 data-tooltip="Total units traded vs 5-day average.">Volume Ratio</h4>
+                            <p>Indicates market conviction. High volume confirms a breakout; low volume suggests a
+                                fake-out.</p>
+                        </div>
+                        <div class="glossary-item"
+                            style="border: 1px solid var(--primary); background: rgba(99, 102, 241, 0.1);">
+                            <h4 data-tooltip="The News Sentiment Multiplier">Sentiment Pulse (Multiplier)</h4>
+                            <p><strong>Used every time!</strong> Unlike static indicators, this acts as a dynamic
+                                multiplier on AI targets based on the latest 10 news articles.</p>
+                        </div>
+                        <div class="glossary-item">
+                            <h4 data-tooltip="Standardized volatility measurement.">Vol-5 (Standardized)</h4>
+                            <p>A 5-day rolling standard deviation that helps the AI normalize price movements across
+                                different assets.</p>
                         </div>
                     </div>
                 </div>

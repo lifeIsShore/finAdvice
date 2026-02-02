@@ -247,7 +247,7 @@ class BacktestEngine:
             
             trade = Trade('BUY', date, price, amount, value, fee, consensus)
             self.trades.append(trade)
-            self.log(f"  >>> BUY {size_pct}% at {price:.2f} (Consensus: {consensus:.1f}%)")
+            self.log(f"  >>> BUY {size_pct}% ({amount:.4f} units) at {price:.2f} (Consensus: {consensus:.1f}%)")
             
         elif side == 'SELL':
             # Sell all positions (100% exit)
@@ -261,7 +261,7 @@ class BacktestEngine:
             
             trade = Trade('SELL', date, price, amount, net_value, fee, consensus)
             self.trades.append(trade)
-            self.log(f"  <<< SELL ALL at {price:.2f} (Consensus: {consensus:.1f}%) [{reason}]")
+            self.log(f"  <<< SELL ALL ({amount:.4f} units) at {price:.2f} (Consensus: {consensus:.1f}%) [{reason}]")
 
     def _finalize_results(self, full_df: pd.DataFrame) -> BacktestResult:
         equity_df = pd.DataFrame(self.equity_history)

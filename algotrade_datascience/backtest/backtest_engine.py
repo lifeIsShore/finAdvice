@@ -18,6 +18,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from core.data_storage import DataStorage
+from core.data_fetcher import DataFetcher
 from consensus_engine import MultiTimeframeConsensus, Sentiment
 
 logger = logging.getLogger(__name__)
@@ -66,6 +67,7 @@ class BacktestEngine:
         self.log_callback = log_callback
         
         self.storage = DataStorage(base_dir=os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+        self.fetcher = DataFetcher()
         self.portfolio = {
             'cash': initial_capital,
             'position': 0.0,  # Number of units held
@@ -73,6 +75,7 @@ class BacktestEngine:
         }
         self.trades = []
         self.equity_history = []
+        self.stop_requested = False
         
     def log(self, message: str):
         if self.log_callback:
@@ -85,20 +88,35 @@ class BacktestEngine:
             consensus_threshold: float = 50.0, 
             sell_threshold: float = 0.0,
             sell_only_at_profit: bool = False,
-            stop_loss_pct: Optional[float] = None) -> BacktestResult:
+            stop_loss_pct: Optional[float] = None,
+            pos_size_pct: float = 100.0,
+            boost_threshold: Optional[float] = None,
+            boost_size_pct: float = 0.0) -> BacktestResult:
         """
-        Run the simulation
+        Run the simulation with advanced position management.
+        pos_size_pct: Base % of cash to use per trade (100 = All-in)
+        boost_threshold: Confidence level to trigger extra buying
+        boost_size_pct: Extra % of initial capital/cash to add on boost
         """
         self.log(f"\n[BACKTEST] Starting simulation for {self.ticker}...")
         self.log(f"  Range: {self.start_date.date()} to {self.end_date.date()}")
         self.log(f"  Interval: {interval}, Buy Thresh: {consensus_threshold}%, Sell Thresh: {sell_threshold}%")
+        self.log(f"  Positioning: Base {pos_size_pct}%" + (f", Boost {boost_size_pct}% at >{boost_threshold}%" if boost_threshold else ""))
         if sell_only_at_profit: self.log("  Strategy: PROTECT PROFITS (Sell only if Price > Entry)")
         if stop_loss_pct: self.log(f"  Strategy: STOP LOSS enabled at {stop_loss_pct}%")
         
         # Load full historical data for the ticker interval
         full_df = self.storage.load_ticker_data(self.ticker, interval)
         if full_df is None:
-            raise ValueError(f"No data found for {self.ticker} {interval}")
+            self.log(f"  [DATA] Ticker {self.ticker} not found locally. Attempting to fetch...")
+            # Try to fetch all intervals to ensure MultiTimeframe works if needed, 
+            # but at least fetch the requested interval for the main loop.
+            full_df = self.fetcher.fetch_ticker_data(self.ticker, interval)
+            if full_df is not None:
+                self.log(f"  [SUCCESS] Fetched {len(full_df)} rows for {self.ticker}. Saving locally...")
+                self.storage.save_ticker_data(self.ticker, interval, full_df)
+            else:
+                raise ValueError(f"Could not fetch data for {self.ticker}. Please check connectivity or ticker symbol.")
             
         # Ensure Date column is datetime
         full_df['Date'] = pd.to_datetime(full_df['Date'])
@@ -113,6 +131,10 @@ class BacktestEngine:
 
         # Main Simulation Loop
         for sim_date in backtest_dates:
+            if self.stop_requested:
+                self.log("\n[ABORTED] Backtest cancelled by user.")
+                return None
+                
             sim_date = pd.to_datetime(sim_date)
             
             # 1. Truncate data to simulate "today" (No Leakage)
@@ -144,9 +166,16 @@ class BacktestEngine:
                     continue
 
             if consensus_val >= consensus_threshold:
-                # BUY Signal
-                if self.portfolio['cash'] > 10: # Only buy if we have cash
-                    self._execute_trade('BUY', sim_date, current_price, consensus_val)
+                # BUY Signal with Dynamic Scaling
+                actual_size = pos_size_pct
+                if boost_threshold and consensus_val >= boost_threshold:
+                    actual_size += boost_size_pct
+                
+                # Limit size to 100% of current cash
+                actual_size = min(actual_size, 100.0)
+                
+                if self.portfolio['cash'] > 10:
+                    self._execute_trade('BUY', sim_date, current_price, consensus_val, size_pct=actual_size)
             elif consensus_val <= sell_threshold: # SELL Signal
                 # SELL Signal
                 if self.portfolio['position'] > 0:
@@ -155,6 +184,7 @@ class BacktestEngine:
                         # self.log(f"  [HOLD] Sell signal ignored (Price {current_price:.2f} < Entry {entry_price:.2f})")
                         pass
                     else:
+                        # For now, SELL is always 100% (Scale-out can be added later if user wants)
                         self._execute_trade('SELL', sim_date, current_price, consensus_val)
             
             # Record Equity Tracker
@@ -203,23 +233,24 @@ class BacktestEngine:
             return prediction.confidence if prediction.change_percent > 0 else -prediction.confidence, prediction.confidence
         return 0, 0
 
-    def _execute_trade(self, side: str, date: datetime, price: float, consensus: float, reason: str = "SIGNAL"):
+    def _execute_trade(self, side: str, date: datetime, price: float, consensus: float, reason: str = "SIGNAL", size_pct: float = 100.0):
         if side == 'BUY':
-            # Buy with all available cash
-            fee = self.portfolio['cash'] * self.fee_pct
-            net_cash = self.portfolio['cash'] - fee
+            # Buy with specified % of available cash
+            trade_cash = self.portfolio['cash'] * (size_pct / 100.0)
+            fee = trade_cash * self.fee_pct
+            net_cash = trade_cash - fee
             amount = net_cash / price
             value = net_cash
             
             self.portfolio['position'] += amount
-            self.portfolio['cash'] = 0.0
+            self.portfolio['cash'] -= trade_cash
             
             trade = Trade('BUY', date, price, amount, value, fee, consensus)
             self.trades.append(trade)
-            self.log(f"  >>> BUY at {price:.2f} (Consensus: {consensus:.1f}%)")
+            self.log(f"  >>> BUY {size_pct}% at {price:.2f} (Consensus: {consensus:.1f}%)")
             
         elif side == 'SELL':
-            # Sell all positions
+            # Sell all positions (100% exit)
             value = self.portfolio['position'] * price
             fee = value * self.fee_pct
             net_value = value - fee
@@ -230,7 +261,7 @@ class BacktestEngine:
             
             trade = Trade('SELL', date, price, amount, net_value, fee, consensus)
             self.trades.append(trade)
-            self.log(f"  <<< SELL at {price:.2f} (Consensus: {consensus:.1f}%) [{reason}]")
+            self.log(f"  <<< SELL ALL at {price:.2f} (Consensus: {consensus:.1f}%) [{reason}]")
 
     def _finalize_results(self, full_df: pd.DataFrame) -> BacktestResult:
         equity_df = pd.DataFrame(self.equity_history)

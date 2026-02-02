@@ -8,3 +8,5 @@
 and also create an info, that needs to explain the ML model's decison, it will tell how the news are relevant and what are the features that was used in the ml model etc. and their importance. maybe that can be a part of that analystcs page, as extention like in the button of the page.
 
 -the feature importanec is not be seen in the analytcs tab. can you check it?
+
+-for the currencies there is a fstring since some times it can be $ and some times it can be EUR or JPY etc. so we need to fix that.

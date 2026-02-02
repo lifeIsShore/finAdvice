@@ -72,13 +72,13 @@ class BacktestEngine:
         self.trades = []
         self.equity_history = []
         
-    def run(self, interval: str = '1d', consensus_threshold: float = 50.0) -> BacktestResult:
+    def run(self, interval: str = '1d', consensus_threshold: float = 50.0, sell_threshold: float = 0.0) -> BacktestResult:
         """
         Run the simulation
         """
         print(f"\n[BACKTEST] Starting simulation for {self.ticker}...")
         print(f"  Range: {self.start_date.date()} to {self.end_date.date()}")
-        print(f"  Interval: {interval}, Threshold: {consensus_threshold}%")
+        print(f"  Interval: {interval}, Buy Threshold: {consensus_threshold}%, Sell Threshold: {sell_threshold}%")
         
         # Load full historical data for the ticker interval
         full_df = self.storage.load_ticker_data(self.ticker, interval)
@@ -122,7 +122,7 @@ class BacktestEngine:
                 # BUY Signal
                 if self.portfolio['cash'] > 10: # Only buy if we have cash
                     self._execute_trade('BUY', sim_date, current_price, consensus_val)
-            elif consensus_val < 0: # SELL Signal (negative consensus means bearish)
+            elif consensus_val <= sell_threshold: # SELL Signal
                 # SELL Signal
                 if self.portfolio['position'] > 0:
                     self._execute_trade('SELL', sim_date, current_price, consensus_val)

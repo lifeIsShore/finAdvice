@@ -3,12 +3,12 @@
 ## CRITICAL: No Emojis or Non-ASCII Characters
 To ensure cross-platform compatibility and prevent fatal 'charmap' encoding errors on Windows systems, the following rules **MUST** be followed by all AI agents and contributors:
 
-1.  **NO EMOJIS in Code or Logs**: Do not use Unicode emojis (e.g., ✅, ❌, 📈) in Python `print()` statements, logging, or string literals.
+1.  **NO EMOJIS in Code or Logs**: Do not use Unicode emojis (e.g., checkmarks, crosses, growth charts) in Python `print()` statements, logging, or string literals.
 2.  **ASCII-Safe Feedback Only**: Use plain text markers for status feedback:
-    *   Instead of ✅ use `[OK]` or `SUCCESS`
-    *   Instead of ❌ use `[ERROR]` or `FAILED`
-    *   Instead of ⚠️ use `[WARNING]`
-    *   Instead of 📈/📉 use `+++` / `---` or `UP` / `DOWN`
+    *   Instead of checkmarks use `[OK]` or `SUCCESS`
+    *   Instead of cross-marks use `[ERROR]` or `FAILED`
+    *   Instead of warning triangles use `[WARNING]`
+    *   Instead of growth/decline charts use `+++` / `---` or `UP` / `DOWN`
 3.  **Standardized UI Icons**: 
     *   In HTML/JS, use **Font Awesome** classes (e.g., `<i class="fas fa-check"></i>`) instead of raw Unicode symbols.
     *   Dynamic JS sentiment indicators should use CSS classes or plain text symbols (like `=` or `+`) if they need to be injected as text.

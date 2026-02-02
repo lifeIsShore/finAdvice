@@ -12,11 +12,11 @@ const getApiBaseUrl = () => {
 const API_BASE_URL = getApiBaseUrl();
 
 // Get ticker from URL or global variable
-const ticker = window.currentTicker || new URLSearchParams(window.location.search).get('ticker') || 'AAPL';
+const currentTickerId = window.currentTicker || new URLSearchParams(window.location.search).get('ticker') || 'AAPL';
 
 async function loadDiagnostics() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/model_diagnostics/${ticker}`);
+        const response = await fetch(`${API_BASE_URL}/api/model_diagnostics/${currentTickerId}`);
         const data = await response.json();
 
         if (data.error) {

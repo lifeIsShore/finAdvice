@@ -45,21 +45,16 @@ venv.bak/
 *.ipynb
 
 # Data files (keep structure, ignore content)
-algotrade_datascience/data/raw/*
-!algotrade_datascience/data/raw/.gitkeep
-algotrade_datascience/data/processed/*
-!algotrade_datascience/data/processed/.gitkeep
-algotrade_datascience/data/models/*
-!algotrade_datascience/data/models/.gitkeep
-
-# Logs
-*.log
-logs/
-algotrade_datascience/data_pipeline.log
-
-# Metadata and reports (generated files)
-algotrade_datascience/data/metadata.json
-algotrade_datascience/data/quality_report.json
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/models/*
+!data/models/.gitkeep
+data/backtests/*
+!data/backtests/.gitkeep
+data/metadata.json
+data/quality_report.json
 
 # Testing
 .pytest_cache/

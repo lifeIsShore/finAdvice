@@ -102,7 +102,7 @@ class BacktestUI:
         e_ticker = ttk.Entry(grid, textvariable=self.ticker_var)
         e_ticker.grid(row=0, column=1, sticky="ew", pady=5, padx=(5, 15))
         ToolTip(e_ticker, (
-            "🔍 SEARCH SYMBOL\n"
+            "SEARCH SYMBOL\n"
             "Tell the bot which asset to analyze.\n\n"
             "Example: 'AAPL' for Apple, 'BTC-USD' for Bitcoin.\n"
             "Tip: We use Yahoo Finance symbols."
@@ -113,7 +113,7 @@ class BacktestUI:
         cb_interval = ttk.Combobox(grid, textvariable=self.interval_var, values=["1h", "4h", "1d", "1wk"])
         cb_interval.grid(row=0, column=3, sticky="ew", pady=5, padx=5)
         ToolTip(cb_interval, (
-            "🕒 REFRESH SPEED\n"
+            "REFRESH SPEED\n"
             "How often should the AI check the price?\n\n"
             "1h = Hourly (Fast/Scalping)\n"
             "1d = Daily (Recommended for beginners)\n"
@@ -126,7 +126,7 @@ class BacktestUI:
         e_start = ttk.Entry(grid, textvariable=self.start_date_var)
         e_start.grid(row=1, column=1, sticky="ew", pady=5, padx=(5, 15))
         ToolTip(e_start, (
-            "📅 TIME TRAVEL\n"
+            "TIME TRAVEL\n"
             "When should the simulation start?\n\n"
             "Example: 2023-01-01 to see how the bot\n"
             "would have handled the last year."
@@ -137,7 +137,7 @@ class BacktestUI:
         e_cap = ttk.Entry(grid, textvariable=self.capital_var)
         e_cap.grid(row=1, column=3, sticky="ew", pady=5, padx=5)
         ToolTip(e_cap, (
-            "💵 STARTING STACK\n"
+            "STARTING STACK\n"
             "How much paper money do you want to start with?\n\n"
             "Note: This is just for the test, it doesn't\n"
             "use your real money!"
@@ -156,7 +156,7 @@ class BacktestUI:
         e_buy = ttk.Entry(thresh_row, textvariable=self.buy_thresh_var, width=8)
         e_buy.pack(side=tk.LEFT, padx=(5, 20))
         ToolTip(e_buy, (
-            "🚀 BUY THRESHOLD\n"
+            "BUY THRESHOLD\n"
             "This is the AI's 'Confidence Gate'.\n\n"
             "Example: If set to 50, the bot ONLY buys when the AI is 50% sure.\n"
             "Set to 80 for 'Safe/Sniping' mode.\n"
@@ -168,7 +168,7 @@ class BacktestUI:
         e_sell = ttk.Entry(thresh_row, textvariable=self.sell_thresh_var, width=8)
         e_sell.pack(side=tk.LEFT, padx=5)
         ToolTip(e_sell, (
-            "🛑 SELL THRESHOLD\n"
+            "SELL THRESHOLD\n"
             "When should the bot panic and exit?\n\n"
             "Example: 0 means 'Sell the moment AI is no longer bullish'.\n"
             "Example: -50 means 'Hold until the AI is screaming that a CRASH is coming'."
@@ -186,7 +186,7 @@ class BacktestUI:
         e_psize = ttk.Entry(scaling_row, textvariable=self.pos_size_var, width=8)
         e_psize.grid(row=0, column=1, sticky="w", pady=5, padx=5)
         ToolTip(e_psize, (
-            "💰 BASE BUY SIZE\n"
+            "BASE BUY SIZE\n"
             "How much of your wallet to use for the FIRST buy.\n\n"
             "Example: If set to 25%, the bot buys 1/4 of your cash.\n"
             "This allows the bot to 'Buy more' later if things look good (Pyramiding)!\n"
@@ -198,7 +198,7 @@ class BacktestUI:
         e_bthresh = ttk.Entry(scaling_row, textvariable=self.boost_thresh_var, width=8)
         e_bthresh.grid(row=0, column=3, sticky="w", pady=5, padx=5)
         ToolTip(e_bthresh, (
-            "🔥 CONFIDENCE BOOST\n"
+            "CONFIDENCE BOOST\n"
             "The 'Super Signal' Level.\n\n"
             "Example: If set to 80, the bot treats any AI score above 80 as a 'Gold Mine'.\n"
             "It will then add the 'Boost Size' extra cash on top of the normal buy."
@@ -209,7 +209,7 @@ class BacktestUI:
         e_bsize = ttk.Entry(scaling_row, textvariable=self.boost_size_var, width=8)
         e_bsize.grid(row=0, column=5, sticky="w", pady=5, padx=5)
         ToolTip(e_bsize, (
-            "🏗️ EXTRA BOOST AMOUNT\n"
+            "EXTRA BOOST AMOUNT\n"
             "How much EXTRA to buy during a Gold Mine signal.\n\n"
             "Example: If Base is 20% and Boost is 30%,\n"
             "the bot will buy 50% total when confidence is very high."
@@ -223,7 +223,7 @@ class BacktestUI:
         chk_profit = ttk.Checkbutton(protect_row, text="Profit Guard (No loss selling)", variable=self.profit_guard_var)
         chk_profit.pack(side=tk.LEFT, padx=(0, 20))
         ToolTip(chk_profit, (
-            "🛡️ PROFIT GUARD\n"
+            "PROFIT GUARD\n"
             "The 'Diamond Hands' mode.\n\n"
             "If on: The bot will REFUSE to sell if the price is lower\n"
             "than what you paid. It only sells for a win!"
@@ -236,7 +236,7 @@ class BacktestUI:
         e_sl = ttk.Entry(protect_row, textvariable=self.sl_val_var, width=6)
         e_sl.pack(side=tk.LEFT, padx=10)
         ToolTip(chk_sl, (
-            "⚓ STOP LOSS\n"
+            "STOP LOSS\n"
             "Your 'Escape Hatch'.\n\n"
             "If the trade goes wrong by X%, we sell everything\n"
             "immediately to save the rest of your money."
@@ -246,10 +246,10 @@ class BacktestUI:
         btn_frame = ttk.Frame(left_col)
         btn_frame.pack(fill=tk.X, pady=15)
         
-        self.run_btn = ttk.Button(btn_frame, text="▶   EXECUTE BACKTEST", style="Action.TButton", command=self.start_backtest_thread)
+        self.run_btn = ttk.Button(btn_frame, text="EXECUTE BACKTEST", style="Action.TButton", command=self.start_backtest_thread)
         self.run_btn.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 5))
         
-        self.cancel_btn = ttk.Button(btn_frame, text="✖   CANCEL", style="Cancel.TButton", command=self.request_cancel, state=tk.DISABLED)
+        self.cancel_btn = ttk.Button(btn_frame, text="CANCEL", style="Cancel.TButton", command=self.request_cancel, state=tk.DISABLED)
         self.cancel_btn.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(5, 0))
         
         # --- 3. METRICS DASHBOARD ---
@@ -299,7 +299,7 @@ class BacktestUI:
 
     def start_backtest_thread(self):
         self.run_btn.config(state=tk.DISABLED)
-        self.cancel_btn.config(state=tk.NORMAL, text="✖   CANCEL")
+        self.cancel_btn.config(state=tk.NORMAL, text="CANCEL")
         self.log_area.delete('1.0', tk.END)
         for key in self.metrics_labels:
             self.metrics_labels[key].config(text="--", foreground="#2c3e50")
@@ -361,7 +361,7 @@ class BacktestUI:
 
     def _reset_ui_state(self):
         self.run_btn.config(state=tk.NORMAL)
-        self.cancel_btn.config(state=tk.DISABLED, text="✖   CANCEL")
+        self.cancel_btn.config(state=tk.DISABLED, text="CANCEL")
         self.engine = None
 
     def update_results(self, result):

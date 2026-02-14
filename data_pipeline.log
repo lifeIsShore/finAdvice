@@ -69,3 +69,75 @@ Saving all timeframes for BTC-EUR
 2026-02-02 22:43:24,040 - core.data_storage - INFO - ============================================================
 2026-02-02 22:43:24,044 - core.news_fetcher - INFO - Fetching news for BTC-EUR...
 2026-02-02 22:43:24,429 - core.data_storage - INFO - [OK] Saved 8 news articles for BTC-EUR to .\data\news\BTC-EUR_news.json
+2026-02-14 17:46:55,116 - core.ticker_selector - INFO - Manual tickers set: ['BTC-EUR']
+2026-02-14 17:46:55,792 - core.ticker_selector - INFO - [OK] Valid ticker: BTC-EUR
+2026-02-14 17:46:55,793 - core.ticker_selector - INFO - Validation complete: 1/1 tickers valid
+2026-02-14 17:46:55,793 - core.data_fetcher - INFO - 
+============================================================
+2026-02-14 17:46:55,793 - core.data_fetcher - INFO - Fetching all timeframes for BTC-EUR
+2026-02-14 17:46:55,793 - core.data_fetcher - INFO - ============================================================
+2026-02-14 17:46:55,794 - core.data_fetcher - INFO - Fetching BTC-EUR - 4h (attempt 1/3)
+2026-02-14 17:46:56,175 - core.data_fetcher - INFO - Resampling hourly data to 4-hour intervals
+2026-02-14 17:46:56,200 - core.data_fetcher - INFO - [OK] Successfully fetched 360 rows for BTC-EUR at 4h
+2026-02-14 17:46:56,200 - core.data_fetcher - INFO - Fetching BTC-EUR - 1d (attempt 1/3)
+2026-02-14 17:46:56,406 - core.data_fetcher - INFO - [OK] Successfully fetched 504 rows for BTC-EUR at 1d
+2026-02-14 17:46:56,406 - core.data_fetcher - INFO - Fetching BTC-EUR - 1wk (attempt 1/3)
+2026-02-14 17:46:56,575 - core.data_fetcher - INFO - [OK] Successfully fetched 104 rows for BTC-EUR at 1wk
+2026-02-14 17:46:56,576 - core.data_fetcher - INFO - Fetching BTC-EUR - 1mo (attempt 1/3)
+2026-02-14 17:46:56,786 - core.data_fetcher - INFO - [OK] Successfully fetched 138 rows for BTC-EUR at 1mo
+2026-02-14 17:46:56,787 - core.data_fetcher - INFO - Fetching BTC-EUR - 3mo (attempt 1/3)
+2026-02-14 17:46:56,966 - core.data_fetcher - INFO - [OK] Successfully fetched 46 rows for BTC-EUR at 3mo
+2026-02-14 17:46:56,966 - core.data_fetcher - INFO - Fetching BTC-EUR - 1h (attempt 1/3)
+2026-02-14 17:46:57,323 - core.data_fetcher - WARNING - BTC-EUR 1h: 50.5% rows have zero volume
+2026-02-14 17:46:57,329 - core.data_fetcher - INFO - [OK] Successfully fetched 1440 rows for BTC-EUR at 1h
+2026-02-14 17:46:57,329 - core.data_fetcher - INFO - Fetching BTC-EUR - 30m (attempt 1/3)
+2026-02-14 17:46:57,729 - core.data_fetcher - INFO - [OK] Successfully fetched 1440 rows for BTC-EUR at 30m
+2026-02-14 17:46:57,729 - core.data_fetcher - INFO - Fetching BTC-EUR - 15m (attempt 1/3)
+2026-02-14 17:46:57,992 - core.data_fetcher - INFO - [OK] Successfully fetched 2879 rows for BTC-EUR at 15m
+2026-02-14 17:46:57,993 - core.data_fetcher - INFO - Fetching BTC-EUR - 5m (attempt 1/3)
+2026-02-14 17:46:58,242 - core.data_fetcher - WARNING - BTC-EUR 5m: 53.8% rows have zero volume
+2026-02-14 17:46:58,249 - core.data_fetcher - INFO - [OK] Successfully fetched 1353 rows for BTC-EUR at 5m
+2026-02-14 17:46:58,250 - core.data_fetcher - INFO - Fetching BTC-EUR - 3m (attempt 1/3)
+2026-02-14 17:46:58,469 - core.data_fetcher - INFO - Resampling 1-minute data to 3-minute intervals
+2026-02-14 17:46:58,480 - core.data_fetcher - WARNING - BTC-EUR 3m: 68.4% rows have zero volume
+2026-02-14 17:46:58,484 - core.data_fetcher - INFO - [OK] Successfully fetched 19 rows for BTC-EUR at 3m
+2026-02-14 17:46:58,484 - core.data_fetcher - INFO - Fetching BTC-EUR - 2m (attempt 1/3)
+2026-02-14 17:46:58,660 - core.data_fetcher - WARNING - BTC-EUR 2m: 69.0% rows have zero volume
+2026-02-14 17:46:58,664 - core.data_fetcher - INFO - [OK] Successfully fetched 29 rows for BTC-EUR at 2m
+2026-02-14 17:46:58,665 - core.data_fetcher - INFO - Fetching BTC-EUR - 1m (attempt 1/3)
+2026-02-14 17:46:58,866 - core.data_fetcher - WARNING - BTC-EUR 1m: 80.9% rows have zero volume
+2026-02-14 17:46:58,872 - core.data_fetcher - INFO - [OK] Successfully fetched 47 rows for BTC-EUR at 1m
+2026-02-14 17:46:59,883 - core.data_storage - INFO - 
+Saving all timeframes for BTC-EUR
+2026-02-14 17:46:59,922 - core.data_storage - INFO - [OK] Saved BTC-EUR 4h to .\data/raw\BTC-EUR\BTC-EUR_4h_20260214.csv (360 rows)
+2026-02-14 17:47:00,064 - core.data_storage - INFO - Metadata saved to .\data/metadata.json
+2026-02-14 17:47:00,090 - core.data_storage - INFO - [OK] Saved BTC-EUR 1d to .\data/raw\BTC-EUR\BTC-EUR_1d_20260214.csv (504 rows)
+2026-02-14 17:47:00,229 - core.data_storage - INFO - Metadata saved to .\data/metadata.json
+2026-02-14 17:47:00,241 - core.data_storage - INFO - [OK] Saved BTC-EUR 1wk to .\data/raw\BTC-EUR\BTC-EUR_1wk_20260214.csv (104 rows)
+2026-02-14 17:47:00,374 - core.data_storage - INFO - Metadata saved to .\data/metadata.json
+2026-02-14 17:47:00,388 - core.data_storage - INFO - [OK] Saved BTC-EUR 1mo to .\data/raw\BTC-EUR\BTC-EUR_1mo_20260214.csv (138 rows)
+2026-02-14 17:47:00,497 - core.data_storage - INFO - Metadata saved to .\data/metadata.json
+2026-02-14 17:47:00,505 - core.data_storage - INFO - [OK] Saved BTC-EUR 3mo to .\data/raw\BTC-EUR\BTC-EUR_3mo_20260214.csv (46 rows)
+2026-02-14 17:47:00,670 - core.data_storage - INFO - Metadata saved to .\data/metadata.json
+2026-02-14 17:47:00,713 - core.data_storage - INFO - [OK] Saved BTC-EUR 1h to .\data/raw\BTC-EUR\BTC-EUR_1h_20260214.csv (1440 rows)
+2026-02-14 17:47:00,805 - core.data_storage - INFO - Metadata saved to .\data/metadata.json
+2026-02-14 17:47:00,920 - core.data_storage - INFO - [OK] Saved BTC-EUR 30m to .\data/raw\BTC-EUR\BTC-EUR_30m_20260214.csv (1440 rows)
+2026-02-14 17:47:01,028 - core.data_storage - INFO - Metadata saved to .\data/metadata.json
+2026-02-14 17:47:01,105 - core.data_storage - INFO - [OK] Saved BTC-EUR 15m to .\data/raw\BTC-EUR\BTC-EUR_15m_20260214.csv (2879 rows)
+2026-02-14 17:47:01,270 - core.data_storage - INFO - Metadata saved to .\data/metadata.json
+2026-02-14 17:47:01,316 - core.data_storage - INFO - [OK] Saved BTC-EUR 5m to .\data/raw\BTC-EUR\BTC-EUR_5m_20260214.csv (1353 rows)
+2026-02-14 17:47:01,408 - core.data_storage - INFO - Metadata saved to .\data/metadata.json
+2026-02-14 17:47:01,417 - core.data_storage - INFO - [OK] Saved BTC-EUR 3m to .\data/raw\BTC-EUR\BTC-EUR_3m_20260214.csv (19 rows)
+2026-02-14 17:47:01,521 - core.data_storage - INFO - Metadata saved to .\data/metadata.json
+2026-02-14 17:47:01,532 - core.data_storage - INFO - [OK] Saved BTC-EUR 2m to .\data/raw\BTC-EUR\BTC-EUR_2m_20260214.csv (29 rows)
+2026-02-14 17:47:01,634 - core.data_storage - INFO - Metadata saved to .\data/metadata.json
+2026-02-14 17:47:01,643 - core.data_storage - INFO - [OK] Saved BTC-EUR 1m to .\data/raw\BTC-EUR\BTC-EUR_1m_20260214.csv (47 rows)
+2026-02-14 17:47:01,741 - core.data_storage - INFO - Metadata saved to .\data/metadata.json
+2026-02-14 17:47:01,741 - core.data_storage - INFO - 
+============================================================
+2026-02-14 17:47:01,741 - core.data_storage - INFO - SAVE SUMMARY:
+2026-02-14 17:47:01,742 - core.data_storage - INFO - Saved 12/12 files
+2026-02-14 17:47:01,742 - core.data_storage - INFO - Success rate: 100.0%
+2026-02-14 17:47:01,742 - core.data_storage - INFO - ============================================================
+2026-02-14 17:47:01,745 - core.news_fetcher - INFO - Fetching news for BTC-EUR...
+2026-02-14 17:47:02,110 - core.data_storage - INFO - [OK] Saved 7 news articles for BTC-EUR to .\data\news\BTC-EUR_news.json
